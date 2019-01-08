@@ -43,13 +43,58 @@ module.exports = function (req, res, next) {
             });
         }
 
+        /**
+
+         (function () {
+
+    var auth = require('basic-auth');
+
+    app.use((req, res, next) => {
+
+        // if (/^\/admin/.test(req.url)) {
+        //
+        //     var credentials = auth(req);
+        //
+        //     if (!credentials || credentials.name !== 'admin' || credentials.pass !== process.env.PROTECTED_ADMIN_PASS) {
+        //
+        //         res.statusCode = 401;
+        //
+        //         res.setHeader('WWW-Authenticate', 'Basic realm="Sign in"')
+        //
+        //         return res.end('Access denied');
+        //     } else {
+        //
+        //         return next();
+        //     }
+        // }
+
+        var credentials = auth(req);
+
+        if (credentials && credentials.name === 'admin' && credentials.pass === process.env.PROTECTED_ADMIN_PASS) {
+
+            req.basicauth = true;
+        }
+
+        next();
+    });
+}());
+
+         // in controller:
+
+
+         if ( ! req.basicauth ) {
+
+                return res.basicAuth();
+         }
+         */
+
         res.constructor.prototype.basicAuth = function (realm = 'Sign in', body = 'Access denied') {
 
-            res.statusCode = 401;
+            this.status(401);
 
-            res.setHeader('WWW-Authenticate', `Basic realm="${realm}"`)
+            this.setHeader('WWW-Authenticate', `Basic realm="${realm}"`)
 
-            return res.end(body);
+            return this.end(body);
         }
     }
 
