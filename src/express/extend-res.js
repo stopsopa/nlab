@@ -42,6 +42,15 @@ module.exports = function (req, res, next) {
                 error: msg
             });
         }
+
+        res.constructor.prototype.basicAuth = function (realm = 'Sign in', body = 'Access denied') {
+
+            res.statusCode = 401;
+
+            res.setHeader('WWW-Authenticate', `Basic realm="${realm}"`)
+
+            return res.end(body);
+        }
     }
 
     next();
