@@ -1,3 +1,5 @@
 update.sh
 Makefile
 /.idea/
+node_modules
+*.tgz

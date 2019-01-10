@@ -1,4 +1,11 @@
 {
   "name": "nlab",
-  "version": "0.0.9"
+  "version": "0.0.9",
+  "author": "Szymon Działowski",
+  "description": "",
+  "license": "MIT",
+  "homepage": "https://github.com/stopsopa/nlab",
+  "dependencies": {
+    "md5": "^2.2.1"
+  }
 }
