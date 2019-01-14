@@ -72,7 +72,7 @@ module.exports = function (req, res, next) {
 
         if (credentials && credentials.name === 'admin' && credentials.pass === process.env.PROTECTED_ADMIN_PASS) {
 
-            req.basicauth = true;
+            req.auth = true;
         }
 
         next();
@@ -82,7 +82,7 @@ module.exports = function (req, res, next) {
          // in controller:
 
 
-         if ( ! req.basicauth ) {
+         if ( ! req.auth ) {
 
                 return res.basicAuth();
          }
