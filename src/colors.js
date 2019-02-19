@@ -8,7 +8,7 @@ let log;
 
 if (node) {
 
-    log = process.stdout.write;
+    log = (...args) => process.stdout.write(...args);
 }
 else {
 
