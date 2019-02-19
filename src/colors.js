@@ -69,7 +69,7 @@ const color = (function (c) {
 const c = (...args) => log(color(...args));
 
 Object.keys(glos).forEach(k => {
-    c[k] = (...args) => log(color(...args, k));
+    c[k] = (...args) => color(...args, k);
 })
 
 module.exports = c;
