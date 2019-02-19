@@ -1,4 +1,7 @@
-
+/**
+ * c.r('message', ' in', ' red')
+ * c('message', ' in', ' red', 'r')
+ */
 const node = require('./isNode');
 
 let log;
