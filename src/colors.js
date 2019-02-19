@@ -1,8 +1,32 @@
 
-// https://i.imgur.com/mWzuQWP.png
-const color = (function (c) {
-    return (...args) => c[args.pop()] + args.join('') + c.reset;
-}({
+const node = require('./isNode');
+
+let log;
+
+if (node) {
+
+    log = process.stdout.write;
+}
+else {
+
+    log = (function () {
+        try {
+            return console.log;
+        }
+        catch (e) {
+            return () => {};
+        }
+    }())
+}
+// for testing in browser
+// window.process = {
+//     stdout: {
+//         write: console.log
+//     }
+// }
+// log = process.stdout.write;
+
+const glos = {
     Bright      : "\x1b[1m",
     Dim         : "\x1b[2m",
     Underscore  : "\x1b[4m",
@@ -27,12 +51,22 @@ const color = (function (c) {
     BgWhite     : "\x1b[47m",
     r           : "\x1b[31m", // red
     g           : "\x1b[32m", // green
+    b           : "\x1b[34m", // blue
     y           : "\x1b[33m", // yellow
     m           : "\x1b[35m", // magenta
     c           : "\x1b[36m", // cyan
     reset       : "\x1b[0m",
-}));
+};
 
-const c = (...args) => process.stdout.write(color(...args));
+// https://i.imgur.com/mWzuQWP.png
+const color = (function (c) {
+    return (...args) => c[args.pop()] + args.join('') + c.reset;
+}(glos));
+
+const c = (...args) => log(color(...args));
+
+Object.keys(glos).forEach(k => {
+    c[k] = (...args) => log(color(...args, k));
+})
 
 module.exports = c;
