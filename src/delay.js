@@ -2,16 +2,17 @@
 'use strict';
 
 /**
- * import delay from 'roderic/libs/delay'
+ * import delay from 'nlab/delay'
  * or
- * const delay require('roderic/libs/delay');
+ * const delay require('nlab/delay');
  *
  * await delay(4000)
  *
  * or:
  *
- return Promise.resolve()
- .then(() => delay(3000, 'ok'))
+    delay(3000, 'ok')
+        .then(data => log('then: ', data))
+    ;
 
  */
 const delay = (time, data) =>
@@ -20,15 +21,15 @@ const delay = (time, data) =>
     )
 ;
 /**
- * import delay from 'roderic/libs/delay'
+ * import delay from 'nlab/delay'
  * or
- * const delay require('roderic/libs/delay');
+ * const delay require('nlab/delay');
  *
- return Promise.resolve()
- .then(
- () => delay(3000, 'ok')
- () => delay.reject(3000, 'error')
- )
+    return Promise.resolve()
+        .then(
+            () => delay(3000, 'ok'),
+            () => delay.reject(3000, 'error')
+        )
 
  */
 const reject = (time, data) =>
@@ -38,9 +39,9 @@ const reject = (time, data) =>
 ;
 
 /**
- * import { then } from 'roderic/libs/delay'
+ * import { then } from 'nlab/delay'
  * or
- * const then require('roderic/libs/delay').then;
+ * const then = require('nlab/delay').then;
  *
  * Promise.reject('test')
  *     .then(...then(1000))
