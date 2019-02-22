@@ -112,6 +112,7 @@ It's more strict method to test if given arg is an object - more strict than imp
 //  ✓isObject - 4                                                   -> false
 //  ✓isObject - string                                              -> false
 //  ✓isObject - Symbol('test')                                      -> false
+//  ✓isObject - new Date()                                          -> false
 ```
 To se more details about what is considired an object and what is not see test cases coverage for this file:
 
@@ -138,6 +139,27 @@ It's actually *Array.isArray* with MDN polyfill.
 //  ✓isArray - 4                                                   -> false
 //  ✓isArray - string                                              -> false
 //  ✓isArray - Symbol('test')                                      -> false
+```
+
+# isDate()
+
+```javascript
+//  ✓isDate - new Date()                                          -> true
+//  ✓isDate - {}                                                  -> false
+//  ✓isDate - using with object that have implemented toString()  -> false
+//  ✓isDate - extended object                                     -> false
+//  ✓isDate - new function () {}                                  -> false
+//  ✓isDate - []                                                  -> false
+//  ✓isDate - function () {}                                      -> false
+//  ✓isDate - () => {}                                            -> false
+//  ✓isDate - true                                                -> false
+//  ✓isDate - false                                               -> false
+//  ✓isDate - NaN                                                 -> false
+//  ✓isDate - undefined                                           -> false
+//  ✓isDate - no arg                                              -> false
+//  ✓isDate - 4                                                   -> false
+//  ✓isDate - string                                              -> false
+//  ✓isDate - Symbol('test')                                      -> false
 ```
 
 

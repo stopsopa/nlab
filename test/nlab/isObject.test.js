@@ -15,6 +15,7 @@
 //  ✓isObject - 4                                                   -> false
 //  ✓isObject - string                                              -> false
 //  ✓isObject - Symbol('test')                                      -> false
+//  ✓isObject - new Date()                                          -> false
 
 const isObject = require('../../isObject');
 
@@ -136,6 +137,13 @@ it('isObject - extended object -> true', async done => {
     b.prototype.constructor = b;
 
     expect(isObject(new b())).toBeTruthy();
+
+    done();
+});
+
+it('isObject - new Date() -> false', async done => {
+
+    expect(isObject(new Date())).toBeFalsy();
 
     done();
 });

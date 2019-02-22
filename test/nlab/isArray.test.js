@@ -1,5 +1,7 @@
 'use strict';
 
+delete Array.isArray;
+
 //  ✓isArray - []                                                  -> true
 //  ✓isArray - {}                                                  -> false
 //  ✓isArray - using with object that have implemented toString()  -> false
@@ -15,6 +17,7 @@
 //  ✓isArray - 4                                                   -> false
 //  ✓isArray - string                                              -> false
 //  ✓isArray - Symbol('test')                                      -> false
+//  ✓isArray - new Date()                                          -> false
 
 const isArray = require('../../isArray');
 
@@ -112,6 +115,14 @@ it('isArray - string -> false', async done => {
 
     expect(isArray('test')).toBeFalsy();
     expect(Array.isArray('test')).toBeFalsy();
+
+    done();
+});
+
+it('isArray - new Date() -> false', async done => {
+
+    expect(isArray(new Date())).toBeFalsy();
+    expect(Array.isArray(new Date())).toBeFalsy();
 
     done();
 });
