@@ -74,6 +74,23 @@ it('delay - pass payload transparently', async done => {
     ;
 });
 
+it('delay - pass payload transparently - immediately', async done => {
+
+    start();
+
+    Promise.resolve('msg')
+        .then(delay())
+        .then(dd => {
+
+            expect(dd).toEqual('msg');
+
+            expect(diff()).toBeLessThanOrEqual(10);
+
+            done();
+        })
+    ;
+});
+
 /**
  * Reject:
  */
@@ -140,6 +157,26 @@ it('reject - pass payload transparently', async done => {
     ;
 });
 
+it('reject - pass payload transparently - immediately', async done => {
+
+    start();
+
+    Promise.reject('msg')
+        .then(
+            delay(),
+            delay.reject(),
+        )
+        .catch(dd => {
+
+            expect(dd).toEqual('msg');
+
+            expect(diff()).toBeLessThanOrEqual(10);
+
+            done();
+        })
+    ;
+});
+
 it('then - resolve', async done => {
 
     start();
@@ -178,3 +215,39 @@ it('then - reject', async done => {
     ;
 });
 
+
+it('then - resolve - immediately', async done => {
+
+    start();
+
+    Promise.resolve('msg')
+        .then(...then())
+        .then(dd => {
+
+            expect(dd).toEqual('msg');
+
+            expect(diff()).toBeLessThanOrEqual(10);
+
+            done();
+        })
+    ;
+});
+
+
+
+it('then - reject - immediately', async done => {
+
+    start();
+
+    Promise.reject('msg')
+        .then(...then())
+        .catch(dd => {
+
+            expect(dd).toEqual('msg');
+
+            expect(diff()).toBeLessThanOrEqual(10);
+
+            done();
+        })
+    ;
+});

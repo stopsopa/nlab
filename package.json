@@ -4,6 +4,7 @@
   "author": "Szymon Działowski",
   "description": "",
   "license": "MIT",
+  "main": "src",
   "homepage": "https://github.com/stopsopa/nlab",
   "dependencies": {
     "md5": "^2.2.1"
@@ -14,7 +15,8 @@
     "collectCoverage": true,
     "coverageReporters": [
       "html",
-      "lcov"
+      "lcov",
+      "text"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
