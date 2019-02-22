@@ -1,5 +1,21 @@
 'use strict';
 
+//  ✓isObject - {}                                                  -> true
+//  ✓isObject - using with object that have implemented toString()  -> true
+//  ✓isObject - extended object                                     -> true
+//  ✓isObject - new function () {}                                  -> true
+//  ✓isObject - []                                                  -> false
+//  ✓isObject - function () {}                                      -> false
+//  ✓isObject - () => {}                                            -> false
+//  ✓isObject - true                                                -> false
+//  ✓isObject - false                                               -> false
+//  ✓isObject - NaN                                                 -> false
+//  ✓isObject - undefined                                           -> false
+//  ✓isObject - no arg                                              -> false
+//  ✓isObject - 4                                                   -> false
+//  ✓isObject - string                                              -> false
+//  ✓isObject - Symbol('test')                                      -> false
+
 const isObject = require('../../isObject');
 
 jest.setTimeout(100);
@@ -46,6 +62,20 @@ it('isObject - true -> false', async done => {
     done();
 });
 
+it('isObject - false -> false', async done => {
+
+    expect(isObject(false)).toBeFalsy();
+
+    done();
+});
+
+it('isObject - NaN -> false', async done => {
+
+    expect(isObject(NaN)).toBeFalsy();
+
+    done();
+});
+
 it('isObject - undefined -> false', async done => {
 
     expect(isObject(undefined)).toBeFalsy();
@@ -56,13 +86,6 @@ it('isObject - undefined -> false', async done => {
 it('isObject - no arg -> false', async done => {
 
     expect(isObject()).toBeFalsy();
-
-    done();
-});
-
-it('isObject - false -> false', async done => {
-
-    expect(isObject(false)).toBeFalsy();
 
     done();
 });
@@ -81,9 +104,9 @@ it('isObject - string -> false', async done => {
     done();
 });
 
-it('isObject - string -> false', async done => {
+it(`isObject - Symbol('test') -> false`, async done => {
 
-    expect(isObject('test')).toBeFalsy();
+    expect(isObject(Symbol('test'))).toBeFalsy();
 
     done();
 });

@@ -88,3 +88,38 @@ import delay from 'nlab/delay';
 // 'start'
 // 'end' - after 1 sec
 ```
+
+# isObject()
+
+It's more strict method to test if given arg is an object - more strict than implementation from lodash or underscore.js
+
+
+```javascript
+//  ✓isObject - {}                                                  -> true
+//  ✓isObject - using with object that have implemented toString()  -> true
+//  ✓isObject - extended object                                     -> true
+//  ✓isObject - new function () {}                                  -> true
+//  ✓isObject - []                                                  -> false
+//  ✓isObject - function () {}                                      -> false
+//  ✓isObject - () => {}                                            -> false
+//  ✓isObject - true                                                -> false
+//  ✓isObject - false                                               -> false
+//  ✓isObject - NaN                                                 -> false
+//  ✓isObject - undefined                                           -> false
+//  ✓isObject - no arg                                              -> false
+//  ✓isObject - 4                                                   -> false
+//  ✓isObject - string                                              -> false
+//  ✓isObject - Symbol('test')                                      -> false
+```
+To se more details about what is considired an object and what is not see test cases coverage for this file:
+
+- [tests](https://github.com/stopsopa/nlab/blob/master/test/nlab/isObject.test.js)
+- [coverage](https://codecov.io/gh/stopsopa/nlab/src/v0.0.29/src/isObject.js)
+
+
+
+
+
+
+
+
