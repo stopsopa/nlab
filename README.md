@@ -7,23 +7,7 @@
 
 <!-- toc -->
 
-- [debugging](#debugging)
-- [console](#console)
-- [readding closest .env](#readding-closest-env)
-- [determining "dev" || "prod"](#determining-dev--prod)
-- [express response extensions:](#express-response-extensions)
-- [access to request & response in react component (SSR):](#access-to-request--response-in-react-component-ssr)
-- [Get client ip address](#get-client-ip-address)
-- [RESTful api (transport)](#restful-api-transport)
-- [Controllers](#controllers)
-- [JWT security](#jwt-security)
-  * [access to JWT payload in the controller](#access-to-jwt-payload-in-the-controller)
-  * [Router](#router)
-- [Ping endpoint is](#ping-endpoint-is)
-- [Semantic UI helpers](#semantic-ui-helpers)
-  * [Button as a Router Link](#button-as-a-router-link)
-  * [Button as a regular link](#button-as-a-regular-link)
-- [Extra tools](#extra-tools)
+- [Promise delay](#promise-delay)
 
 <!-- tocstop -->
 
