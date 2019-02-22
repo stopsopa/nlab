@@ -117,6 +117,27 @@ To se more details about what is considired an object and what is not see test c
 - [tests](https://github.com/stopsopa/nlab/blob/master/test/nlab/isObject.test.js)
 - [coverage](https://codecov.io/gh/stopsopa/nlab/src/v0.0.29/src/isObject.js)
 
+# isArray()
+
+It's actually *Array.isArray* with MDN polyfill.
+
+```javascript
+//  ✓isArray - []                                                  -> true
+//  ✓isArray - {}                                                  -> false
+//  ✓isArray - using with object that have implemented toString()  -> false
+//  ✓isArray - extended object                                     -> false
+//  ✓isArray - new function () {}                                  -> false
+//  ✓isArray - function () {}                                      -> false
+//  ✓isArray - () => {}                                            -> false
+//  ✓isArray - true                                                -> false
+//  ✓isArray - false                                               -> false
+//  ✓isArray - NaN                                                 -> false
+//  ✓isArray - undefined                                           -> false
+//  ✓isArray - no arg                                              -> false
+//  ✓isArray - 4                                                   -> false
+//  ✓isArray - string                                              -> false
+//  ✓isArray - Symbol('test')                                      -> false
+```
 
 
 

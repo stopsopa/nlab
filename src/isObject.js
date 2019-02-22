@@ -16,6 +16,22 @@
 // ALSO WORTH TO MENTION:
 // this function doesn't care if new b(1) has or not has 'toString' function implemented, so it's rather safe
 
+//  ✓isObject - {}                                                  -> true
+//  ✓isObject - using with object that have implemented toString()  -> true
+//  ✓isObject - extended object                                     -> true
+//  ✓isObject - new function () {}                                  -> true
+//  ✓isObject - []                                                  -> false
+//  ✓isObject - function () {}                                      -> false
+//  ✓isObject - () => {}                                            -> false
+//  ✓isObject - true                                                -> false
+//  ✓isObject - false                                               -> false
+//  ✓isObject - NaN                                                 -> false
+//  ✓isObject - undefined                                           -> false
+//  ✓isObject - no arg                                              -> false
+//  ✓isObject - 4                                                   -> false
+//  ✓isObject - string                                              -> false
+//  ✓isObject - Symbol('test')
+
 function isObject(o) {
     return Object.prototype.toString.call(o) === '[object Object]';
 }
