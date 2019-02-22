@@ -3,3 +3,17 @@ Makefile
 /.idea/
 node_modules
 *.tgz
+/coverage/
+/test/
+/update.sh
+/update-badge.js
+/test.sh
+/update.sh
+/update-badge.sh
+/.travis.yml
+/package_travis.json
+/server.js
+/yarn.lock
+node_modules
+/travis.sh
+/package_prod.json

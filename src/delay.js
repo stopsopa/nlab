@@ -15,11 +15,21 @@
     ;
 
  */
-const delay = (time, data) =>
+const resolve = (time, data) =>
     new Promise(
         resolve => time ? setTimeout(resolve, time, data) : resolve(data)
     )
 ;
+
+const delay = (time, ...rest) => {
+
+    if (rest.length) {
+
+        return resolve(time, rest[0]);
+    }
+
+    return data => resolve(time, data);
+}
 /**
  * import delay from 'nlab/delay'
  * or
@@ -38,6 +48,16 @@ const reject = (time, data) =>
     )
 ;
 
+const delayReject = (time, ...rest) => {
+
+    if (rest.length) {
+
+        return reject(time, rest[0]);
+    }
+
+    return data => reject(time, data);
+}
+
 /**
  * import { then } from 'nlab/delay'
  * or
@@ -55,11 +75,11 @@ const reject = (time, data) =>
  */
 
 const then = time => ([
-    data => delay(time, data),
-    data => delay.reject(time, data)
+    delay(time),
+    delay.reject(time),
 ]);
 
-delay.reject    = reject;
+delay.reject    = delayReject;
 
 delay.then      = then;
 

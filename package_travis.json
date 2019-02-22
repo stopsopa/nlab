@@ -3,10 +3,13 @@
   "version": "0.0.25",
   "author": "Szymon Działowski",
   "description": "",
+  "main": "src",
+  "scripts": {
+    "test": "/bin/bash test.sh"
+  },
   "license": "MIT",
   "homepage": "https://github.com/stopsopa/nlab",
   "dependencies": {
-    "md5": "^2.2.1"
   },
   "jest": {
     "verbose": true,
@@ -14,10 +17,14 @@
     "collectCoverage": true,
     "coverageReporters": [
       "html",
-      "lcov"
+      "lcov",
+      "text"
     ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
+  },
+  "devDependencies": {
+    "jest": "^24.0.0"
   }
 }
