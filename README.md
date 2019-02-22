@@ -20,41 +20,41 @@ _(TOC generated using [markdown-toc](https://github.com/jonschlinkert/markdown-t
 const delay = require('nlab/delay');
 
 delay(3000, 'ok')
-    .then(data => console.log('then: ', data))
+    .then(data => console.log('then:', data))
 ;
-// prints 'then:  ok' after 3 sek
+// prints 'then: ok' after 3 sek
 ```
 
 ```javascript
 const delay = require('nlab/delay');
 
-Promise.resolve()
+Promise.resolve('all good')
     .then(
-        () => delay(3000, 'all good'),
-        () => delay.reject(3000, 'error')
+        delay(3000),
+        delay.reject(3000)
     )
     .then(
         ok => console.log('ok:', ok),
         error => console.log('catch:', error)
     )
 ;    
-// ok: all good
+// 'ok: all good' - after 3 sec
 ```
 
 ```javascript
 const delay = require('nlab/delay');
 
-Promise.reject()
+Promise.reject('all wrong')
     .then(
-        () => delay(3000, 'all good'),
-        () => delay.reject(3000, 'error')
+        delay(3000),
+        delay.reject(3000)
     )
     .then(
         ok => console.log('ok:', ok),
         error => console.log('catch:', error)
     )
 ;    
-// catch: error
+// 'catch: all wrong' - after 3 sec
 ```
 
 ```javascript
@@ -64,13 +64,13 @@ Promise.resolve('resolved')
     .then(...then(1000))
     .then(data => console.log('then:', data))
 ;
-// then: rejected - after 1 sec
+// 'then: resolved' - after 1 sec
 
 Promise.reject('rejected')
     .then(...then(1000))
     .catch(data => console.log('catch:', data))
 ;
-// catch: rejected - after 1 sec
+// 'catch: rejected' - after 1 sec
 ```
 
 ```javascript
@@ -85,6 +85,6 @@ import delay from 'nlab/delay';
     console.log('end')
 }());
 
-// start
-// end - after 1 sec
+// 'start'
+// 'end' - after 1 sec
 ```
