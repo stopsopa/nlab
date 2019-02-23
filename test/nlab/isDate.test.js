@@ -28,7 +28,7 @@ it('isDate - new Date() -> true', async done => {
     done();
 });
 
-it('isDate - {} -> true', async done => {
+it('isDate - {} -> false', async done => {
 
     expect(isDate({})).toBeFalsy();
 
@@ -42,7 +42,7 @@ it('isDate - [] -> false', async done => {
     done();
 });
 
-it('isDate - new function () {} -> true', async done => {
+it('isDate - new function () {} -> false', async done => {
 
     expect(isDate(new function () {})).toBeFalsy();
 
@@ -119,7 +119,7 @@ it(`isDate - Symbol('test') -> false`, async done => {
     done();
 });
 
-it('isDate - using with object that have implemented toString() -> true', async done => {
+it('isDate - using with object that have implemented toString() -> false', async done => {
 
     var k = function () {}
     k.prototype.toString = function () {return 'test...'};
@@ -133,7 +133,7 @@ it('isDate - using with object that have implemented toString() -> true', async 
     done();
 });
 
-it('isDate - extended object -> true', async done => {
+it('isDate - extended object -> false', async done => {
 
     var a = function () {};
 
