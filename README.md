@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.32/graph/badge.svg)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.32)
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 
-## Table of Contents
+##Table of Contents
 
 <!-- toc -->
 
@@ -144,7 +144,7 @@ It's actually *Array.isArray* with MDN polyfill.
 
 # isDate()
 
-```javascript
+```javascript**
 //  ✓isDate - new Date()                                          -> true
 //  ✓isDate - {}                                                  -> false
 //  ✓isDate - using with object that have implemented toString()  -> false
@@ -163,6 +163,15 @@ It's actually *Array.isArray* with MDN polyfill.
 //  ✓isDate - Symbol('test')                                      -> false
 ```
 
+# trim()
+
+```javascript
+/*!
+ * direction : 'rl'|'r'|'l'   -->   (undefined => 'rl')
+ * charlist  : (undefined => " \n")
+ */
+function trim(string, charlist, direction) { /* ... */ }
+```
 
 
 

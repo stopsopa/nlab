@@ -1,4 +1,8 @@
 
+'use strict';
+
+const pregQuote = require('./pregQuote');
+
 /*!
  * @version 1.0 - 2013-05-21
  * @author Szymon Działowski
@@ -6,8 +10,14 @@
  * charlist  : (undefined => " \n")
  */
 module.exports = function trim(string, charlist, direction) {
+
+    if (typeof string !== 'string') {
+
+        return false;
+    }
+
     direction = direction || 'rl';
-    charlist  = (charlist || '').replace(/([.?*+^$[\]\\(){}|-])/g,'\\$1');
+    charlist  = pregQuote(charlist || '');
     charlist  = charlist || " \\n";
     (direction.indexOf('r')+1) && (string = string.replace(new RegExp('^(.*?)['+charlist+']*$','gm'),'$1'));
     (direction.indexOf('l')+1) && (string = string.replace(new RegExp('^['+charlist+']*(.*)$','gm'),'$1'));
