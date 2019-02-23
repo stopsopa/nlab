@@ -23,7 +23,7 @@ it('delay - get delayed promise with payload', async done => {
 
             expect(data).toEqual('ok');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -45,7 +45,7 @@ it('delay - pass payload manually', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -67,7 +67,7 @@ it('delay - pass payload transparently', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -106,7 +106,7 @@ it('reject - get delayed promise with payload', async done => {
 
             expect(data).toEqual('ok');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -128,7 +128,7 @@ it('reject - pass payload manually', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -150,7 +150,7 @@ it('reject - pass payload transparently', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -189,7 +189,7 @@ it('then - resolve', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
@@ -208,7 +208,7 @@ it('then - reject', async done => {
 
             expect(dd).toEqual('msg');
 
-            expect(diff()).toBeGreaterThanOrEqual(d);
+            expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
             done();
         })
