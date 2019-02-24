@@ -308,6 +308,89 @@ console.log(get(data, 'one.two.1.nonexisting', 'defvalifnotexist'));
 
 # set
 
+```javascript
+import set from 'nlab/set';
+// or 
+// const set = require('nlab/set');
+
+let data = {one: 'two'}
+
+set(data, 'three', 'four')
+console.log(JSON.stringify(data));
+// will print: {"one":"two","three":"four"}
+
+set(data, 'three.a', 'four')
+console.log(JSON.stringify(data));
+// will print: {"one":"two","three":{"a":"four"}}
+// -> string 'four' has been replaced with object {a:'four'}
+
+set(data, 'six.seven.eight', 'nine');
+console.log(JSON.stringify(data, null, 4));
+// will print:
+// {
+//     "one": "two",
+//     "three": {
+//         "a": "four"
+//     },
+//     "six": {
+//         "seven": {
+//             "eight": "nine"
+//         }
+//     }
+// }
+
+set(data, 'three.bbb.ccc', 'ddd');
+console.log(JSON.stringify(data, null, 4));
+// will print:
+// {
+//     "one": "two",
+//     "three": {
+//         "a": "four",
+//         "bbb": {
+//             "ccc": "ddd"
+//         }
+//     },
+//     "six": {
+//         "seven": {
+//             "eight": "nine"
+//         }
+//     }
+// }
+
+
+data = {one: 'two'}
+set(data, 'arr', []);
+console.log(JSON.stringify(data))
+// will print: {"one":"two","arr":[]}
+
+set(data, 'arr.', 'v1') // works like array.push();
+console.log(JSON.stringify(data))
+// will print: {"one":"two","arr":["v1"]}
+
+set(data, 'arr.', 'v2')
+console.log(JSON.stringify(data))
+// will print: {"one":"two","arr":["v1","v2"]}
+
+set(data, 'arr..a.b..c', 'v3');
+console.log(JSON.stringify(data, null, 4));
+// will print:
+// {
+//     "one": "two",
+//     "arr": [
+//         "v1",
+//         "v2",
+//         {
+//             "a": {
+//                 "b": [
+//                     {
+//                         "c": "v3"
+//                     }
+//                 ]
+//             }
+//         }
+//     ]
+// }
+```
 
 
 
