@@ -17,7 +17,6 @@
 
 _(TOC generated using [markdown-toc](https://github.com/jonschlinkert/markdown-toc))_
 
-
 # Promise delay
 
 ```javascript
@@ -99,6 +98,10 @@ It's more strict method to test if given arg is an object - more strict than imp
 
 
 ```javascript
+import isObject from 'nlab/isObject';
+// or 
+// const isObject = require('nlab/isObject');
+
 //  ✓isObject - {}                                                  -> true
 //  ✓isObject - using with object that have implemented toString()  -> true
 //  ✓isObject - extended object                                     -> true
@@ -126,6 +129,10 @@ To se more details about what is considired an object and what is not see test c
 It's actually *Array.isArray* with MDN polyfill.
 
 ```javascript
+import isArray from 'nlab/isArray';
+// or 
+// const isArray = require('nlab/isArray');
+
 //  ✓isArray - []                                                  -> true
 //  ✓isArray - {}                                                  -> false
 //  ✓isArray - using with object that have implemented toString()  -> false
@@ -146,6 +153,10 @@ It's actually *Array.isArray* with MDN polyfill.
 # isDate()
 
 ```javascript**
+import isDate from 'nlab/isDate';
+// or 
+// const isDate = require('nlab/isDate');
+
 //  ✓isDate - new Date()                                          -> true
 //  ✓isDate - {}                                                  -> false
 //  ✓isDate - using with object that have implemented toString()  -> false
@@ -167,6 +178,10 @@ It's actually *Array.isArray* with MDN polyfill.
 # trim()
 
 ```javascript
+import trim from 'nlab/trim';
+// or 
+// const trim = require('nlab/trim');
+
 /*!
  * direction : 'rl'|'r'|'l'   -->   (undefined => 'rl')
  * charlist  : (undefined => " \n")
@@ -174,7 +189,120 @@ It's actually *Array.isArray* with MDN polyfill.
 function trim(string, charlist, direction) { /* ... */ }
 ```
 
+# aes256
 
+```javascript
+
+import aes256 from 'nlab/aes256';
+// or 
+// const aes256 = require('nlab/aes256');
+
+const c = aes256(`password`);
+
+let msg = `message `;
+
+const enc = c.encrypt(msg);
+
+const dec = c.decrypt(enc);
+
+// dec === msg;
+```
+# color
+
+```javascript
+
+import c from 'nlab/colors';
+// or 
+// const c = require('nlab/colors');
+
+const glossary = {
+    Bright      : "\x1b[1m",
+    Dim         : "\x1b[2m",
+    Underscore  : "\x1b[4m",
+    Blink       : "\x1b[5m",
+    Reverse     : "\x1b[7m",
+    Hidden      : "\x1b[8m",
+    FgBlack     : "\x1b[30m",
+    FgRed       : "\x1b[31m", // red
+    FgGreen     : "\x1b[32m", // green
+    FgYellow    : "\x1b[33m", // yellow
+    FgBlue      : "\x1b[34m",
+    FgMagenta   : "\x1b[35m", // magenta
+    FgCyan      : "\x1b[36m", // cyan
+    FgWhite     : "\x1b[37m",
+    BgBlack     : "\x1b[40m",
+    BgRed       : "\x1b[41m",
+    BgGreen     : "\x1b[42m",
+    BgYellow    : "\x1b[43m",
+    BgBlue      : "\x1b[44m",
+    BgMagenta   : "\x1b[45m",
+    BgCyan      : "\x1b[46m",
+    BgWhite     : "\x1b[47m",
+    r           : "\x1b[31m", // red
+    g           : "\x1b[32m", // green
+    b           : "\x1b[34m", // blue
+    y           : "\x1b[33m", // yellow
+    m           : "\x1b[35m", // magenta
+    c           : "\x1b[36m", // cyan
+    reset       : "\x1b[0m",
+};
+
+console.log(c.r(`print in red`));
+console.log(c.g(`print in green`));
+console.log(c.BgGreen(`print in green`));
+
+// or
+c(`print`, `in`, `blue\n`, `b`); // last arg will be use to choose color
+c(`print`, `in`, `green\n`, `g`);
+// the difference is that it will also print it directly using one of
+// console.log() - in browser
+// process.stdout.write() - in node
+
+```
+
+![table of colors](https://i.imgur.com/mWzuQWP.png)
+
+# get
+
+```javascript
+import get from 'nlab/get';
+// or 
+// const get = require('nlab/get');
+
+const data = {
+    one: {
+        two: [
+            {
+                t: 'e',
+            },
+            {
+                three: {
+                    four: {
+                        six: 'test'
+                    }
+                }                
+            }
+        ]
+    }
+}
+
+console.log(get(data, 'one.two.1.three.four.six'));
+// will print: 'test'
+
+console.log(get(data, 'one.two.1.three'));
+// // will print: { four: { six: 'test' } }
+//
+console.log(get(data));
+// // will print: { one: { two: [ [Object], [Object] ] } }
+//
+console.log(get(data, 'one.two.1.nonexisting'));
+// // will print: undefined
+//
+console.log(get(data, 'one.two.1.nonexisting', 'defvalifnotexist'));
+// // will print: 'defvalifnotexist'
+```
+
+# set
 
 
 

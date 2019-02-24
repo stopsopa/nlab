@@ -1,5 +1,5 @@
 
-module.exports = function unique(pattern) { // node.js require('crypto').randomBytes(16).toString('hex');
+function unique(pattern) { // node.js require('crypto').randomBytes(16).toString('hex');
 
     pattern || (pattern = 'xyxyxy');
 
@@ -12,3 +12,5 @@ module.exports = function unique(pattern) { // node.js require('crypto').randomB
         }
     );
 }
+
+module.exports = unique;
