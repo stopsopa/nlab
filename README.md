@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/stopsopa/nlab.svg?branch=v0.0.35)](https://travis-ci.org/stopsopa/nlab)
+[![Build Status](https://travis-ci.org/stopsopa/nlab.svg?branch=v0.0.36)](https://travis-ci.org/stopsopa/nlab)
 [![npm version](https://badge.fury.io/js/nlab.svg)](https://badge.fury.io/js/nlab)
-[![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.35/graph/badge.svg)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.35)
+[![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.36/graph/badge.svg)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.36)
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 
 # Table of Contents
@@ -12,6 +12,10 @@
 - [isArray()](#isarray)
 - [isDate()](#isdate)
 - [trim()](#trim)
+- [aes256](#aes256)
+- [color](#color)
+- [get](#get)
+- [set](#set)
 
 <!-- tocstop -->
 
