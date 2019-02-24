@@ -156,7 +156,7 @@ import isArray from 'nlab/isArray';
 
 # isDate()
 
-```javascript**
+```javascript
 import isDate from 'nlab/isDate';
 // or 
 // const isDate = require('nlab/isDate');
