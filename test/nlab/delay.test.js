@@ -4,6 +4,8 @@ const delay = require('../../delay');
 
 const then = delay.then;
 
+const wait = delay.wait;
+
 const { start, diff } = require('./timer');
 
 jest.setTimeout(100);
@@ -250,4 +252,17 @@ it('then - reject - immediately', async done => {
             done();
         })
     ;
+});
+
+it('then - wait async', async done => {
+
+    start();
+
+    const d = 50;
+
+    await wait(d);
+
+    expect(diff()).toBeGreaterThanOrEqual(d - 5);
+
+    done()
 });

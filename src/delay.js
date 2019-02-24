@@ -83,4 +83,6 @@ delay.reject    = delayReject;
 
 delay.then      = then;
 
+delay.wait      = time => delay(time, undefined);
+
 module.exports = delay;

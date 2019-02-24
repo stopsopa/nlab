@@ -80,14 +80,16 @@ Promise.reject('rejected')
 // 'catch: rejected' - after 1 sec
 ```
 
+Use *wait()* with es6:
+
 ```javascript
-import delay from 'nlab/delay';
+import { wait } from 'nlab/delay';
 
 (async function () {
 
     console.log('start');
 
-    await delay(1000);
+    await wait(1000);
 
     console.log('end')
 }());
