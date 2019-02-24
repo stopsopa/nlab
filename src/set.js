@@ -69,23 +69,47 @@ function set(source, key, value) {
 
             if ( key.length ) {
 
-                obb = isObject(tmp[kt]);
+                obb         = isObject(tmp[kt]);
 
-                arr = isArray(tmp[kt]);
+                arr         = isArray(tmp[kt]);
 
-                if ( ! ( obb || arr ) ) {
+                if ( obb || arr ) {
+
+                    tmp2 = tmp[kt];
+                }
+                else {
 
                     if (key[0] === '') {
 
-                        arr || (tmp[kt] = []);
+                        if (isArray(tmp)) {
+
+                            const t = [];
+
+                            tmp.push(t);
+
+                            tmp2 = t;
+                        }
+                        else {
+
+                            tmp2 = tmp[kt] = [];
+                        }
                     }
                     else {
 
-                        obb || (tmp[kt] = {});
+                        if (isArray(tmp)) {
+
+                            const t = {};
+
+                            tmp.push(t);
+
+                            tmp2 = t;
+                        }
+                        else {
+
+                            tmp2 = tmp[kt] = {};
+                        }
                     }
                 }
-
-                tmp2 = tmp[kt];
             }
             else {
 

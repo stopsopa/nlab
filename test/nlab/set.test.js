@@ -437,3 +437,129 @@ it('set() - complex reverse', done => {
 
     done();
 });
+
+it('set() - .. leads to array in the middle 1', done => {
+
+    let target = {};
+
+    target = set(target, 'one.test..next..last', 'value');
+
+    expect(
+        target
+    ).toEqual(
+        {
+            "one": {
+                "test": [
+                    {
+                        "next": [
+                            {
+                                "last": "value"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    );
+
+    done();
+});
+
+it('set() - .. leads to array in the middle 2', done => {
+
+    let target = {
+        "one": {
+            "test": [
+                {
+                    "next": [
+                        {
+                            "last": "value"
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+
+    target = set(target, 'one.test..next..last', 'value');
+
+    expect(
+        target
+    ).toEqual(
+        {
+            "one": {
+                "test": [
+                    {
+                        "next": [
+                            {
+                                "last": "value"
+                            }
+                        ]
+                    },
+                    {
+                        "next": [
+                            {
+                                "last": "value"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    );
+
+    done();
+});
+
+it('set() - .. leads to array in the middle 3', done => {
+
+    let target = {
+        "one": {
+            "test": [
+                {
+                    "next": [
+                        {
+                            "last": "value"
+                        }
+                    ]
+                }
+            ]
+        }
+    };
+
+    target = set(target, 'one.test.0.next..last', 'value');
+
+    expect(
+        target
+    ).toEqual(
+        {
+            "one": {
+                "test": [
+                    {
+                        "next": [
+                            {
+                                "last": "value"
+                            },
+                            {
+                                "last": "value"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    );
+
+    done();
+});
+
+
+
+
+
+
+
+
+
+
+
