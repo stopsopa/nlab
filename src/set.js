@@ -81,9 +81,9 @@ function set(source, key, value) {
 
                     if (key[0] === '') {
 
-                        if (isArray(tmp)) {
+                        const t = [];
 
-                            const t = [];
+                        if (isArray(tmp)) {
 
                             tmp.push(t);
 
@@ -91,14 +91,14 @@ function set(source, key, value) {
                         }
                         else {
 
-                            tmp2 = tmp[kt] = [];
+                            tmp2 = tmp[kt] = t;
                         }
                     }
                     else {
 
-                        if (isArray(tmp)) {
+                        const t = {};
 
-                            const t = {};
+                        if (isArray(tmp)) {
 
                             tmp.push(t);
 
@@ -106,7 +106,7 @@ function set(source, key, value) {
                         }
                         else {
 
-                            tmp2 = tmp[kt] = {};
+                            tmp2 = tmp[kt] = t;
                         }
                     }
                 }

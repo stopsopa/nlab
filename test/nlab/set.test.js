@@ -553,6 +553,29 @@ it('set() - .. leads to array in the middle 3', done => {
     done();
 });
 
+it('set() - ...', done => {
+
+    let target = {};
+
+    target = set(target, 'one...', 'value');
+
+    expect(
+        target
+    ).toEqual(
+        {
+            "one": [
+                [
+                    [
+                        'value',
+                    ]
+                ]
+            ]
+        }
+    );
+
+    done();
+});
+
 
 
 
