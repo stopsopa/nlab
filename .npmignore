@@ -17,3 +17,5 @@ node_modules
 node_modules
 /travis.sh
 /package_prod.json
+/controller/
+/test/public/

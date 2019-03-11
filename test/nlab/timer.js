@@ -6,14 +6,27 @@ function now() {
     return parseInt((new Date()).getTime(), 10);
 }
 
-function diff() {
+function diff(given) {
 
-    if ( cache === undefined ) {
+    let tmp;
 
-        throw `cache not initialized`;
+    if ( typeof given === 'undefined' ) {
+
+        if (cache === undefined) {
+
+            throw `cache nor given are not initialized`;
+        }
+        else {
+
+            tmp = cache;
+        }
+    }
+    else {
+
+        tmp = given;
     }
 
-    const d = now() - cache;
+    const d = now() - tmp;
 
     cache = undefined;
 
@@ -22,7 +35,7 @@ function diff() {
 
 function start() {
 
-    cache = now();
+    return cache = now();
 };
 
 module.exports = {

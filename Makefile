@@ -6,8 +6,8 @@ h: # show any help that is available
 c: # run local server to browse coverage
 	@node server.js --log 15 --dir coverage
 
-nt: # test .npmignore
-	@npm pack
+cc: # run local server to general testing
+	@node server.js --log 15
 
 u: # update npm and git (generates new tag)
 	@/bin/bash update.sh
