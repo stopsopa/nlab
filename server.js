@@ -74,18 +74,25 @@ app.use(express.static(web, { // http://expressjs.com/en/resources/middleware/se
     }
 }));
 
+const throttlePromises = require('./src/throttlePromises');
 
-
-const promiseCache = require('./src/promiseCache');
+const cache = throttlePromises(1, 8 * 1000);
 
 const {
-    prepareToStamp,
-    throttle,
-    nowHR,
     now,
-} = promiseCache;
+} = throttlePromises;
 
-const cache = throttle(3, 10 * 1000);
+
+// const promiseCache = require('./src/promiseCache');
+//
+// const {
+//     prepareToStamp,
+//     throttle,
+//     nowHR,
+//     now,
+// } = promiseCache;
+//
+// const cache = throttle(3, 10 * 1000);
 
 app.all('/data1', (req, res) => {
 
@@ -98,30 +105,29 @@ app.all('/data2', (req, res) => {
 app.all('/data3', (req, res) => {
 
     const create = f => {
-        console.log(now() + `----create3 ${f}----`)
+
+        console.log(now() + `----create3 ${f}----`);
+
         return Promise.resolve(`testdatafrompromise 3 ${f}`);
     }
-
-// log.dump(req.query)
-
 
     const f =  req.query.f || 'query';
 
     let time = 3 * 1000;
 
-    if (f === 'three') {
-
-        time = 1500 * 1000
-        // log.dump('wlazł' + time);
-    }
+    // if (f === 'three') {
+    //
+    //     time = 1500 * 1000
+    //     // log.dump('wlazł' + time);
+    // }
 
     cache(f, () => create(f), time).then(data => {
 
         res.set(`Content-Type`, `application/json; charset=utf-8`);
 
-        if (cache.lastInfo() === 'from cache') {
+        if (cache.lastInfo() === 'cache') {
 
-            // res.statusCode = 304;
+            res.statusCode = 304;
         }
 
         res.end(JSON.stringify({
@@ -136,6 +142,36 @@ app.all('/data3', (req, res) => {
         }, null, 4));
     });
 });
+
+app.all('/inspect', (req, res) => {
+    res.json({
+        m: 'inspect',
+        inspect: cache.inspect(),
+        lastInfo: cache.lastInfo(),
+    });
+})
+
+app.all('/clear', (req, res) => {
+
+    cache.clear();
+
+    res.json({
+        m: 'clear',
+        inspect: cache.inspect(),
+        lastInfo: cache.lastInfo(),
+    });
+})
+
+app.all('/trigger', (req, res) => {
+
+    cache.trigger();
+
+    res.json({
+        m: 'trigger',
+        inspect: cache.inspect(),
+        lastInfo: cache.lastInfo(),
+    });
+})
 
 app.listen(port, host, () => {
 

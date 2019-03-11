@@ -8,54 +8,12 @@
  *
  * yarn add node-forge@0.8.1
  */
-const isObject  = require('./isObject');
-
-const isArray   = require('./isArray');
-
-const isDate    = require('./isDate');
 
 const sha256    = require('./sha256');
 
 const log       = require('inspc');
 
-const prepareToStamp = data => {
-
-    let tmp = data;
-
-    if (typeof data === 'function') {
-
-        tmp = data.toString();
-    }
-
-    if ( isDate(data) ) {
-
-        tmp = data.toISOString();
-    }
-
-    if ( isArray(data) ) {
-
-        tmp = data.map(prepareToStamp);
-    }
-
-    if (isObject(data)) {
-
-        let keys = Object.keys(data);
-
-        tmp = keys.reduce((acc, key) => {
-
-            acc[key] = prepareToStamp(data[key]);
-
-            if (acc[key] == undefined) {
-
-                acc[key] = 'undefined';
-            }
-
-            return acc;
-        }, {});
-    }
-
-    return tmp;
-};
+const prepareToStamp = require('./prepareToStamp');
 
 const nowHR = d => {
     return (new Date(d)).toISOString().substring(0, 23).replace(/[\.T]/g, ' ');
