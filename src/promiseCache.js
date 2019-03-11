@@ -2,7 +2,7 @@
 /**
  * Purpose of this library is to reduce numbers of request to certain amout per given time, not more - that's the main goal
  * all rest is just optimizing to use those request in most efficient way to serve individual http responses
- * 
+ *
  * requirements:
  * node-forge@0.8.1
  *
@@ -314,7 +314,7 @@ const throttle = (maxRequests, withinTimeMS, checkInterval = 50) => {
 
         const n     = now();
 
-        const key   = sha256(prepareToStamp(forKey));
+        const key   = sha256(JSON.stringify(prepareToStamp(forKey)));
 
         promises.clean();
 
