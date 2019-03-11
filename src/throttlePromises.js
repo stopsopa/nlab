@@ -19,16 +19,29 @@ const now = d => {
  * Purpose of this library is to reduce numbers of request to certain amout per given time, not more - that's the main goal
  * all rest is just optimizing to use those request in most efficient way to serve individual http responses
  */
-const tool = function (requests, perTimeMsec) {
+const tool = function (opt) {
+
+    const {
+        requests,
+        perTimeMsec,
+        dump,
+    } = Object.assign({
+        dump: false,
+    }, opt);
+
+    if ( ! (typeof dump === 'function' || dump === false) ) {
+
+        throw new Error(`promiseThrottle: dump must be a function or boolean`);
+    }
 
     if ( ! Number.isInteger(requests) || requests < 1 ) {
 
-        throw new Error(`promiseThrottle(requests, perTimeMsec): requests should be positive integer, it is: ` + JSON.stringify(requests));
+        throw new Error(`promiseThrottle(): requests should be positive integer, it is: ` + JSON.stringify(requests));
     }
 
     if ( ! Number.isInteger(perTimeMsec) || perTimeMsec < 1 ) {
 
-        throw new Error(`promiseThrottle(requests, perTimeMsec): perTimeMsec should be positive integer, it is: ` + JSON.stringify(perTimeMsec));
+        throw new Error(`promiseThrottle(): perTimeMsec should be positive integer, it is: ` + JSON.stringify(perTimeMsec));
     }
 
     let t, last = {
@@ -75,14 +88,6 @@ const tool = function (requests, perTimeMsec) {
 
             if ( t < n ) {
 
-                // log.dump({
-                //     deleting_from_last: {
-                //         t,
-                //         n,
-                //         key: lastKeys[i]
-                //     }
-                // }, 3);
-
                 delete last[lastKeys[i]];
 
                 lastNum -= 1;
@@ -106,22 +111,9 @@ const tool = function (requests, perTimeMsec) {
 
             if ( t < n ) {
 
-                // log.dump({
-                //     deleting_from_cache: {
-                //         t,
-                //         n,
-                //         key: lastKeys[i],
-                //     }
-                // }, 3);
-
                 delete cache[lastKeys[i]];
             }
         }
-
-        // log.dump([
-        //     nextTrigger,
-        //     lastNum,
-        // ])
 
         return [
             nextTrigger,
@@ -150,14 +142,7 @@ const tool = function (requests, perTimeMsec) {
         schedule = tmp;
     }
 
-    function sendScheduled(nextTrigger) {
-
-        // log.dump({
-        //     sendScheduled: {
-        //         handler,
-        //         schedule,
-        //     }
-        // }, 3)
+    function sendScheduled(nextTrigger, tool, dump) {
 
         if ( handler || schedule.length === 0 ) {
 
@@ -174,10 +159,6 @@ const tool = function (requests, perTimeMsec) {
                 nextTrigger,
                 lastNum
             ]                           = cleanAndReturnNextCleanTimeoutTime(n);
-
-            // log.dump({
-            //     nextTrigger_inside: nextTrigger
-            // })
 
             triggerScheduled();
 
@@ -224,7 +205,14 @@ const tool = function (requests, perTimeMsec) {
                 }
             }
 
-            sendScheduled(nextTrigger);
+            sendScheduled(nextTrigger, tool, dump);
+
+            dump && dump({
+                time: now(),
+                event: `sendScheduled`,
+                inspect: tool.inspect(),
+                lastInfo: tool.lastInfo(),
+            })
 
         }, nextTrigger);
     }
@@ -264,16 +252,17 @@ const tool = function (requests, perTimeMsec) {
 
             lastInfo = 'cache';
 
+            dump && dump({
+                time: now(),
+                event: `cache[${key}]`,
+                inspect: tool.inspect(),
+                lastInfo: tool.lastInfo(),
+            })
+
             return cache[key].p;
         }
 
         let promise;
-
-        // log.dump({
-        //     requests,
-        //     lastNum,
-        //     nextTrigger,
-        // })
 
         if ( lastNum < requests ) {
 
@@ -289,6 +278,13 @@ const tool = function (requests, perTimeMsec) {
             triggerScheduled();
 
             lastInfo = 'live';
+
+            dump && dump({
+                time: now(),
+                event: `live: ${key}`,
+                inspect: tool.inspect(),
+                lastInfo: tool.lastInfo(),
+            })
         }
         else {
 
@@ -307,9 +303,16 @@ const tool = function (requests, perTimeMsec) {
                 reject,
             });
 
-            sendScheduled(nextTrigger);
+            sendScheduled(nextTrigger, tool, dump);
 
             lastInfo = 'scheduled';
+
+            dump && dump({
+                time: now(),
+                event: `scheduled: ${key}`,
+                inspect: tool.inspect(),
+                lastInfo: tool.lastInfo(),
+            })
         }
 
         return promise;
@@ -335,13 +338,30 @@ const tool = function (requests, perTimeMsec) {
         };
     };
 
-    tool.clear = () => cleanAndReturnNextCleanTimeoutTime();
+    tool.clear = () =>{
+
+        cleanAndReturnNextCleanTimeoutTime();
+
+        dump && dump({
+            time: now(),
+            event: `clear`,
+            inspect: tool.inspect(),
+            lastInfo: tool.lastInfo(),
+        })
+    };
 
     tool.trigger = () => {
 
         cleanAndReturnNextCleanTimeoutTime();
 
         triggerScheduled();
+
+        dump && dump({
+            time: now(),
+            event: `trigger`,
+            inspect: tool.inspect(),
+            lastInfo: tool.lastInfo(),
+        })
     };
 
     return tool;

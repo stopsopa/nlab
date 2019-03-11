@@ -5,7 +5,11 @@ const fs        = require('fs');
 
 const express   = require('express');
 
-const app       = express();
+const app = express();
+
+const server    = require('http').Server(app);
+
+const io        = require('socket.io')(server); // io
 
 const log       = require('inspc');
 
@@ -76,44 +80,54 @@ app.use(express.static(web, { // http://expressjs.com/en/resources/middleware/se
 
 const throttlePromises = require('./src/throttlePromises');
 
-const cache = throttlePromises(1, 8 * 1000);
-
-const {
-    now,
-} = throttlePromises;
-
-
-// const promiseCache = require('./src/promiseCache');
-//
-// const {
-//     prepareToStamp,
-//     throttle,
-//     nowHR,
-//     now,
-// } = promiseCache;
-//
-// const cache = throttle(3, 10 * 1000);
-
-app.all('/data1', (req, res) => {
-
+const iolog = require('./test/public/io')({
+    io,
 });
 
-app.all('/data2', (req, res) => {
-
+const cache = throttlePromises({
+    requests : 3,
+    perTimeMsec : 3 * 1000,
+    dump: data => {
+        iolog('data', data);
+    },
 });
 
+const now = () => (new Date()).toISOString().substring(0, 19).replace('T', ' ')
+
+
+io.on('connection', socket => {
+
+    console.log('connect..');
+
+    socket.on('gimi', () => {
+
+        console.log('gimi came');
+
+        iolog('data', {
+            event: `init`,
+            inspect: cache.inspect(),
+            lastInfo: cache.lastInfo(),
+        })
+    })
+});
+
+/**
+ * visit: http://localhost:8080/controller/promiseCache.html
+ */
 app.all('/data3', (req, res) => {
+
+    iolog('data', {data: 'test from node'});
 
     const create = f => {
 
-        console.log(now() + `----create3 ${f}----`);
+        console.log(now() + ` ----create3 ${f}----`);
 
         return Promise.resolve(`testdatafrompromise 3 ${f}`);
     }
 
     const f =  req.query.f || 'query';
 
-    let time = 3 * 1000;
+    let time = 8 * 1000;
 
     // if (f === 'three') {
     //
@@ -171,9 +185,9 @@ app.all('/trigger', (req, res) => {
         inspect: cache.inspect(),
         lastInfo: cache.lastInfo(),
     });
-})
+});
 
-app.listen(port, host, () => {
+server.listen(port, host, undefined, () => {
 
     console.log(`\n 🌎  Server is running ` + `${host}:${port}\n`)
 });

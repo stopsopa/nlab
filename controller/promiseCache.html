@@ -6,11 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>cache</title>
+    <style>
+        pre {
+            line-height: 9px;
+            font-size: 10px;
+            font-family: monospace;
+        }
+    </style>
 </head>
 <body>
 
-    <button id="one">one</button>
-    <button id="two">two</button>
+
+    <button class="other">one</button>
+    <button class="other">two</button>
     <button class="other">three</button>
     <button class="other">four</button>
     <button class="other">six</button>
@@ -19,27 +27,23 @@
     <button class="inspec">inspec</button>
     <button class="clear">clear</button>
     <button class="trigger">trigger</button>
+    <script src="/node_modules/socket.io-client/dist/socket.io.js"></script>
     <script>
 
         const log = console.log;
 
         document.addEventListener('DOMContentLoaded', function () {
 
+            const socket = io();
+
             const t = {
-                '1' : () => fetch('/data1'),
-                '2' : () => fetch('/data2'),
+                '1' : () => fetch('/data3?f=one'),
+                '2' : () => fetch('/data3?f=two'),
                 '3' : () => fetch('/data3?f=three'),
                 '4' : () => fetch('/data3?f=four'),
                 '5' : () => fetch('/data3?f=six'),
                 '6' : () => fetch('/data3?f=seven'),
             };
-
-            document.querySelector('#one').addEventListener('click', function () {
-                t['1']()
-            });
-            document.querySelector('#two').addEventListener('click', function () {
-                t['2']()
-            });
 
             document.querySelectorAll('.other').forEach(a => {
 
@@ -69,17 +73,43 @@
                 });
             });
             document.querySelector('.clear').addEventListener('click', function () {
-                fetch('/clear').then(r => r.json()).then(json => {
-                    pre.innerHTML = JSON.stringify(json, null, 4);
-                });
+                fetch('/clear')
+                    // .then(r => r.json()).then(json => {
+                    // pre.innerHTML = JSON.stringify(json, null, 4);
+                // });
             });
             document.querySelector('.trigger').addEventListener('click', function () {
-                fetch('/trigger').then(r => r.json()).then(json => {
-                    pre.innerHTML = JSON.stringify(json, null, 4);
-                });
+                fetch('/trigger')
+                //     .then(r => r.json()).then(json => {
+                //     pre.innerHTML = JSON.stringify(json, null, 4);
+                // });
             });
+
+
+
+
+
+            socket.on('connect', function(){
+
+                log('connected...');
+
+                socket.on('data', data => {
+                    pre.innerHTML = JSON.stringify(data, null, 4);
+                });
+
+                // setTimeout(() => {
+
+                    socket.emit('gimi', {event: 'gimi'});
+                // }, 1000);
+
+                log('end...')
+
+            });
+
+            window.socket = socket;
         });
     </script>
+    press buttons from 1 to 6 on the keyboard
     <pre></pre>
 </body>
 </html>
