@@ -1,12 +1,17 @@
 {
   "name": "nlab",
-  "version": "0.0.40",
+  "version": "0.0.42",
   "author": "Szymon Działowski",
   "description": "",
-  "license": "MIT",
   "main": "src",
+  "scripts": {
+    "test": "/bin/bash test.sh"
+  },
+  "license": "MIT",
   "homepage": "https://github.com/stopsopa/nlab",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "inspc": "^0.0.16",
     "md5": "^2.2.1"
   },
@@ -22,5 +27,9 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
+  },
+  "devDependencies": {
+    "codecov": "^3.1.0",
+    "jest": "^24.0.0"
   }
 }
