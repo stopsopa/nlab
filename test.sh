@@ -63,7 +63,6 @@ else
 fi
 
 # --bail \
-
 TEST="$(cat <<END
 $JEST \
 $@ \
@@ -76,6 +75,8 @@ END
 
 
 { green "\n\n    executing tests:\n        $TEST\n\n"; } 2>&3
+
+#exit;
 
 $TEST
 
