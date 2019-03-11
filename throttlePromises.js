@@ -1,2 +1,2 @@
 
-module.exports = require('./src/throttlePomises');r
+module.exports = require('./src/throttlePomises');
