@@ -217,7 +217,7 @@ const tool = function (opt) {
         }, nextTrigger);
     }
 
-    const tool = function (forKey, createPromise, keepInCacheForMsec) {
+    const tool = function (forKey, createPromise, keepInCacheForMsec, forceLive = false) {
 
         if ( ! Number.isInteger(keepInCacheForMsec) || keepInCacheForMsec < 1 ) {
 
@@ -237,6 +237,13 @@ const tool = function (opt) {
         if ( forKey === undefined ) {
 
             throw new Error(`throttlePromies(forKey, createPromise, keepInCacheForMsec): forKey can't be undefined, it is: ` + JSON.stringify(forKey));
+        }
+
+        if ( forceLive ) {
+
+            lastInfo = 'forcelive';
+
+            return createPromise();
         }
 
         const n                     = now();
