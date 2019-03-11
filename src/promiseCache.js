@@ -1,5 +1,8 @@
 
 /**
+ * Purpose of this library is to reduce numbers of request to certain amout per given time, not more - that's the main goal
+ * all rest is just optimizing to use those request in most efficient way to serve individual http responses
+ * 
  * requirements:
  * node-forge@0.8.1
  *
