@@ -195,6 +195,22 @@ import trim from 'nlab/trim';
 function trim(string, charlist, direction) { /* ... */ }
 ```
 
+# xor
+
+```javascript
+
+import xor from 'nlab/xor';
+
+const key = 'mysecret key';
+
+const data = 'my data';
+
+if (xor(xor(data, key), key) === data) {
+    // true
+}
+
+```
+
 # aes256
 
 ```javascript
