@@ -2,12 +2,12 @@
 
 var promiseall = list => {
 
+    if ( ! Array.isArray(list) ) {
+
+        throw new Error("promiseall: list is not an array");
+    }
+
     return new Promise((resolve, reject) => {
-
-        if ( ! Array.isArray(list) ) {
-
-            throw new Error("promiseall: list is not an array");
-        }
 
         let counter = list.length;
 
