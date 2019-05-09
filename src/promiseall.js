@@ -7,13 +7,13 @@ var promiseall = list => {
         throw new Error("promiseall: list is not an array");
     }
 
+    let counter = list.length;
+
+    let resolved = true;
+
+    const errors = [];
+
     return new Promise((resolve, reject) => {
-
-        let counter = list.length;
-
-        let resolved = true;
-
-        const errors = [];
 
         const ok = i => data => {
 
