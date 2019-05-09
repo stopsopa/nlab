@@ -99,6 +99,45 @@ import { wait } from 'nlab/delay';
 // 'end' - after 1 sec
 ```
 
+# promiseall
+
+works like Promise.all but if at least one promise in array is rejected, it will still wait for all other promises to resolve or reject ( to finish their job ), and return array like:
+
+
+
+```javascript
+
+const promiseall = require('nlab/promiseall');
+
+import promiseall from 'nlab/promiseall';
+
+const list = promiseall([/* ... array of promises to wait ... */]);
+
+// example response (if reject)
+
+[
+    {
+        resolved: true,
+        data: '...'
+    },
+    {
+        resolved: true,
+        data: '...'
+    },
+    {
+        resolved: false,
+        data: '...'
+    },
+    {
+        resolved: true,
+        data: '...'
+    },
+]
+
+// if all promises are resolved there is not difference in behaviour from Promise.all
+
+```
+
 # isObject()
 
 It's more strict method to test if given arg is an object - more strict than implementation from lodash or underscore.js
