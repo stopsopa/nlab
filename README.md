@@ -451,5 +451,61 @@ console.log(JSON.stringify(data, null, 4));
 // }
 ```
 
+# pregQuote
+
+Function to prefix in regex reserved characters.
+
+```javascript
+
+import pregQuote from 'nlab/pregQuote';
+// or 
+// const pregQuote = require('nlab/pregQuote');
+
+pregQuote('test'); // 'test'
+pregQuote('test[]test'); // 'test\[\]test'
+pregQuote('t?e(st'); // 't\?es\(t'
+```
+
+# incrementSlug
+
+Function to generate next possible value in db for unique key column. 
+(In order to use it it's necessary to find 'last/biggest' slug in column):
+
+```jsx
+import incrementSlug from 'nlab/incrementSlug';
+
+import slugify from 'nlab/slugify';
+
+const title = '....';
+
+const prefix = slugify(title, {lower: true})
+
+let newSlug = prefix;
+
+let lastSlug = await this.queryColumn(debug, trx, `SELECT slug FROM :table: WHERE slug LIKE :slug ORDER BY slug desc limit 1`, {
+    slug: prefix + '%',
+});
+
+if (lastSlug) {
+
+    nextSlug = incrementSlug(lastSlug);
+}
+
+return nextSlug
+
+```
+
+```javascript
+
+import incrementSlug from 'nlab/incrementSlug';
+// or 
+// const incrementSlug = require('nlab/incrementSlug');
+
+incrementSlug('test'); // 'test-1'
+incrementSlug('test-30'); // 'test-31'
+incrementSlug('test-30', '_'); // 'test-30_1'
+incrementSlug('test_30', '_'); // 'test-31'
+```
+
 
 
