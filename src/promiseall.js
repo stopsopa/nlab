@@ -9,6 +9,11 @@ var promiseall = list => {
 
     let counter = list.length;
 
+    if (counter === 0) {
+
+        return Promise.resolve([]);
+    }
+
     let resolved = true;
 
     const errors = [];
