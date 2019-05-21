@@ -26,7 +26,7 @@ var promiseall = list => {
 
             if (counter === 0) {
 
-                resolved ? Promise.all(list).then(resolve) : reject(errors);
+                resolved ? resolve(errors.map(x => x.data)) : reject(errors);
             }
         }
 
