@@ -26,7 +26,7 @@ var promiseall = list => {
 
             if (counter === 0) {
 
-                resolved ? resolve(list) : reject(errors);
+                resolved ? Promise.all(list).then(resolve) : reject(errors);
             }
         }
 
