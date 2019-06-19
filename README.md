@@ -104,7 +104,7 @@ import { wait } from 'nlab/delay';
 
 # promiseall
 
-works like Promise.all but if at least one promise in array is rejected, it will still wait for all other promises to resolve or reject ( to finish their job ), and return array like:
+Works like Promise.all but when one or more promises in array are rejected, it will still wait for all other promises to resolve or reject ( to finish their job ), and return array like:
 
 
 
@@ -116,7 +116,7 @@ import promiseall from 'nlab/promiseall';
 
 const list = promiseall([/* ... array of promises to wait ... */]);
 
-// example response (if reject)
+// example response (if at least one promise is rejected)
 
 [
     {
@@ -137,7 +137,8 @@ const list = promiseall([/* ... array of promises to wait ... */]);
     },
 ]
 
-// if all promises are resolved there is not difference in behaviour from Promise.all
+If all promises are resolved then there is not difference in behaviour from native Promise.all().
+It just return array of payloads from those resolved promises.
 
 ```
 
