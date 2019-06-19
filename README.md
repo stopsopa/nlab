@@ -89,6 +89,8 @@ Use *wait()* with es6:
 ```javascript
 import { wait } from 'nlab/delay';
 
+const { wait } = require('nlab/delay');
+
 (async function () {
 
     console.log('start');
