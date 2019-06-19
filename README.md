@@ -141,6 +141,7 @@ const list = promiseall([/* ... array of promises to wait ... */]);
 If all promises are resolved then there is not difference in behaviour from native Promise.all().
 It just return array of payloads from those resolved promises.
 
+promiseall in this variant is designed to address some particular issues with race condition
 
 # isObject()
 
