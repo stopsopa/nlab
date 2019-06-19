@@ -136,11 +136,11 @@ const list = promiseall([/* ... array of promises to wait ... */]);
         data: '...'
     },
 ]
+```
 
 If all promises are resolved then there is not difference in behaviour from native Promise.all().
 It just return array of payloads from those resolved promises.
 
-```
 
 # isObject()
 
