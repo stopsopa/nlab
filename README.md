@@ -71,6 +71,8 @@ Promise.reject('all wrong')
 ```javascript
 const then = require('nlab/delay').then;
 
+const { then } = require('nlab/delay');
+
 Promise.resolve('resolved')
     .then(...then(1000))
     .then(data => console.log('then:', data))
