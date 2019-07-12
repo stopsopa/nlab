@@ -20,9 +20,7 @@ module.exports = {
 
         return this;
     },
-    get: function (...args) {
-
-        const [key, def, thrw = null] = args;
+    get: function (key, def, thrw = null) {
 
         if ( ! node ) {
 
