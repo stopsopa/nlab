@@ -28,6 +28,7 @@ tw: # run tests in watch mode
 	@/bin/bash test.sh --watch
 
 twa: # run tests in watchAll mode
+	@/bin/bash test.sh --watchAll
 
 nt: # test .npmignore
 	@npm pack

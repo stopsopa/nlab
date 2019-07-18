@@ -9,6 +9,7 @@ delete Array.isArray;
 //  ✓isArray - new function () {}                                  -> false
 //  ✓isArray - function () {}                                      -> false
 //  ✓isArray - () => {}                                            -> false
+//  ✓isArray - null                                                -> false
 //  ✓isArray - true                                                -> false
 //  ✓isArray - false                                               -> false
 //  ✓isArray - NaN                                                 -> false
@@ -22,6 +23,14 @@ delete Array.isArray;
 const isArray = require('../../isArray');
 
 jest.setTimeout(100);
+
+it('isArray - null -> false', async done => {
+
+    expect(isArray(null)).toBeFalsy();
+    expect(Array.isArray(null)).toBeFalsy();
+
+    done();
+});
 
 it('isArray - [] -> true', async done => {
 

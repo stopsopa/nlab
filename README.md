@@ -164,6 +164,7 @@ import isObject from 'nlab/isObject';
 //  ✓isObject - []                                                  -> false
 //  ✓isObject - function () {}                                      -> false
 //  ✓isObject - () => {}                                            -> false
+//  ✓isObject - null                                                -> false
 //  ✓isObject - true                                                -> false
 //  ✓isObject - false                                               -> false
 //  ✓isObject - NaN                                                 -> false
@@ -195,6 +196,7 @@ import isArray from 'nlab/isArray';
 //  ✓isArray - new function () {}                                  -> false
 //  ✓isArray - function () {}                                      -> false
 //  ✓isArray - () => {}                                            -> false
+//  ✓isArray - null                                                -> false
 //  ✓isArray - true                                                -> false
 //  ✓isArray - false                                               -> false
 //  ✓isArray - NaN                                                 -> false
@@ -220,6 +222,7 @@ import isDate from 'nlab/isDate';
 //  ✓isDate - []                                                  -> false
 //  ✓isDate - function () {}                                      -> false
 //  ✓isDate - () => {}                                            -> false
+//  ✓isDate - null                                                -> false
 //  ✓isDate - true                                                -> false
 //  ✓isDate - false                                               -> false
 //  ✓isDate - NaN                                                 -> false

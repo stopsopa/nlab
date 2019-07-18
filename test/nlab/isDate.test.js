@@ -8,6 +8,7 @@
 //  ✓isDate - []                                                  -> false
 //  ✓isDate - function () {}                                      -> false
 //  ✓isDate - () => {}                                            -> false
+//  ✓isDate - null                                                -> false
 //  ✓isDate - true                                                -> false
 //  ✓isDate - false                                               -> false
 //  ✓isDate - NaN                                                 -> false
@@ -31,6 +32,13 @@ it('isDate - new Date() -> true', async done => {
 it('isDate - {} -> false', async done => {
 
     expect(isDate({})).toBeFalsy();
+
+    done();
+});
+
+it('isDate - null -> false', async done => {
+
+    expect(isDate(null)).toBeFalsy();
 
     done();
 });

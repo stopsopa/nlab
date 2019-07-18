@@ -23,6 +23,7 @@
 //  ✓isObject - []                                                  -> false
 //  ✓isObject - function () {}                                      -> false
 //  ✓isObject - () => {}                                            -> false
+//  ✓isObject - null                                                -> false
 //  ✓isObject - true                                                -> false
 //  ✓isObject - false                                               -> false
 //  ✓isObject - NaN                                                 -> false
