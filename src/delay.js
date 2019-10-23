@@ -3,40 +3,30 @@
 
 /**
  * import delay from 'nlab/delay'
- * or
+ *     or
  * const delay require('nlab/delay');
  *
  * await delay(4000)
  *
  * or:
  *
-    delay(3000, 'ok')
-        .then(data => log('then: ', data))
-    ;
+   delay(3000, 'ok')
+       .then(data => log('then: ', data))
+   ;
 
  */
-const resolve = (time, data) =>
+const delay = (time, data) =>
     new Promise(
         resolve => time ? setTimeout(resolve, time, data) : resolve(data)
     )
 ;
-
-const delay = (time, ...rest) => {
-
-    if (rest.length) {
-
-        return resolve(time, rest[0]);
-    }
-
-    return data => resolve(time, data);
-}
 /**
  * import delay from 'nlab/delay'
  * or
  * const delay require('nlab/delay');
  *
-    return Promise.resolve()
-        .then(
+   return Promise.resolve()
+       .then(
             () => delay(3000, 'ok'),
             () => delay.reject(3000, 'error')
         )
@@ -48,19 +38,9 @@ const reject = (time, data) =>
     )
 ;
 
-const delayReject = (time, ...rest) => {
-
-    if (rest.length) {
-
-        return reject(time, rest[0]);
-    }
-
-    return data => reject(time, data);
-}
-
 /**
  * import { then } from 'nlab/delay'
- * or
+ *     or
  * const then = require('nlab/delay').then;
  *
  * Promise.reject('test')
@@ -75,14 +55,12 @@ const delayReject = (time, ...rest) => {
  */
 
 const then = time => ([
-    delay(time),
-    delay.reject(time),
+    data => delay(time, data),
+    data => delay.reject(time, data),
 ]);
 
-delay.reject    = delayReject;
+delay.reject    = reject;
 
 delay.then      = then;
-
-delay.wait      = time => delay(time, undefined);
 
 module.exports = delay;

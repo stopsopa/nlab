@@ -41,8 +41,8 @@ const delay = require('nlab/delay');
 
 Promise.resolve('all good')
     .then(
-        delay(3000),
-        delay.reject(3000)
+        data => delay(3000, data),
+        data => delay.reject(3000, data)
     )
     .then(
         ok => console.log('ok:', ok),
@@ -57,8 +57,8 @@ const delay = require('nlab/delay');
 
 Promise.reject('all wrong')
     .then(
-        delay(3000),
-        delay.reject(3000)
+        data => delay(3000, data),
+        data => delay.reject(3000, data)
     )
     .then(
         ok => console.log('ok:', ok),
@@ -86,18 +86,18 @@ Promise.reject('rejected')
 // 'catch: rejected' - after 1 sec
 ```
 
-Use *wait()* with es6:
+Use of *delay()* with es6:
 
 ```javascript
-import { wait } from 'nlab/delay';
+import delay from 'nlab/delay';
 
-const { wait } = require('nlab/delay');
+const delay = require('nlab/delay');
 
 (async function () {
 
     console.log('start');
 
-    await wait(1000);
+    await delay(1000);
 
     console.log('end')
 }());

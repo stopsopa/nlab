@@ -7,8 +7,6 @@ const log               = require('inspc');
 
 const delay             = require('../../src/delay');
 
-const { wait }          = delay;
-
 const unique            = require('../../src/unique');
 
 const {
@@ -71,7 +69,7 @@ it('throttle second live, beyond withinTimeMS', async done => {
 
     expect(throttler.lastInfo()).toEqual('live');
 
-    await wait(40); // 40
+    await delay(40); // 40
 
     const r2            = await throttler('key', () => delay(40, 'second')); // 0
 
@@ -79,7 +77,7 @@ it('throttle second live, beyond withinTimeMS', async done => {
 
     expect(throttler.lastInfo()).toEqual('from cache');
 
-    await wait(40); // 40
+    await delay(40); // 40
 
     const r3            = await throttler('key', () => delay(40, 'thrid'));
 
@@ -87,7 +85,7 @@ it('throttle second live, beyond withinTimeMS', async done => {
 
     expect(throttler.lastInfo()).toEqual('live');
 
-    await wait(40);
+    await delay(40);
 
     const r4            = await throttler('key', () => delay(40, 'forth'));
 
@@ -112,7 +110,7 @@ it('throttle second live, beyond withinTimeMS', async done => {
 
     expect(throttler.lastInfo()).toEqual('live');
 
-    // await wait(40); // 40
+    // await delay(40); // 40
 
     const r2            = await throttler('key2', () => delay(40, 'second')); // 0
 

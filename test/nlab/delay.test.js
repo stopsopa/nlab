@@ -4,8 +4,6 @@ const delay = require('../../delay');
 
 const then = delay.then;
 
-const wait = delay.wait;
-
 const { start, diff } = require('./timer');
 
 jest.setTimeout(100);
@@ -62,8 +60,8 @@ it('delay - pass payload transparently', async done => {
 
     Promise.resolve('msg')
         .then(
-            delay(d),
-            dd => delay.reject(d, dd)
+            data => delay(d, data),
+            data => delay.reject(d, data)
         )
         .then(dd => {
 
@@ -81,7 +79,7 @@ it('delay - pass payload transparently - immediately', async done => {
     start();
 
     Promise.resolve('msg')
-        .then(delay())
+        .then(data => delay(undefined, data))
         .then(dd => {
 
             expect(dd).toEqual('msg');
@@ -123,8 +121,8 @@ it('reject - pass payload manually', async done => {
 
     Promise.reject('msg')
         .then(
-            dd => delay(d, dd),
-            dd => delay.reject(d, dd)
+            data => delay(d, data),
+            data => delay.reject(d, data)
         )
         .catch(dd => {
 
@@ -145,8 +143,8 @@ it('reject - pass payload transparently', async done => {
 
     Promise.reject('msg')
         .then(
-            delay(d),
-            delay.reject(d)
+            data => delay(d, data),
+            data => delay.reject(d, data)
         )
         .catch(dd => {
 
@@ -165,8 +163,8 @@ it('reject - pass payload transparently - immediately', async done => {
 
     Promise.reject('msg')
         .then(
-            delay(),
-            delay.reject(),
+            data => delay(undefined, data),
+            data => delay.reject(undefined, data),
         )
         .catch(dd => {
 
@@ -185,7 +183,7 @@ it('then - resolve', async done => {
 
     const d = 50;
 
-    Promise.resolve('msg')
+    return Promise.resolve('msg')
         .then(...then(d))
         .then(dd => {
 
@@ -254,13 +252,13 @@ it('then - reject - immediately', async done => {
     ;
 });
 
-it('then - wait async', async done => {
+it('then - delay async', async done => {
 
     start();
 
     const d = 50;
 
-    await wait(d);
+    await delay(d);
 
     expect(diff()).toBeGreaterThanOrEqual(d - 5);
 
