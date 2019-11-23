@@ -430,6 +430,58 @@ it('ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d', async done => {
     }
 });
 
+it('ms.generate 2d 7y - y', async done => {
+
+    try {
+
+        const v = generate({
+            d: 365 * 2 + 5, // 2
+            y: 7
+        }, 'y');
+
+        expect(v).toEqual(2 + 7);
+
+        done();
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+
+        done(`this test shouldn't crush`);
+    }
+});
+
+it('ms.generate 2d 7y - ms', async done => {
+
+    try {
+
+        const v = generate({
+            d: 365 * 2 + 5, // 2
+            y: 7
+        });
+
+        expect(v).toEqual(
+            (1000 * 60 * 60 * 24 * 365 * 2) +
+            (1000 * 60 * 60 * 24 * 5) +
+            (1000 * 60 * 60 * 24 * 365 * 7)
+        );
+
+        expect(v).toEqual(
+            generate({y:2}) +
+            generate({d:5}) +
+            generate({y:7})
+        );
+
+        done();
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+
+        done(`this test shouldn't crush`);
+    }
+});
+
 it('ms.generate unit y', async done => {
 
     try {
