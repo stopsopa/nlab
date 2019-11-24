@@ -2,9 +2,39 @@
 
 const ms = require('../../ms');
 
-const generate = ms.generate;
+const generate  = ms.generate;
 
-const log = require('inspc')
+const raw       = ms.raw;
+
+const log = require('inspc');
+
+const trim = require('../../trim');
+
+function f(o) {
+
+    o = JSON.stringify(o);
+
+    o = o.replace(/[",\{\}]/g, ' ');
+
+    o = o.replace(/\s\s+/g, ' ');
+
+    o = o.replace(/([a-z]) :(\d+)/g, '$1:$2');
+
+    return trim(o);
+}
+
+function discard (o) {
+
+    return Object.keys(o).reduce((acc, key) => {
+
+        if (o[key]) {
+
+            acc[key] = o[key];
+        }
+
+        return acc;
+    }, {});
+}
 
 it('ms.generate 1', async done => {
 
@@ -20,7 +50,7 @@ it('ms.generate 1', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -41,7 +71,7 @@ it('ms.generate 2000ms 5s', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -62,7 +92,7 @@ it('ms.generate 56ms 5s', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -84,7 +114,7 @@ it('ms.generate 56ms 5s 4d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -106,7 +136,7 @@ it('ms.generate 56ms 5s 0d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -128,7 +158,7 @@ it('ms.generate 56ms 0s 0d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -150,7 +180,7 @@ it('ms.generate 0ms 0s 0d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -174,7 +204,7 @@ it('ms.generate 56ms 5s 19h 4d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -198,7 +228,7 @@ it('ms.generate 56ms 5s 19h 4d 6y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -222,7 +252,7 @@ it('ms.generate 56ms 5s 19h 4d 0y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -247,7 +277,7 @@ it('ms.generate 56ms 5s 19h 4d 0y 7z', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -272,7 +302,7 @@ it('ms.generate 56ms 5s 45m 19h 4d 6y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -297,7 +327,7 @@ it('ms.generate 56ms 5s 145m 19h 4d 6y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -322,7 +352,7 @@ it('ms.generate 0ms 0s 0m 0h 0d 0y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -348,7 +378,7 @@ it('ms.generate 0ms 0s 0m 0h 0d 1y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -399,7 +429,7 @@ it('ms.generate 56ms 60s 145m 19h 4d 6y - m', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -424,7 +454,7 @@ it('ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -445,7 +475,7 @@ it('ms.generate 2d 7y - y', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -476,7 +506,7 @@ it('ms.generate 2d 7y - ms', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+        expect(String(e)).toEqual(`this test shouldn't crush`);
 
         done(`this test shouldn't crush`);
     }
@@ -508,53 +538,498 @@ it('ms.generate unit y', async done => {
     }
 });
 
-// // it('ms - no opt ', async done => {
-// //
-// //     try {
-// //
-// //         const h = ms(60);
-// //
-// //         expect(h).toEqual("Error: nlab/ms library error: opt 'mss' is string but it is not on the list: 'ms, s, m, h, d, y'");
-// //
-// //         done();
-// //     }
-// //     catch (e) {
-// //
-// //         done(`shouldn't throw error: ${e}`);
-// //     }
-// // });
-//
-//
-// it('ms - wrong opt', async done => {
-//
-//     try {
-//
-//         ms(60, 'mss');
-//
-//         done(`should throw error`);
-//     }
-//     catch (e) {
-//
-//         expect(String(e)).toEqual("Error: nlab/ms library error: opt 'mss' is string but it is not on the list: 'ms, s, m, h, d, y'");
-//
-//         done();
-//     }
-// });
+(function (i) {
 
-// it('ms - first arg not a number', async done => {
-//
-//     try {
-//
-//         ms();
-//
-//         done(`should throw error`);
-//     }
-//     catch (e) {
-//
-//         expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
-//
-//         done();
-//     }
-// });
-//
-//
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({d: 0, h: 0, m: 0, ms: 60, s: 0, y: 0}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    ms: 456,
+    s: 43,
+    m: 54,
+    h: 5,
+    d: 3,
+    y: 9
+}));
+
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    ms: 456,
+}));
+
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    s: 43,
+}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    m: 54,
+}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    d: 3,
+}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    y: 9
+}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard(i));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    ms: 456,
+    s: 43,
+    m: 0,
+    h: 5,
+    d: 3,
+    y: 0
+}));
+
+(function (i) {
+
+    it('raw - ' + f(i), async done => {
+
+        try {
+
+            const h = raw(generate(i));
+
+            expect(discard(h)).toEqual(discard({"d": 4, "h": 1, "m": 54, "ms": 456, "s": 43, "y": 9}));
+
+            done();
+        }
+        catch (e) {
+
+            done(`shouldn't throw error: ${e}`);
+        }
+    });
+
+}({
+    ms: 456,
+    s: 43,
+    m: 54,
+    h: 25,
+    d: 3,
+    y: 9
+}));
+
+
+
+
+
+
+
+it('raw - wrong opt', async done => {
+
+    try {
+
+        raw(60, 'mss');
+
+        done(`should throw error`);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: unit 'mss' is string but it is not on the list: 'ms, s, m, h, d, y'");
+
+        done();
+    }
+});
+
+it('raw - first arg not a number', async done => {
+
+    try {
+
+        raw();
+
+        done(`should throw error`);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+
+        done();
+    }
+});
+
+
+it('ms - time undefined', async done => {
+
+    try {
+
+        ms(); // test undefined
+
+        done(`should throw error`);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+
+        done();
+    }
+});
+
+it('ms - time string', async done => {
+
+    try {
+
+        ms(`shouldn't be a string eather`);
+
+        done(`should throw error`);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
+
+        done();
+    }
+});
+
+it('ms - 56ms', async done => {
+
+    try {
+
+        const t = ms(56);
+
+        expect(t).toEqual('56ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+it('ms - wrong unit', async done => {
+
+    try {
+
+        const t = ms(56, 'wrong unit');
+
+        done(`should throw error`);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: nlab/ms library error: unit 'wrong unit' is string but it is not on the list: 'ms, s, m, h, d, y'");
+
+        done();
+    }
+});
+
+
+
+
+it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 47,
+            h: 4,
+            d: 3,
+            y: 2,
+        }));
+
+        expect(t).toEqual('2y 3d 4h 47m 46s 45ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 47,
+            d: 3,
+            y: 2,
+        }));
+
+        expect(t).toEqual('2y 3d 47m 46s 45ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+
+
+it('ms - 2y 368d 4h 47m 46s 45ms - day overclock', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 47,
+            d: 368,
+            y: 2,
+        }));
+
+        expect(t).toEqual('3y 3d 47m 46s 45ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+
+
+
+it('ms - 2y 3d 4h 67m 46s 45ms - m overclock', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 67,
+            h: 4,
+            d: 3,
+            y: 2,
+        }));
+
+        expect(t).toEqual('2y 3d 5h 7m 46s 45ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+
+it('ms - 2y 3d 4h 67m 46s 3045ms - ms overclock', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 3045,
+            s: 46,
+            m: 67,
+            h: 4,
+            d: 3,
+            y: 2,
+        }));
+
+        expect(t).toEqual('2y 3d 5h 7m 49s 45ms');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+it('ms - 2y 3d 4h 67m 46s 45ms - different base units', async done => {
+
+    try {
+
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 67,
+            h: 4,
+            d: 3,
+            y: 2,
+        }, 's'), 's');
+
+        expect(t).toEqual('2y 3d 5h 7m 46s');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+
+it('ms - change output units', async done => {
+
+    try {
+        const t = ms(generate({
+            ms: 45,
+            s: 46,
+            m: 67,
+            h: 4,
+            d: 3,
+            y: 2,
+        }, 's'), {
+            unit: 's',
+            dict: {
+                ms: ' msx',
+                s: ' sx',
+                m: ' mx',
+                h: ' hx',
+                d: ' dx',
+                y: ' yx',
+            }
+        });
+
+        expect(t).toEqual('2 yx 3 dx 5 hx 7 mx 46 sx');
+
+        done();
+    }
+    catch (e) {
+
+        done(`shouldn't throw error: ${e}`);
+    }
+});
+
+

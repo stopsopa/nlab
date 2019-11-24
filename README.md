@@ -518,5 +518,59 @@ incrementSlug('test-30', '_'); // 'test-30_1'
 incrementSlug('test_30', '_'); // 'test-31'
 ```
 
+# ms
+
+Generate human readable version of time left based on given number of miliseconds (or other unit);
+
+```javascript
+
+const ms        = require('./ms');
+
+const generate  = ms.generate;
+
+const raw       = ms.raw;
+
+console.log(ms(89754389233)) // number of miliseconds
+// 2y 308d 19h 46m 29s 233ms
+
+console.log(ms(89754389)) // number of miliseconds
+// 1d 55m 54s 389ms
+
+console.log(ms(89754389, 's')) // number of seconds
+// 2y 308d 19h 46m 29s
+// other units m,h,d,y - default 'ms'
+
+console.log(ms(89754389, {
+    unit: 's',
+    dict: {
+        ms: ' ms',
+        s: ' sec',
+        m: ' min',
+        h: ' hours',
+        d: ' days',
+        y: ' years',
+    }
+}))
+// 2 years 308 days 19 hours 46 min 29 sec
+
+const k = generate({
+    ms: 45,
+    s: 46,
+    m: 47,
+    h: 4,
+    d: 3,
+    y: 2,
+});
+
+console.log(k) // 63348466045
+
+console.log(ms(k)) // 2y 3d 4h 47m 46s 45ms
+
+console.log(JSON.stringify(raw(k)))
+// {"ms":45,"s":46,"m":47,"h":4,"d":3,"y":2}
+
+
+```
+
 
 

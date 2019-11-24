@@ -1,6 +1,4 @@
 
-const log = require('inspc');
-
 function th(msg) {
 
     throw new Error("nlab/ms library error: " + String(msg));
@@ -21,8 +19,10 @@ var shift = {
     m: 60,
     h: 24,
     d: 365,
-    // y: 365,
+    y: 365,
 }
+
+var shiftkeys     = Object.keys(shift);
 
 var keys          = Object.keys(dividers);
 
@@ -33,30 +33,48 @@ var dict = keys.reduce((acc, key) => {
 
 function ms(time, opt) {
 
+    if (typeof opt === 'string') {
+
+        opt = {
+            unit: opt,
+        }
+    }
+
+    var tmp = Object.assign({
+        unit: 'ms',
+    }, opt);
+
+    tmp.dict = Object.assign({}, dict, tmp.dict || {});
+
+    var t = raw(time, tmp.unit);
+
+    return Object.keys(t).reduce((acc, key) => {
+
+        if (t[key]) {
+
+            acc.unshift(String(t[key] + tmp.dict[key]));
+        }
+
+        return acc;
+    }, []).join(' ');
+}
+
+function raw(time, unit) {
+
+    if ( typeof unit !== 'string' ) {
+
+        unit = 'ms';
+    }
+
     if (typeof time !== 'number') {
 
         throw th("time is not a number");
     }
 
-    if (typeof opt === 'string') {
+    if ( ! dividers[unit] ) {
 
-        opt = {
-            s: opt,
-        }
+        throw th("unit '" + unit + "' is string but it is not on the list: '" + keys.join(', ') + "'");
     }
-
-    opt = Object.assign({
-        s: 'ms',
-    }, opt);
-
-    if ( keys.indexOf(opt.s) === -1 ) {
-
-        throw th("opt '" + opt.s + "' is string but it is not on the list: '" + keys.join(', ') + "'");
-    }
-
-    opt.dict = Object.assign(dict, opt.dict || {});
-
-    var list = keys.slice(keys.indexOf(opt.s));
 
     var ret = {
         ms: 0,
@@ -67,32 +85,24 @@ function ms(time, opt) {
         y: 0,
     };
 
-    // function msToTime(duration) {
-    //     var milliseconds = parseInt((duration % 1000) / 100),
-    //         seconds = Math.floor((duration / 1000) % 60),
-    //         minutes = Math.floor((duration / (1000 * 60)) % 60),
-    //         hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    //
-    //     hours = (hours < 10) ? "0" + hours : hours;
-    //     minutes = (minutes < 10) ? "0" + minutes : minutes;
-    //     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    //
-    //     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-    // }
+    var list = shiftkeys.slice(shiftkeys.indexOf(unit));
 
-    var div, unit;
+    var div, tmp;
+
     for ( var i = 0, l = list.length ; i < l ; i += 1 ) {
 
-        unit = list[i];
+        tmp = list[i];
 
-        div = dividers[unit];
+        div = shift[tmp];
 
-        // ret[unit] = parseInt( time %  , 10);
+        ret[tmp] = parseInt( time % div, 10);
 
+        time -= ret[tmp];
+
+        time /= div;
     }
 
-
-    return opt;
+    return ret;
 }
 
 function generate(opt, unit) {
@@ -143,6 +153,8 @@ function generate(opt, unit) {
 
     return t;
 }
+
+ms.raw      = raw;
 
 ms.generate = generate;
 
