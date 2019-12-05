@@ -525,7 +525,9 @@ Generate human readable version of time left based on given number of milisecond
 
 ```javascript
 
-const ms        = require('./ms');
+import ms from 'nlab/ms';
+
+const ms        = require('nlab/ms');
 
 const generate  = ms.generate;
 
@@ -569,6 +571,187 @@ console.log(ms(k)) // 2y 3d 4h 47m 46s 45ms
 
 console.log(JSON.stringify(raw(k)))
 // {"ms":45,"s":46,"m":47,"h":4,"d":3,"y":2}
+
+
+```
+
+
+
+
+# cachePromiseInterval
+
+Library for caching data and refreshing it periodicly using given async function to get the cache content,
+it is possible to cache multiple sets of data based on unique set of input arguments.
+If new set arguments appear then it will fetch data on demand.
+
+```javascript
+
+import cachePromiseInterval from 'nlab/cachePromiseInterval';
+
+const cachePromiseInterval  = require('nlab/cachePromiseInterval');
+
+// example
+
+const log = require('inspc');
+
+const delay = require('nlab/delay');
+
+const cache = cachePromiseInterval('separatebucket');
+
+const fetch = (args, data) => {
+    return cache({
+        args,
+        create: () => new Promise(res => {
+
+            // console.log('fetch...')
+
+            setTimeout(res, 20, `res: ${data}`);
+        }),
+        refreshinterval: 20
+    });
+};
+
+(async function () {
+
+    {
+        const { data } = await fetch(['arg'], 'dd');
+
+        console.log(`data: ${data}`); // data: res: dd
+    }
+
+    {
+        // will server data from cache because args are the same
+        const { data } = await fetch(['arg'], 'ddd');
+
+        console.log(`data: ${data}`); // data: res: dd
+    }
+
+    process.exit(0);
+
+}());
+
+// end of case 1
+
+(async function () {
+
+    {
+        const { data } = await fetch(['arg'], 'dd');
+
+        console.log(`data: ${data}`); // data: res: dd
+    }
+
+    {
+        // arguments has changed so create will be called for this set of arguments
+        // and it will return different data
+        const { data } = await fetch(['arg', 'arg2'], 'ddd');
+
+        console.log(`data: ${data}`); // data: res: ddd
+    }
+
+    process.exit(0);
+
+}());
+
+// end of case 2
+
+// first failed cache will crash server (process.exit(1)) if create return rejected promise
+// it means library can't populate cache for this case
+const fetchCrash = (args, data) => {
+    return cache({
+        args,
+        // firstcrach: true, it is true by defualt
+        create: () => new Promise((res, rej) => {
+
+            // console.log('fetch...')
+
+            setTimeout(rej, 20, `rej: ${data}`);
+        }),
+        refreshinterval: 20
+    });
+};
+
+(async function () {
+
+    {
+        const { data } = await fetchCrash(['arg'], 'dd');
+
+        console.log(`data: ${data}`); // data: res: dd
+    }
+
+    // Object {
+    //     <key> [String]: >separatebucket< len: 14
+    //     <ckey> [String]: >separatebucket_9b6bc915ce444bab0f263ac01bfb83b14c5a13d0351b22a7e5c748a6d594144f< len: 79
+    //     <catch> [String]: >cachePromiseInterval error: promise catch< len: 41
+    //     <o> Object {
+    //     <args> Array [
+    //         <0> [String]: >arg< len: 3
+    //     ]
+    //     <create> [Function]: ><
+    //     <refreshinterval> [Integer]: >20<
+    //         <firstcrach> [Boolean]: >true<
+    //     }
+    //     <e> [String]: >rej: dd< len: 7
+    //     <firstcrach> [Undefined]: >undefined<
+    // }
+
+    // server will exit with status code: 1
+
+}());
+
+// end of case 3
+
+// first failed cache will crash server (process.exit(1)) if create return rejected promise
+// it means library can't populate cache for this case
+const fetchCrash2 = (args, data) => {
+    return cache({
+        args,
+        firstcrach: false, // it is true by defualt
+        create: () => new Promise((res, rej) => {
+
+            // console.log('fetch...')
+
+            setTimeout(rej, 20, `rej: ${data}`);
+        }),
+        refreshinterval: 200
+    });
+};
+
+(async function () {
+
+    try {
+
+        const { data } = await fetchCrash2(['arg'], 'dd');
+    }
+    catch (e) {
+
+        log.dump({
+            catch_error: e, // rej: dd
+        })
+    }
+
+    try {
+
+        const { data } = await fetchCrash2(['arg'], 'ddd');
+    }
+    catch (e) {
+
+        log.dump({
+            catch_error2: e, // rej: dd - the same value
+        })
+    }
+
+    // It will just try and try to fetch it every interval given in refreshinterval
+    // Object {
+    //     <key> [String]: >separatebucket< len: 14
+    //     <ckey> [String]: >separatebucket_9b6bc915ce444bab0f263ac01bfb83b14c5a13d0351b22a7e5c748a6d594144f< len: 79
+    //     <error> [String]: >o.refreshinterval next call error< len: 33
+    //     <e> [String]: >rej: dd< len: 7
+    // }
+
+    // server will not crush
+}());
+
+// end of case 4
 
 
 ```

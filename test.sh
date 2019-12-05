@@ -15,6 +15,7 @@ cat << EOF
     /bin/bash $0 --help
     /bin/bash $0 --watch
     /bin/bash $0 --watchAll
+    /bin/bash $0 --watchAll -t filter_tests_with_this_string
 
 EOF
 
