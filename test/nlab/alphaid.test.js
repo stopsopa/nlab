@@ -198,13 +198,13 @@ it('alphaid basic', done => {
         expect(t.encode(127)).toEqual('B_')
         expect(t.encode(128)).toEqual('CA')
         expect(t.encode(129)).toEqual('CB')
-        expect(t.encode(4095)).toEqual('__')
-        expect(t.encode(262143)).toEqual('___')
-        expect(t.encode(16777215)).toEqual('____')
-        expect(t.encode(1073741823)).toEqual('_____')
-        expect(t.encode(68719476735)).toEqual('______')
-        expect(t.encode(4398046511103)).toEqual('_______')
-        expect(t.encode(281474976710655)).toEqual('________')
+        expect(t.encode((64 * 64) - 1)).toEqual('__')
+        expect(t.encode((64 * 64 * 64) - 1)).toEqual('___')
+        expect(t.encode((64 * 64 * 64 * 64) - 1)).toEqual('____')
+        expect(t.encode((64 * 64 * 64 * 64 * 64) - 1)).toEqual('_____')
+        expect(t.encode((64 * 64 * 64 * 64 * 64 * 64) - 1)).toEqual('______')
+        expect(t.encode((64 * 64 * 64 * 64 * 64 * 64 * 64) - 1)).toEqual('_______')
+        expect(t.encode((64 * 64 * 64 * 64 * 64 * 64 * 64 * 64) - 1)).toEqual('________')
 
         done();
     }
