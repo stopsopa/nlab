@@ -7,12 +7,11 @@ it('alphaid basic', done => {
 
         const t = alphaid('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
 
-        expect(t.encode(0)).toEqual('')
+        expect(t.encode(0)).toEqual('a')
         expect(t.encode(1)).toEqual('b')
         expect(t.encode(2)).toEqual('c')
         expect(t.encode(3)).toEqual('d')
         expect(t.encode(4)).toEqual('e')
-        expect(t.encode(5)).toEqual('f')
         expect(t.encode(5)).toEqual('f')
         expect(t.encode(24)).toEqual('y')
         expect(t.encode(26)).toEqual('A')
@@ -37,12 +36,11 @@ it('alphaid basic changed', done => {
 
         const t = alphaid('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0132456789');
 
-        expect(t.encode(0)).toEqual('')
+        expect(t.encode(0)).toEqual('a')
         expect(t.encode(1)).toEqual('b')
         expect(t.encode(2)).toEqual('c')
         expect(t.encode(3)).toEqual('d')
         expect(t.encode(4)).toEqual('e')
-        expect(t.encode(5)).toEqual('f')
         expect(t.encode(5)).toEqual('f')
         expect(t.encode(24)).toEqual('y')
         expect(t.encode(26)).toEqual('A')
@@ -121,7 +119,7 @@ it('alphaid basic ab', done => {
 
         const t = alphaid('01');
 
-        expect(t.encode(0)).toEqual('')
+        expect(t.encode(0)).toEqual('0')
         expect(t.encode(1)).toEqual('1')
         expect(t.encode(2)).toEqual('10')
         expect(t.encode(3)).toEqual('11')
@@ -165,6 +163,48 @@ it('alphaid basic ab rev', done => {
         expect(t.decode(t.encode(61))).toEqual(61)
         expect(t.decode(t.encode(62))).toEqual(62)
         expect(t.decode(t.encode(63))).toEqual(63)
+
+        done();
+    }
+    catch (e) {
+
+        done(String(e))
+    }
+});
+
+it('alphaid basic', done => {
+
+    try {
+
+        const t = alphaid('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_');
+
+        expect(t.encode(0)).toEqual('A')
+        expect(t.encode(1)).toEqual('B')
+        expect(t.encode(2)).toEqual('C')
+        expect(t.encode(3)).toEqual('D')
+        expect(t.encode(4)).toEqual('E')
+        expect(t.encode(5)).toEqual('F')
+        expect(t.encode(24)).toEqual('Y')
+        expect(t.encode(26)).toEqual('a')
+        expect(t.encode(40)).toEqual('o')
+        expect(t.encode(50)).toEqual('y')
+        expect(t.encode(60)).toEqual('8')
+        expect(t.encode(61)).toEqual('9')
+        expect(t.encode(62)).toEqual('-')
+        expect(t.encode(63)).toEqual('_')
+        expect(t.encode(64)).toEqual('BA')
+        expect(t.encode(125)).toEqual('B9')
+        expect(t.encode(126)).toEqual('B-')
+        expect(t.encode(127)).toEqual('B_')
+        expect(t.encode(128)).toEqual('CA')
+        expect(t.encode(129)).toEqual('CB')
+        expect(t.encode(4095)).toEqual('__')
+        expect(t.encode(262143)).toEqual('___')
+        expect(t.encode(16777215)).toEqual('____')
+        expect(t.encode(1073741823)).toEqual('_____')
+        expect(t.encode(68719476735)).toEqual('______')
+        expect(t.encode(4398046511103)).toEqual('_______')
+        expect(t.encode(281474976710655)).toEqual('________')
 
         done();
     }

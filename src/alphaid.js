@@ -56,7 +56,7 @@ const tool = (function () {
             encoded += c[num];
         }
 
-        return reverseString(encoded);
+        return reverseString(encoded) || this.key[0];
     };
 
     Cls.prototype.decode = function (alpha) {
@@ -86,9 +86,16 @@ const tool = (function () {
         return decoded;
     }
 
-
-
     return function (key) {
+
+        if ( typeof key !== 'string' || ! key ) {
+
+            // https://webapps.stackexchange.com/a/101153
+            key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#Description
+            // key = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_AZaz09-_.!~*\\'()';
+        }
 
         return new Cls(key);
     }
