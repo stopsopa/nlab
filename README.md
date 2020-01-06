@@ -249,6 +249,45 @@ import trim from 'nlab/trim';
 function trim(string, charlist, direction) { /* ... */ }
 ```
 
+# alphaid()
+
+```javascript
+import alphaid from 'nlab/alphaid';
+// or 
+// const alphaid = require('nlab/alphaid');
+
+
+
+const t = alphaid('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+
+expect(t.encode(1)).toEqual('b')
+expect(t.encode(2)).toEqual('c')
+expect(t.encode(3)).toEqual('d')
+expect(t.encode(61)).toEqual('9')
+expect(t.encode(62)).toEqual('ba')
+expect(t.encode(63)).toEqual('bb')
+
+expect(t.decode(t.encode(5))).toEqual(5)
+expect(t.decode(t.encode(50))).toEqual(50)
+expect(t.decode(t.encode(150))).toEqual(150)
+
+const t = alphaid('01');
+
+expect(t.encode(1)).toEqual('1')
+expect(t.encode(2)).toEqual('10')
+expect(t.encode(3)).toEqual('11')
+expect(t.encode(4)).toEqual('100')
+expect(t.encode(5)).toEqual('101')
+expect(t.encode(24)).toEqual('11000')
+expect(t.encode(26)).toEqual('11010')
+expect(t.encode(40)).toEqual('101000')
+expect(t.encode(50)).toEqual('110010')
+expect(t.encode(60)).toEqual('111100')
+expect(t.encode(61)).toEqual('111101')
+expect(t.encode(62)).toEqual('111110')
+expect(t.encode(63)).toEqual('111111')
+```
+
 # xor
 
 ```javascript
