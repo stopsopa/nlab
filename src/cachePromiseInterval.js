@@ -39,6 +39,7 @@ const tool      = key => {
             create          : null,
             refreshinterval : null,
             firstcrach      : true,
+            errordepth      : 3,
             ...opt,
         }
 
@@ -117,7 +118,7 @@ const tool      = key => {
                                 error: `o.refreshinterval next call error`,
                                 e,
                                 ...add,
-                            }, 3);
+                            }, o.errordepth);
                         }
 
                         cache[key][ckey].handler = setTimeout(loop, o.refreshinterval);
@@ -166,7 +167,7 @@ const tool      = key => {
                     e,
                     firstcrach: cache[key][ckey].firstcrach,
                     ...add,
-                }, 3)
+                }, o.errordepth)
 
                 if ( cache[key][ckey].firstcrach !== true && o.firstcrach ) {
 
@@ -194,7 +195,7 @@ const tool      = key => {
                 o,
                 e,
                 ...add,
-            }, 3)
+            }, o.errordepth)
 
             if ( o.firstcrach ) {
 
