@@ -6,11 +6,11 @@ const sha256 = require('../../sha256');
  */
 it(`sha256 - compatibility`, async done => {
 
-    expect(sha256('a')).toEqual('CA978112CA1BBDCAFAC231B39A23DC4DA786EFF8147C4E72B9807785AFEE48BB');
+    expect(sha256('a')).toEqual('ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb');
 
-    expect(sha256('A')).toEqual('559AEAD08264D5795D3909718CDD05ABD49572E84FE55590EEF31A88A08FDFFD');
+    expect(sha256('A')).toEqual('559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd');
 
-    expect(sha256('test')).toEqual('9F86D081884C7D659A2FEAA0C55AD015A3BF4F1B2B0B822CD15D6C15B0F00A08');
+    expect(sha256('test')).toEqual('9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08');
 
     done();
 });
