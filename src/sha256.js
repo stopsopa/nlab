@@ -1,6 +1,8 @@
 
 const node = require('../isNode');
 
+const sjcl = require('sjcl');
+
 let tool;
 
 if (node) {
@@ -11,19 +13,27 @@ if (node) {
 
         if ( typeof str !== 'string' ) {
 
-            throw 'nlab:sha256: given value is not a string';
+            throw 'nlab:sha256 node: given value is not a string';
         }
 
         const hash = crypto.createHash('sha256');
 
         hash.update(str);
 
-        return hash.digest('hex').toUpperCase();
+        return hash.digest('hex');
     };
 }
 else {
 
-    throw new Error('nlab:sha256: browser implementation not available');
+    tool = str => {
+
+        if ( typeof str !== 'string' ) {
+
+            throw 'nlab:sha256 browser: given value is not a string';
+        }
+
+        return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(str));
+    };
 }
 
 module.exports = tool;
