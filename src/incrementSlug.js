@@ -1,6 +1,9 @@
 
 const pregQuote = require('./pregQuote');
 
+/**
+ * @doc https://github.com/stopsopa/nlab#incrementslug
+ */
 const incrementSlug = function (slug, delimiter = '-') {
 
     if ( typeof slug !== 'string' ) {

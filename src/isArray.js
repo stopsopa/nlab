@@ -1,4 +1,6 @@
 
+// @doc https://github.com/stopsopa/nlab#isarray
+
 //  ✓isObject - []                                                  -> true
 //  ✓isObject - {}                                                  -> false
 //  ✓isObject - using with object that have implemented toString()  -> false

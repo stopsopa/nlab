@@ -1,4 +1,6 @@
-
+/**
+ * @doc https://github.com/stopsopa/nlab#ms
+ */
 function th(msg) {
 
     throw new Error("nlab/ms library error: " + String(msg));

@@ -1,5 +1,6 @@
-
-
+/**
+ * @doc https://github.com/stopsopa/nlab#xor
+ */
 function xor(data, key) {
 
     if ( typeof key !== 'string') {

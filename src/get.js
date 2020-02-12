@@ -4,6 +4,7 @@
 const isArray   = require('./isArray');
 
 /**
+ * @doc https://github.com/stopsopa/nlab#get
  *
  * @param source
  * @param key

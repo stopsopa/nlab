@@ -5,6 +5,9 @@ const isArray = require('./isArray');
 
 const isObject = require('./isObject');
 
+/**
+ * @doc https://github.com/stopsopa/nlab#set
+ */
 function set(source, key, value) {
 
     if (typeof key === 'string') {

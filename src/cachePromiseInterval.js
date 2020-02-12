@@ -1,4 +1,6 @@
-
+/**
+ * @doc https://github.com/stopsopa/nlab#cachepromiseinterval
+ */
 const log       = require('inspc');
 
 const crypto    = require('crypto');

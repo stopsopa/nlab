@@ -2,6 +2,8 @@
 'use strict';
 
 /**
+ * @doc https://github.com/stopsopa/nlab#promise-delay
+ *
  * import delay from 'nlab/delay'
  *     or
  * const delay require('nlab/delay');

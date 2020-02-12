@@ -1,4 +1,6 @@
 
+// @doc https://github.com/stopsopa/nlab#isobject
+
 // const a = function () {};
 // a.prototype.other = 'other';
 // const b = function (t) { this.id = t };

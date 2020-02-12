@@ -4,6 +4,7 @@
 const pregQuote = require('./pregQuote');
 
 /*!
+ * @doc https://github.com/stopsopa/nlab#trim
  * @version 1.0 - 2013-05-21
  * @author Szymon Działowski
  * direction : 'rl'|'r'|'l'   -->   (undefined => 'rl')

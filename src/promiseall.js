@@ -1,5 +1,6 @@
-
-
+/**
+ * @doc https://github.com/stopsopa/nlab#promiseall
+ */
 var promiseall = list => {
 
     if ( ! Array.isArray(list) ) {

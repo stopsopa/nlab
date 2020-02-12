@@ -1,4 +1,5 @@
 /**
+ * @doc https://github.com/stopsopa/nlab#color
  * c.r('message', ' in', ' red')
  * c('message', ' in', ' red', 'r')
  */

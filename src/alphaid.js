@@ -1,6 +1,9 @@
 
 const trim = require('./trim');
 
+/**
+ * @doc https://github.com/stopsopa/nlab#alphaid
+ */
 const tool = (function () {
 
     const th = msg => new Error("alphaid.js error: " + msg);

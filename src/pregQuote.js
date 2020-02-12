@@ -2,6 +2,8 @@
 'use strict';
 
 /**
+ * @doc https://github.com/stopsopa/nlab#pregquote
+ *
  * Logic based on https://www.npmjs.com/package/escape-string-regexp
  */
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;

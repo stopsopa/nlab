@@ -7,6 +7,8 @@ const IV_LENGTH = 16; // For AES, this is always 16
 
 /**
  * https://gist.github.com/vlucas/2bd40f62d20c1d49237a109d491974eb
+ *
+ * @doc https://github.com/stopsopa/nlab#aes256
  */
 module.exports = pass => {
 
