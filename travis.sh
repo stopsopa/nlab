@@ -12,9 +12,11 @@ set -x
 
 make ct
 
-#npm install jest --global
-
 cat package.json
+
+yarn
+
+yarn list
 
 EXECUTE="/bin/bash test.sh"
 

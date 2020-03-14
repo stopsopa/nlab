@@ -30,7 +30,7 @@ branches:
   except:
     - master
 
-#cache: yarn
+cache: yarn
 
 env:
   global:
