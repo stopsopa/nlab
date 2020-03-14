@@ -12,7 +12,7 @@ set -x
 
 make ct
 
-npm install jest --global
+#npm install jest --global
 
 cat package.json
 
