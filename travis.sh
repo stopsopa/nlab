@@ -16,6 +16,9 @@ yarn
 
 yarn list
 
+ls -la node_modules/sjcl/sjcl.js
+tree node_modules/sjcl/
+
 EXECUTE="/bin/bash test.sh"
 
 { green "\n\n    executing tests:\n        $EXECUTE\n\n"; } 2>&3
