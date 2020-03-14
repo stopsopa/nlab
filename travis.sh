@@ -12,6 +12,8 @@ set -x
 
 make ct
 
+npm install jest --global
+
 cat package.json
 
 EXECUTE="/bin/bash test.sh"
