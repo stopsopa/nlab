@@ -14,6 +14,8 @@ make ct
 
 yarn
 
+yarn list
+
 EXECUTE="/bin/bash test.sh"
 
 { green "\n\n    executing tests:\n        $EXECUTE\n\n"; } 2>&3

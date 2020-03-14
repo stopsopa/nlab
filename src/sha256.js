@@ -1,7 +1,7 @@
 
 const node = require('../isNode');
 
-const sjcl = require('sjcl');
+const sjcl = require('../node_modules/sjcl/sjcl.js');
 
 let tool;
 
