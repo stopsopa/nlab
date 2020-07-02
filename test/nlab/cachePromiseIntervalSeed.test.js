@@ -1,12 +1,12 @@
 'use strict';
 
-const cache     = require('../../cachePromiseInterval');
+const cache     = require('../../cachePromiseIntervalSeed');
 
 const log       = require('inspc');
 
 const delay     = require('../../delay');
 
-it('cachePromiseInterval', async done => {
+it('cachePromiseIntervalSeed', async done => {
 
     try {
 
@@ -18,7 +18,7 @@ it('cachePromiseInterval', async done => {
 
             return await t({
                 test: true,
-                args: ['one'],
+                seed: ['one'],
                 create: () => new Promise((res, rej) => {
 
                     mem += 1;
@@ -76,7 +76,7 @@ it('cachePromiseInterval', async done => {
 
 
 
-it('cachePromiseInterval 2', async done => {
+it('cachePromiseIntervalSeed 2', async done => {
 
     try {
 
@@ -88,7 +88,7 @@ it('cachePromiseInterval 2', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => new Promise((res, rej) => {
 
                     mem += 1;
@@ -145,7 +145,7 @@ it('cachePromiseInterval 2', async done => {
 });
 
 
-it('cachePromiseInterval 3', async done => {
+it('cachePromiseIntervalSeed 3', async done => {
 
     try {
 
@@ -157,7 +157,7 @@ it('cachePromiseInterval 3', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => new Promise((res, rej) => {
 
                     mem += 1;
@@ -215,7 +215,7 @@ it('cachePromiseInterval 3', async done => {
 
 
 
-it('cachePromiseInterval crash', async done => {
+it('cachePromiseIntervalSeed crash', async done => {
 
     try {
 
@@ -229,7 +229,7 @@ it('cachePromiseInterval crash', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => new Promise((res, rej) => {
 
                     called += 1;
@@ -268,7 +268,7 @@ it('cachePromiseInterval crash', async done => {
 });
 
 
-it('cachePromiseInterval crash 2', async done => {
+it('cachePromiseIntervalSeed crash 2', async done => {
 
     try {
 
@@ -282,7 +282,7 @@ it('cachePromiseInterval crash 2', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => 'ok',
                 refreshinterval: false,
             });
@@ -303,7 +303,7 @@ it('cachePromiseInterval crash 2', async done => {
 });
 
 
-it('cachePromiseInterval crash 22', async done => {
+it('cachePromiseIntervalSeed crash 22', async done => {
 
     try {
 
@@ -317,7 +317,7 @@ it('cachePromiseInterval crash 22', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => {
                     throw new Error('exception')
                 },
@@ -337,7 +337,7 @@ it('cachePromiseInterval crash 22', async done => {
     }
 });
 
-it('cachePromiseInterval crash 3', async done => {
+it('cachePromiseIntervalSeed crash 3', async done => {
 
     try {
 
@@ -351,7 +351,7 @@ it('cachePromiseInterval crash 3', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => 'wrong',
                 refreshinterval: -90
             });
@@ -363,7 +363,7 @@ it('cachePromiseInterval crash 3', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.refreshinterval is number but it is < than 10, it is '-90'");
+        expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.refreshinterval is number but it is < than 10, it is '-90'");
 
         done();
     }
@@ -371,7 +371,7 @@ it('cachePromiseInterval crash 3', async done => {
 
 
 
-it('cachePromiseInterval crash 4', async done => {
+it('cachePromiseIntervalSeed crash 4', async done => {
 
     try {
 
@@ -385,7 +385,7 @@ it('cachePromiseInterval crash 4', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 create: () => 'wrong',
                 refreshinterval: null
             });
@@ -397,7 +397,7 @@ it('cachePromiseInterval crash 4', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.refreshinterval is not false nor number");
+        expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.refreshinterval is not false nor number");
 
         done();
     }
@@ -405,7 +405,7 @@ it('cachePromiseInterval crash 4', async done => {
 
 
 
-it('cachePromiseInterval crash 5', async done => {
+it('cachePromiseIntervalSeed crash 5', async done => {
 
     try {
 
@@ -419,7 +419,7 @@ it('cachePromiseInterval crash 5', async done => {
 
             return await t({
                 test: true,
-                args: {},
+                seed: {},
                 create: () => 'wrong',
                 refreshinterval: null
             });
@@ -431,13 +431,13 @@ it('cachePromiseInterval crash 5', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.args is not an array");
+        expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.seed is not an array");
 
         done();
     }
 });
 
-it('cachePromiseInterval firstcrach false', async done => {
+it('cachePromiseIntervalSeed firstcrach false', async done => {
 
     try {
 
@@ -451,7 +451,7 @@ it('cachePromiseInterval firstcrach false', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 firstcrach: false,
                 create: () => new Promise((res, rej) => {
 
@@ -492,7 +492,7 @@ it('cachePromiseInterval firstcrach false', async done => {
 
 
 
-it('cachePromiseInterval firstcrach not false', async done => {
+it('cachePromiseIntervalSeed firstcrach not false', async done => {
 
     try {
 
@@ -506,7 +506,7 @@ it('cachePromiseInterval firstcrach not false', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 firstcrach: 45,
                 create: () => new Promise((res, rej) => {
 
@@ -539,7 +539,7 @@ it('cachePromiseInterval firstcrach not false', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.firstcrach is not boolean");
+        expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.firstcrach is not boolean");
 
         done();
     }
@@ -547,7 +547,7 @@ it('cachePromiseInterval firstcrach not false', async done => {
 
 
 
-it('cachePromiseInterval create not function', async done => {
+it('cachePromiseIntervalSeed create not function', async done => {
 
     try {
 
@@ -561,7 +561,7 @@ it('cachePromiseInterval create not function', async done => {
 
             return await t({
                 test: true,
-                args: ['two'],
+                seed: ['two'],
                 refreshinterval: 30
             });
         };
@@ -572,7 +572,7 @@ it('cachePromiseInterval create not function', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.create is not a function");
+        expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.create is not a function");
 
         done();
     }
@@ -580,7 +580,7 @@ it('cachePromiseInterval create not function', async done => {
 
 
 
-it('cachePromiseInterval key not string', async done => {
+it('cachePromiseIntervalSeed key not string', async done => {
 
     try {
 
@@ -590,7 +590,7 @@ it('cachePromiseInterval key not string', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: cachePromiseInterval error: key is not a string");
+        expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is not a string");
 
         done();
     }
@@ -598,7 +598,7 @@ it('cachePromiseInterval key not string', async done => {
 
 
 
-it('cachePromiseInterval key an empty string', async done => {
+it('cachePromiseIntervalSeed key an empty string', async done => {
 
     try {
 
@@ -608,7 +608,7 @@ it('cachePromiseInterval key an empty string', async done => {
     }
     catch (e) {
 
-        expect(String(e)).toEqual("Error: cachePromiseInterval error: key is an empty string");
+        expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is an empty string");
 
         done();
     }
@@ -616,7 +616,7 @@ it('cachePromiseInterval key an empty string', async done => {
 
 
 
-it('cachePromiseInterval all good', async done => {
+it('cachePromiseIntervalSeed all good', async done => {
 
     try {
 
@@ -628,7 +628,7 @@ it('cachePromiseInterval all good', async done => {
 
             return await t({
                 test: true,
-                args: ['one'],
+                seed: ['one'],
                 create: () => new Promise(res => {
 
                     mem += 1;
@@ -669,7 +669,7 @@ it('cachePromiseInterval all good', async done => {
 
 
 
-it('cachePromiseInterval all good 3', async done => {
+it('cachePromiseIntervalSeed all good 3', async done => {
 
     try {
 
@@ -686,7 +686,7 @@ it('cachePromiseInterval all good 3', async done => {
 
         const one = await t({
             test: true,
-            args: ['one'],
+            seed: ['one'],
             create: () => new Promise(res => {
 
                 called.a += 1;
@@ -702,7 +702,7 @@ it('cachePromiseInterval all good 3', async done => {
 
         await t({
             test: true,
-            args: ['onetwo'],
+            seed: ['onetwo'],
             create: () => new Promise(res => {
 
                 called.b += 1;
@@ -722,7 +722,7 @@ it('cachePromiseInterval all good 3', async done => {
 
         await t({
             test: true,
-            args: ['one'],
+            seed: ['one'],
             create: () => new Promise(res => {
 
                 called.c += 1;
@@ -738,7 +738,7 @@ it('cachePromiseInterval all good 3', async done => {
 
         const two = await t({
             test: true,
-            args: ['one'],
+            seed: ['one'],
             create: () => new Promise(res => {
 
                 called.d += 1;
@@ -777,7 +777,7 @@ it('cachePromiseInterval all good 3', async done => {
 
 
 
-it('cachePromiseInterval time', async done => {
+it('cachePromiseIntervalSeed time', async done => {
 
     try {
 
@@ -785,7 +785,7 @@ it('cachePromiseInterval time', async done => {
 
         await t({
             test: true,
-            args: ['one'],
+            seed: ['one'],
             create: () => new Promise(res => {
 
                 setTimeout(res, 10, `data...`);
@@ -797,7 +797,7 @@ it('cachePromiseInterval time', async done => {
 
         const one = await t({
             test: true,
-            args: ['one'],
+            seed: ['one'],
             create: () => new Promise(res => {
 
                 setTimeout(res, 10, `data...`);

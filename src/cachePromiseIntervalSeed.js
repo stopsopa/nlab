@@ -1,16 +1,16 @@
 
-// import cachePromiseInterval from '../../override/nlab/cachePromiseInterval';
+// import cachePromiseIntervalSeed from 'nlab/cachePromiseIntervalSeed';
 //
 // import { generate } from 'nlab/ms';
 //
 // const cachename = 'homepage';
 //
-// const cache = cachePromiseInterval(cachename);
+// const cache = cachePromiseIntervalSeed(cachename);
 //
 // console.log(`cache initialization: ${cachename}`);
 // // fill cache on server start
 // cache({
-//     args: [],
+//     seed: [],
 //     create,
 //     refreshinterval: generate({m: 1}), // 1 minute cache
 //     errordepth: 6,
@@ -22,7 +22,7 @@
 //     try {
 //
 //         const { data, ...rest } = await cache({
-//             args: [],
+//             seed: [],
 //             create,
 //             // refreshinterval: generate({m: 1}) // 1 minute cache
 //             refreshinterval: generate({h: 1}) // 1 minute cache
@@ -36,7 +36,7 @@ const ms        = require('../ms');
 
 const isObject  = require('../isObject');
 
-const msg       = m => `cachePromiseInterval error: ${m}`
+const msg       = m => `cachePromiseIntervalSeed error: ${m}`
 
 const th        = m => new Error(msg(m));
 
@@ -64,12 +64,17 @@ const tool      = key => {
     return (opt = {}) => {
 
         const o = {
-            args            : null,
+            seed            : null,
             create          : null,
             refreshinterval : null,
             firstcrach      : true,
             errordepth      : 3,
             ...opt,
+        }
+
+        if ( typeof o.args !== 'undefined' ) {
+
+            throw th(`using 'args' argument is deprecaded, use 'seed' instead`);
         }
 
         let add = {};
@@ -95,9 +100,9 @@ const tool      = key => {
                 throw th(`o.firstcrach is not boolean`);
             }
 
-            if ( ! Array.isArray(o.args) ) {
+            if ( ! Array.isArray(o.seed) ) {
 
-                throw th(`o.args is not an array`);
+                throw th(`o.seed is not an array`);
             }
 
             if ( o.refreshinterval !== false ) {
@@ -115,13 +120,13 @@ const tool      = key => {
 
             const sha256    = crypto.createHash('sha256');
 
-            sha256.update(JSON.stringify(o.args));
+            sha256.update(JSON.stringify(o.seed));
 
             ckey = `${key}_${sha256.digest('hex')}`;
 
             if ( ! cache[key][ckey] ) {
 
-                cache[key][ckey] = Promise.resolve(o.create(...o.args));
+                cache[key][ckey] = Promise.resolve(o.create());
 
                 cache[key][ckey].now = now();
 
@@ -131,7 +136,7 @@ const tool      = key => {
 
                         try {
 
-                            const p = await o.create(...o.args);
+                            const p = await o.create();
 
                             cache[key][ckey] = Promise.resolve(p);
 
