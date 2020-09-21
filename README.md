@@ -151,6 +151,38 @@ It just return array of payloads from those resolved promises.
 
 promiseall in this variant is designed to address some particular issues with race condition
 
+# parallel
+
+Allows only to specific number of asynchronous action to be executed in parallel, rest is queued.
+
+
+
+```javascript
+
+const parallel = require('nlab/parallel');
+
+import parallel from 'nlab/parallel';
+
+const instance = parallel({
+    numberOfThreads: 3
+});
+
+app.all((req, res) => {
+  instance((slot, release) => {
+    
+    console.log(`do some stuff ${slot}/${instance.getSetup().numberOfThreads}`);
+
+    setTimeout(() => {
+      
+        console.log(`still in the queue: ${instance.getQueue().length}`)
+
+        release()    
+    }, 100);
+  })
+})
+
+```
+
 # isObject()
 
 It's more strict method to test if given arg is an object - more strict than implementation from lodash or underscore.js
