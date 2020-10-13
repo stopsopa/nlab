@@ -27,16 +27,14 @@ var all = (function () {
                 throw th("element on the list number " + i + " is not a function");
             }
 
-            t[i] = true;
-
-            const r = f(...args);
+            t[i] = [f(...args)];
 
             if (Object.keys(t).length === list.length) {
 
-                setTimeout(callback, 0);
+                setTimeout(() => callback(Object.values(t).map(r => r.pop())), 0);
             }
 
-            return r;
+            return t[i];
         });
     }
 

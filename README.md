@@ -349,18 +349,26 @@ import all from 'nlab/all';
 const all = require('nlab/all');
 
 
-var k = () => console.log('k');
+var k = () => {
+  console.log('k')
+  return ['k1', 'k2']
+};
 
-var l = () => console.log('l');
+var l = () => {
+  console.log('l')
+  return ['l1', 'l2']
+};
 
-([k, l] = all([k, l], () => console.log('callback')))
+([k, l] = all([k, l], (data) => console.log({
+  callback: data
+})))
 
 setTimeout(k, 1800);
-setTimeout(l, 1500);
+setTimeout(l, 1000);
 
-// l
 // k
-// callback
+// l
+// { callback: [ [ 'k1', 'k2' ], [ 'l1', 'l2' ] ] }
 
 ```
 
