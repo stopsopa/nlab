@@ -339,6 +339,30 @@ if (xor(xor(data, key), key) === data) {
 
 ```
 
+# all
+
+```javascript
+
+import all from 'nlab/all';
+
+const all = require('nlab/all');
+
+
+var k = () => console.log('k');
+
+var l = () => console.log('l');
+
+([k, l] = all([k, l], () => console.log('callback')))
+
+setTimeout(k, 1800);
+setTimeout(l, 1500);
+
+// l
+// k
+// callback
+
+```
+
 # aes256
 
 ```javascript
