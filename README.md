@@ -650,7 +650,7 @@ const k = generate({
     h: 4,
     d: 3,
     y: 2,
-});
+}, /* unit: default 'ms' */);
 
 console.log(k) // 63348466045
 
