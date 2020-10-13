@@ -156,11 +156,15 @@ function generate(opt, unit) {
     return t;
 }
 
-ms.raw      = raw;
+ms.raw          = raw;
 
-ms.generate = generate;
+ms.generate     = generate;
 
-module.exports = ms;
+ms.shift        = shift;
+
+ms.dividers     = dividers;
+
+module.exports  = ms;
 
 /**
  * Old version used in roderic, but it is limited in its functionality
