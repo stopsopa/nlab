@@ -1,6 +1,8 @@
 
 const promiseany = require('../../promiseany');
 
+const delay = require('../../delay');
+
 jest.setTimeout(20000);
 // jest.setTimeout(500);
 
@@ -288,6 +290,93 @@ it('promiseany 3 reject by throw both', async done => {
     catch (e) {
 
         expect(String(e)).toEqual("Error: throw 1,Error: throw 2");
+
+        done();
+    }
+});
+
+it('promiseany async', async done => {
+
+    const data = await promiseany([
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('abc'), 150)
+        }),
+        async () => 'cde',
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('ddd'), 50)
+        }),
+    ]);
+
+    expect(data).toEqual("cde");
+
+    done();
+});
+
+it('promiseany async 2', async done => {
+
+    const data = await promiseany([
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('abc'), 150)
+        }),
+        async () => {
+            await delay(30);
+
+            return 'cde';
+        },
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('ddd'), 50)
+        }),
+    ]);
+
+    expect(data).toEqual("cde");
+
+    done();
+});
+
+it('promiseany async 2', async done => {
+
+    const data = await promiseany([
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('abc'), 150)
+        }),
+        async () => {
+
+            throw new Error('def')
+        },
+        new Promise((resolve, reject) => {
+            setTimeout(() => resolve('ddd'), 50)
+        }),
+    ]);
+
+    expect(data).toEqual("ddd");
+
+    done();
+});
+
+it('promiseany async 3', async done => {
+
+    try {
+
+        const data = await promiseany([
+            async () => {
+                await delay(30);
+
+                throw new Error('abc')
+            },
+            async () => {
+                await delay(50);
+
+                throw new Error('def')
+            },
+            async () => {
+
+                throw new Error('ddd')
+            },
+        ]);
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: abc,Error: def,Error: ddd");
 
         done();
     }
