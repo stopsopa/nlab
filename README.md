@@ -378,8 +378,10 @@ setTimeout(l, 1000);
 ```javascript
 
 import serializeError from 'nlab/serializeError';
+import se from 'nlab/se';
 
 const serializeError = require('nlab/serializeError');
+const se = require('nlab/se');
 
 const log = require('inspc');
 
