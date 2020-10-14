@@ -12,10 +12,10 @@ crypt@~0.0.1:
   resolved "https://registry.yarnpkg.com/crypt/-/crypt-0.0.2.tgz#88d7ff7ec0dfb86f713dc87bbb42d044d3e6c41b"
   integrity sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=
 
-inspc@^0.0.16:
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/inspc/-/inspc-0.0.16.tgz#5e279df3e30615f969787dadf8841f45c00a8ff4"
-  integrity sha512-ClM+kJZW5WO6Ej2NiPuleS76tUH9v4HdsA5LWJAtSeViVmiiPo1ShLOc8kTc6vxCOyWZllXtoX+I5Wz3d2Axjg==
+inspc@^0.0.19:
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/inspc/-/inspc-0.0.19.tgz#ef4ac598e410ca88b4b3beac25b475cfa29493f1"
+  integrity sha512-xp20MQkUSFNbGY71rBt6GtxGbcVlcGKpT22Z81jkbtPb5Yf1H6g64Si3+wkdBbI1+C+BuZF/qS2Jj9WtPEhHdQ==
 
 is-buffer@~1.1.1:
   version "1.1.6"

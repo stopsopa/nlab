@@ -372,6 +372,65 @@ setTimeout(l, 1000);
 
 ```
 
+# serializeError
+
+```javascript
+
+import serializeError from 'nlab/serializeError';
+
+const serializeError = require('nlab/serializeError');
+
+const log = require('inspc');
+
+try {
+
+  throw new Error(`naha you don't`);
+}
+catch (e) {
+
+  log.dump({
+    implicit_to_string      : e,
+    serializeError          : serializeError(e),
+    leave_stack_as_a_string : serializeError(e, true)
+  });
+}
+
+// Object {
+//   <implicit_to_string> [Error]: >Error: naha you don't<
+//   <serializeError> Object {
+//     <name> [String]: >Error< len: 5
+//     <message> [String]: >naha you don't< len: 14
+//     <stack> Array [
+//       <0> [String]: >Error: naha you don't< len: 21
+//       <1> [String]: >    at Object.<anonymous> (.../ttt.js:9:9)< len: 80
+//       <2> [String]: >    at Module._compile (module.js:653:30)< len: 41
+//       <3> [String]: >    at Object.Module._extensions..js (module.js:664:10)< len: 55
+//       <4> [String]: >    at Module.load (module.js:566:32)< len: 37
+//       <5> [String]: >    at tryModuleLoad (module.js:506:12)< len: 39
+//       <6> [String]: >    at Function.Module._load (module.js:498:3)< len: 46
+//       <7> [String]: >    at Function.Module.runMain (module.js:694:10)< len: 49
+//       <8> [String]: >    at startup (bootstrap_node.js:204:16)< len: 41
+//       <9> [String]: >    at bootstrap_node.js:625:3< len: 30
+//     ]
+//   }
+//   <leave_stack_as_a_string> Object {
+//     <name> [String]: >Error< len: 5
+//     <message> [String]: >naha you don't< len: 14
+//     <stack> [String]: >Error: naha you don't
+//     at Object.<anonymous> (.../ttt.js:9:9)
+//     at Module._compile (module.js:653:30)
+//     at Object.Module._extensions..js (module.js:664:10)
+//     at Module.load (module.js:566:32)
+//     at tryModuleLoad (module.js:506:12)
+//     at Function.Module._load (module.js:498:3)
+//     at Function.Module.runMain (module.js:694:10)
+//     at startup (bootstrap_node.js:204:16)
+//     at bootstrap_node.js:625:3< len: 448
+//   }
+// }
+
+```
+
 # aes256
 
 ```javascript
