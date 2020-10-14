@@ -28,7 +28,7 @@ function promiseany (list) {
         }
         else {
 
-            t.catch(() => {});
+            t.then(() => {}, () => {});
         }
     }
 
