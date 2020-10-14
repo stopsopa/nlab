@@ -87,20 +87,6 @@ const serializeError = value => {
     return value;
 };
 
-const deserializeError = value => {
-    if (value instanceof Error) {
-        return value;
-    }
-
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        const newError = new Error();
-        destroyCircular({from: value, seen: [], to_: newError});
-        return newError;
-    }
-
-    return new NonError(value);
-};
-
 module.exports = function (e, native) {
 
     e = serializeError(e);
