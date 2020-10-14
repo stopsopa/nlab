@@ -154,6 +154,41 @@ It just return array of payloads from those resolved promises.
 
 promiseall in this variant is designed to address some particular issues with race condition
 
+# promiseany
+
+```javascript
+
+const promiseany = require('nlab/promiseany');
+
+import promiseany from 'nlab/promiseany';
+
+promiseany([
+  Promise.resolve(1),
+  Promise.resolve(2),
+  Promise.resolve(3),
+]).then(console.log) // 1
+
+promiseany([
+  new Promise(r => setTimeout(() => r(1), 100)),
+  Promise.resolve(2),
+  Promise.resolve(3),
+]).then(console.log) // 2
+
+promiseany([
+  Promise.reject(1),
+  Promise.resolve(2),
+  Promise.resolve(3),
+]).then(console.log) // 2
+
+promiseany([
+  Promise.reject(1),
+  Promise.reject(2),
+  Promise.reject(3),
+]).catch(console.log) // [ 1, 2, 3 ]
+
+```
+
+
 # parallel
 
 Allows only to specific number of asynchronous action to be executed in parallel, rest is queued.
