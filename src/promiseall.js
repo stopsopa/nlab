@@ -1,11 +1,17 @@
 /**
  * @doc https://github.com/stopsopa/nlab#promiseall
  */
+
+function th(msg) {
+
+    return new Error("promiseall error: " + msg);
+}
+
 var promiseall = list => {
 
     if ( ! Array.isArray(list) ) {
 
-        throw new Error("promiseall: list is not an array");
+        throw th("list is not an array");
     }
 
     let counter = list.length;
@@ -13,6 +19,32 @@ var promiseall = list => {
     if (counter === 0) {
 
         return Promise.resolve([]);
+    }
+
+    var err = false
+
+    for (var i = 0, l = list.length, t ; i < l ; i += 1 ) {
+
+        if (typeof list[i] === 'function' && list[i].constructor.name === "AsyncFunction") {
+
+            list[i] = Promise.resolve(list[i]());
+        }
+
+        t = list[i];
+
+        if ( ! t || typeof t.then !== 'function' ) {
+
+            err = th("list["+i+"] is not a promise");
+        }
+        else {
+
+            t.then(() => {}, () => {});
+        }
+    }
+
+    if (err) {
+
+        throw err;
     }
 
     let resolved = true;
