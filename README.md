@@ -385,7 +385,6 @@ import all from 'nlab/all';
 
 const all = require('nlab/all');
 
-
 var k = () => {
   console.log('k')
   return ['k1', 'k2']
@@ -403,8 +402,8 @@ var l = () => {
 setTimeout(k, 1800);
 setTimeout(l, 1000);
 
-// k
 // l
+// k
 // { callback: [ [ 'k1', 'k2' ], [ 'l1', 'l2' ] ] }
 
 ```
