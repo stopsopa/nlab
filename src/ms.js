@@ -61,6 +61,9 @@ function ms(time, opt) {
     }, []).join(' ');
 }
 
+/**
+ * https://github.com/stopsopa/nlab#ms
+ */
 function raw(time, unit) {
 
     if ( typeof unit !== 'string' ) {
