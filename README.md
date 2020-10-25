@@ -679,6 +679,46 @@ console.log(JSON.stringify(data, null, 4));
 //     ]
 // }
 ```
+# del
+
+```javascript
+import del from 'nlab/del';
+// or 
+// const del = require('nlab/del');
+
+const data = {
+    test: {
+        one: [
+            {
+                two: 'three',
+            },
+            {
+                four: 'five',
+            },
+            {
+                two: {
+                    a: 'b',
+                    c: 'd',
+                },
+            },
+            {
+                six: 'seven',
+            },
+
+        ],
+        empty: false
+    }
+}
+
+del(data, `test.one`);
+
+expect(data).toEqual({
+    test: {
+        empty: false
+    }
+});
+
+```
 
 # pregQuote
 
