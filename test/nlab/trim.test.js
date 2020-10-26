@@ -172,4 +172,13 @@ it(`pregQuote`, done => {
     expect(pregQuote()).toBeFalsy();
 
     done();
-})
+});
+
+it(`trim()`, () => {
+
+    let t = 'bd1bf8c_2020-10-26_09-54-20-';
+
+    t = trim(t, '_- ');
+
+    expect(t).toEqual("bd1bf8c_2020-10-26_09-54-20");
+});
