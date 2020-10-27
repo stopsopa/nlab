@@ -17,7 +17,7 @@
 //  ✓isObject - string                                              -> false
 //  ✓isObject - Symbol('test')                                      -> false
 
-module.exports = function (o) {
+function isArray(o) {
 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray#Polyfill
     if ( ! Array.isArray ) {
@@ -30,3 +30,5 @@ module.exports = function (o) {
 
     return Array.isArray(o);
 }
+
+module.exports = isArray;

@@ -1,6 +1,9 @@
 /**
  * @doc https://github.com/stopsopa/nlab#isdate
  */
-module.exports = function (o) {
+
+function isDate(o) {
     return Object.prototype.toString.call(o) === '[object Date]';
 }
+
+module.exports = isDate;
