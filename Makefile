@@ -1,3 +1,5 @@
+#WARNING:
+#	DON'T UPDATE codecov@3.7.2 BECAUSE IT WILL CRUSH TRAVIS TESTS FOR NODE VER 8
 
 h: # show any help that is available
 	@/bin/bash test.sh --help
@@ -15,11 +17,11 @@ u: # update npm and git (generates new tag)
 uf: # update even if there is nothing new committed
 	@/bin/bash update.sh force
 
-ct: # karma parameters.json
-	@/bin/bash update.sh --travis
+#ct: # karma parameters.json
+#	@/bin/bash update.sh --travis
 
-cp: # jest parameters.json
-	@/bin/bash update.sh --prod
+#cp: # jest parameters.json
+#	@/bin/bash update.sh --prod
 
 t: # just run tests once
 	@/bin/bash test.sh

@@ -10,8 +10,6 @@ function green {
 set -e
 set -x
 
-make ct
-
 cat package.json
 
 yarn
