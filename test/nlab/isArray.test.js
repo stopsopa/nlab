@@ -64,6 +64,14 @@ it('isArray - function () {} -> false', async done => {
     done();
 });
 
+it('isArray - async function () {} -> false', async done => {
+
+    expect(isArray(async function () {})).toBeFalsy();
+    expect(Array.isArray(async function () {})).toBeFalsy();
+
+    done();
+});
+
 it('isArray - () => {} -> false', async done => {
 
     expect(isArray(() => {})).toBeFalsy();

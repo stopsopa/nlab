@@ -239,6 +239,7 @@ import isObject from 'nlab/isObject';
 //  ✓isObject - new function () {}                                  -> true
 //  ✓isObject - []                                                  -> false
 //  ✓isObject - function () {}                                      -> false
+//  ✓isObject - async function () {}                                -> false
 //  ✓isObject - () => {}                                            -> false
 //  ✓isObject - null                                                -> false
 //  ✓isObject - true                                                -> false
@@ -271,6 +272,7 @@ import isArray from 'nlab/isArray';
 //  ✓isArray - extended object                                     -> false
 //  ✓isArray - new function () {}                                  -> false
 //  ✓isArray - function () {}                                      -> false
+//  ✓isArray - async function () {}                                -> false
 //  ✓isArray - () => {}                                            -> false
 //  ✓isArray - null                                                -> false
 //  ✓isArray - true                                                -> false
@@ -281,6 +283,32 @@ import isArray from 'nlab/isArray';
 //  ✓isArray - 4                                                   -> false
 //  ✓isArray - string                                              -> false
 //  ✓isArray - Symbol('test')                                      -> false
+```
+
+# isAsyncFunction()
+
+```javascript
+import isAsyncFunction from 'nlab/isAsyncFunction';
+// or 
+// const isAsyncFunction = require('nlab/isAsyncFunction');
+
+//  ✓isAsyncFunction - []                                                  -> false
+//  ✓isAsyncFunction - {}                                                  -> false
+//  ✓isAsyncFunction - using with object that have implemented toString()  -> false
+//  ✓isAsyncFunction - extended object                                     -> false
+//  ✓isAsyncFunction - new function () {}                                  -> false
+//  ✓isAsyncFunction - function () {}                                      -> false
+//  ✓isAsyncFunction - async function () {}                                -> true
+//  ✓isAsyncFunction - () => {}                                            -> false
+//  ✓isAsyncFunction - null                                                -> false
+//  ✓isAsyncFunction - true                                                -> false
+//  ✓isAsyncFunction - false                                               -> false
+//  ✓isAsyncFunction - NaN                                                 -> false
+//  ✓isAsyncFunction - undefined                                           -> false
+//  ✓isAsyncFunction - no arg                                              -> false
+//  ✓isAsyncFunction - 4                                                   -> false
+//  ✓isAsyncFunction - string                                              -> false
+//  ✓isAsyncFunction - Symbol('test')                                      -> false
 ```
 
 # isDate()
@@ -297,6 +325,7 @@ import isDate from 'nlab/isDate';
 //  ✓isDate - new function () {}                                  -> false
 //  ✓isDate - []                                                  -> false
 //  ✓isDate - function () {}                                      -> false
+//  ✓isDate - async function () {}                                -> false
 //  ✓isDate - () => {}                                            -> false
 //  ✓isDate - null                                                -> false
 //  ✓isDate - true                                                -> false

@@ -85,6 +85,13 @@ it('isObject - function () {} -> false', async done => {
     done();
 });
 
+it('isObject - async function () {} -> false', async done => {
+
+    expect(isObject(async function () {})).toBeFalsy();
+
+    done();
+});
+
 it('isObject - () => {} -> false', async done => {
 
     expect(isObject(() => {})).toBeFalsy();
