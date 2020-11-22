@@ -408,6 +408,20 @@ if (xor(xor(data, key), key) === data) {
 
 ```
 
+# generateSalt
+
+```javascript
+
+import generateSalt from 'nlab/generateSalt';
+
+const generateSalt = require('nlab/generateSalt');
+
+console.log(generateSalt(12)) 
+
+// d87c3e2c5373
+
+```
+
 # all
 
 ```javascript
