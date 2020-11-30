@@ -6,29 +6,6 @@
  * and added splitting 'stack' field
  */
 
-class NonError extends Error {
-    constructor(message) {
-        super(NonError._prepareSuperMessage(message));
-        Object.defineProperty(this, 'name', {
-            value: 'NonError',
-            configurable: true,
-            writable: true
-        });
-
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, NonError);
-        }
-    }
-
-    static _prepareSuperMessage(message) {
-        try {
-            return JSON.stringify(message);
-        } catch (_) {
-            return String(message);
-        }
-    }
-}
-
 const commonProperties = [
     {property: 'name', enumerable: false},
     {property: 'message', enumerable: false},
