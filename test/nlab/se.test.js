@@ -74,7 +74,6 @@ it('se - string native', async done => {
 it('se - circular', async done => {
 
   var k = {
-    a: function () {},
     c: {
       d: {
 
@@ -94,13 +93,14 @@ it('se - circular', async done => {
   delete e.stack;
 
   expect(e).toEqual({
-    "a": "b",
     "c": {
       "d": {
         "k": "[Circular]"
       }
     },
-    "f": "g"
+    f: [],
+    h: {},
+    i: false
   })
 
   done();
