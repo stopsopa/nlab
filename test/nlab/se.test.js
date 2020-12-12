@@ -88,7 +88,7 @@ it('se - circular', async done => {
 
   let e = se(k, true);
 
-  console.log(JSON.stringify(e, null, 4), 10)
+  // console.log(JSON.stringify(e, null, 4), 10)
 
   delete e.stack;
 

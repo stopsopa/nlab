@@ -12,7 +12,7 @@ const IV_LENGTH = 16; // For AES, this is always 16
  */
 module.exports = pass => {
 
-    const md5buff = new Buffer(md5(pass));
+    const md5buff = Buffer.from(md5(pass));
 
     return {
         encrypt: function (text) {
@@ -24,8 +24,8 @@ module.exports = pass => {
         },
         decrypt: function (text) {
             let textParts = text.split(':');
-            let iv = new Buffer(textParts.shift(), 'hex');
-            let encryptedText = new Buffer(textParts.join(':'), 'hex');
+            let iv = Buffer.from(textParts.shift(), 'hex');
+            let encryptedText = Buffer.from(textParts.join(':'), 'hex');
             let decipher = crypto.createDecipheriv('aes-256-cbc', md5buff, iv);
             let decrypted = decipher.update(encryptedText);
             decrypted = Buffer.concat([decrypted, decipher.final()]);

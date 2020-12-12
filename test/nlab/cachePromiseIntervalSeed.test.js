@@ -657,10 +657,10 @@ it('cachePromiseIntervalSeed all good', async done => {
     }
     catch (e) {
 
-        log.dump({
-            error___: e,
-            n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        })
+        // log.dump({
+        //     error___: e,
+        //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        // })
 
         done(`this test shouldn't crush..`);
     }
@@ -766,10 +766,10 @@ it('cachePromiseIntervalSeed all good 3', async done => {
     }
     catch (e) {
 
-        log.dump({
-            error___: e,
-            n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        })
+        // log.dump({
+        //     error___: e,
+        //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        // })
 
         done(`this test shouldn't crush>`);
     }
@@ -813,10 +813,10 @@ it('cachePromiseIntervalSeed time', async done => {
     }
     catch (e) {
 
-        log.dump({
-            error___: e,
-            n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        })
+        // log.dump({
+        //     error___: e,
+        //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        // })
 
         done(`this test shouldn't crush>`);
     }

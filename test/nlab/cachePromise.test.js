@@ -24,9 +24,9 @@ it('cachePromise() - simple', async done => {
     }
     catch (e) {
 
-        log.dump({
-            e,
-        })
+        // log.dump({
+        //     e,
+        // })
 
         done({
             error: e
@@ -61,9 +61,9 @@ it('cachePromise() - double cached', async done => {
     }
     catch (e) {
 
-        log.dump({
-            e,
-        })
+        // log.dump({
+        //     e,
+        // })
 
         done({
             error: e
@@ -109,9 +109,9 @@ it('cachePromise() - double refreshed', async done => {
     }
     catch (e) {
 
-        log.dump({
-            e,
-        })
+        // log.dump({
+        //     e,
+        // })
 
         done({
             error: e

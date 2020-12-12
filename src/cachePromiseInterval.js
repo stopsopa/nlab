@@ -69,6 +69,7 @@ const tool      = key => {
             refreshinterval : null,
             firstcrach      : true,
             errordepth      : 3,
+            verbose         : false,
             ...opt,
         }
 
@@ -141,7 +142,7 @@ const tool      = key => {
                         }
                         catch (e) {
 
-                            log.dump({
+                            o.verbose && log.dump({
                                 key,
                                 ckey,
                                 error: `o.refreshinterval next call error`,
@@ -188,7 +189,7 @@ const tool      = key => {
 
             }).catch(e => {
 
-                log.dump({
+                o.verbose && log.dump({
                     key,
                     ckey,
                     catch: msg(`promise catch`),
@@ -217,7 +218,7 @@ const tool      = key => {
         }
         catch (e) {
 
-            log.dump({
+            o.verbose && log.dump({
                 key,
                 ckey,
                 catch: msg(`main catch`),

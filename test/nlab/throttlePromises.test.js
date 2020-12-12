@@ -9,7 +9,7 @@ const cache = throttlePromises({
     perTimeMsec : 1.5 * 1000,
     dump: data => {
 
-        log && log(data);
+        // log && log(data);
         // iolog('data', data);
     },
 });
@@ -29,9 +29,11 @@ it('throttlePromises() - simple', async done => {
     }
     catch (e) {
 
-        log.dump({
-            e,
-        })
+        // log.dump({
+        //     e,
+        // })
+
+        throw e;
 
     }
 });

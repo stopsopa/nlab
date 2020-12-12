@@ -14,7 +14,7 @@ cat package.json
 
 yarn
 
-yarn list
+#yarn list
 
 EXECUTE="/bin/bash test.sh"
 
