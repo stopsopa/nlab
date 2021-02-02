@@ -781,6 +781,26 @@ pregQuote('test[]test'); // 'test\[\]test'
 pregQuote('t?e(st'); // 't\?es\(t'
 ```
 
+# stringToRegex
+
+Function to convert string to regex.
+
+```javascript
+
+import stringToRegex from 'nlab/stringToRegex';
+// or 
+// const stringToRegex = require('nlab/stringToRegex');
+
+const r = stringToRegex('/abc\\/abcf/i');
+
+console.log(r)
+// {
+//   "flags": "i",
+//   "source": "abc\\/abcf",
+//   "str": "/abc\\/abcf/i"
+// }
+```
+
 # incrementSlug
 
 Function to generate next possible value in db for unique key column. 
