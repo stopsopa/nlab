@@ -43,7 +43,7 @@ it('stringToRegex simple error', done => {
 
         const r = stringToRegex('abc/i');
 
-        console.log(JSON.stringify(d(r), null, 4));
+        // console.log(JSON.stringify(d(r), null, 4));
 
         e(r);
 
@@ -94,6 +94,50 @@ it('stringToRegex simple error', done => {
     catch (e) {
 
         expect(String(e)).toEqual("Error: stringToRegex error: general error: string '/abc/def/i' error: Error: param '/abc/def/i' splits to more than 2 segments");
+
+        done()
+    }
+});
+
+it('stringToRegex no flags', done => {
+
+    try {
+
+        const r = stringToRegex('/abc/');
+
+        // console.log(JSON.stringify(d(r), null, 4));
+
+        e(r).toEqual({
+            "flags": "",
+            "source": "abc",
+            "str": "/abc/"
+        });
+
+        done();
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: stringToRegex error: general error: string '/abc/def/i' error: Error: param '/abc/def/i' splits to more than 2 segments");
+
+        done()
+    }
+});
+
+it('stringToRegex just string', done => {
+
+    try {
+
+        const r = stringToRegex('abc');
+
+        // console.log(JSON.stringify(d(r), null, 4));
+
+        e(r);
+
+        done('error');
+    }
+    catch (e) {
+
+        expect(String(e)).toEqual("Error: stringToRegex error: general error: string 'abc' error: Error: param 'abc' doesn't seem to be proper regex");
 
         done()
     }
