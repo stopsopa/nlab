@@ -843,6 +843,28 @@ incrementSlug('test-30', '_'); // 'test-30_1'
 incrementSlug('test_30', '_'); // 'test-31'
 ```
 
+```javascript
+
+import negotiatePort from 'nlab/negotiatePort';
+// or 
+// const negotiatePort = require('nlab/negotiatePort');
+
+negotiatePort('http', 80); // ''
+negotiatePort('http', '80'); // ''
+negotiatePort('http:', '80'); // ''
+negotiatePort('http://', '80'); // ''
+negotiatePort('http', '81'); // '81'
+negotiatePort('http', '81', ':'); // ':81'
+negotiatePort('https', '80'); // '80'
+negotiatePort('https', '80', ':'); // ':80'
+negotiatePort('https', 443); // '443'
+negotiatePort('https:', 443); // '443'
+negotiatePort('https:/', 443); // '443'
+negotiatePort('https://', 443); // '443'
+negotiatePort('https', '443'); // '443'
+negotiatePort('https', '443', ':'); // ':443'
+```
+
 # ms
 
 Generate human readable version of time left based on given number of miliseconds (or other unit);
