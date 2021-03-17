@@ -30,6 +30,7 @@
 - [pregQuote](#pregquote)
 - [stringToRegex](#stringtoregex)
 - [incrementSlug](#incrementslug)
+- [negotiatePort](#negotiateport)
 - [ms](#ms)
 - [cachePromiseInterval](#cachepromiseinterval)
 
