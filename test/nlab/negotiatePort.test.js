@@ -167,5 +167,19 @@ it('negotiatePort - demo', done => {
     ])
 
     done()
-})
+});
+
+it('negotiatePort - http undefined int, : prefix', done => {
+
+    expect(np('http', undefined, ':')).toEqual('');
+
+    done();
+});
+
+it('negotiatePort - http enpty string int, : prefix', done => {
+
+    expect(np('http', '', ':')).toEqual('');
+
+    done();
+});
 

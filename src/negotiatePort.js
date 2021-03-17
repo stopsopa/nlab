@@ -29,6 +29,11 @@ const negotiatePort = function (protocol, port, prefix) {
         return '';
     }
 
+    if (port === '') {
+
+        return '';
+    }
+
     if ( ! /^\d+$/.test(port) ) {
 
         throw th(`port '${port}' is not a number`);
