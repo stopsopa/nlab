@@ -843,6 +843,8 @@ incrementSlug('test-30', '_'); // 'test-30_1'
 incrementSlug('test_30', '_'); // 'test-31'
 ```
 
+# negotiatePort
+
 ```javascript
 
 import negotiatePort from 'nlab/negotiatePort';
