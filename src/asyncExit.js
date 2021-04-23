@@ -3,7 +3,20 @@ function now() {
   return (new Date()).toISOString().substring(0, 19).replace('T', ' ');
 }
 
+const exit = (function (e) {
+  return code => e(code);
+}(process.exit));
+
+let used = false;
+
 module.exports = async (promise, options) => {
+
+  if (used) {
+
+    throw new Error(`${__filename} ${now()} event already registered`);
+  }
+
+  used = true;
 
   let {
     resume,
@@ -26,7 +39,7 @@ module.exports = async (promise, options) => {
 
   let stop = false;
 
-  async function onExit(origin) {
+  async function onExit(origin, exitCodeManual) {
 
     if (stop) {
 
@@ -47,7 +60,7 @@ module.exports = async (promise, options) => {
 
         errors && console.error(`${__filename} ${now()} promiseTimeoutMsec(${promiseTimeoutMsec})`);
 
-        process.exit(exitCodeTimeout);
+        exit(exitCodeTimeout);
 
       }, promiseTimeoutMsec);
     }
@@ -72,8 +85,10 @@ module.exports = async (promise, options) => {
 
     verbose && console.log(`${__filename} ${now()} stop origin: ${origin}`);
 
-    process.exit(exitCodeNormal);
+    exit(Number.isInteger(exitCodeManual) ? exitCodeManual : exitCodeNormal);
   }
+
+  process.exit = code => onExit('manual', code);
 
   // // do something when app is closing
   // process.on('exit', onExit.bind(null,'exit'));
