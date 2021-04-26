@@ -25,6 +25,7 @@ module.exports = async (promise, options) => {
     promiseTimeoutMsec,
     verbose,
     bindTo,
+    overrideExit,
   } = Object.assign({}, {
     resume              : true,
     // https://nodejs.org/api/process.html#process_signal_events
@@ -35,6 +36,7 @@ module.exports = async (promise, options) => {
     promiseTimeoutMsec  : 30000,
     verbose             : true,
     errors              : true,
+    overrideExit        : true,
   }, options);
 
   let stop = false;
@@ -49,8 +51,6 @@ module.exports = async (promise, options) => {
     stop = true;
 
     verbose && console.log(`${__filename} ${now()} start origin: ${origin}`);
-
-    onExit = () => {};
 
     let timeoutHandler;
 
@@ -88,7 +88,11 @@ module.exports = async (promise, options) => {
     exit(Number.isInteger(exitCodeManual) ? exitCodeManual : exitCodeNormal);
   }
 
-  process.exit = code => onExit('manual', code);
+  if (overrideExit) {
+
+    process.exit = code => onExit('manual', code);
+  }
+
 
   // // do something when app is closing
   // process.on('exit', onExit.bind(null,'exit'));
