@@ -1,6 +1,8 @@
 
 'use strict';
 
+// see also https://nodejs.org/api/timers.html#timers_timers_promises_api
+
 /**
  * @doc https://github.com/stopsopa/nlab#promise-delay
  *
