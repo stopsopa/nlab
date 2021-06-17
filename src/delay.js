@@ -1,6 +1,27 @@
 
 'use strict';
 
+/**
+ * Not needed since node v16
+ 
+ 
+const { setTimeout } = require('timers/promises')
+
+async function demoNew() {
+  
+  await setTimeout(5000);
+  
+  console.log("Timer expired.");
+}
+
+(async function () {
+
+  await demoNew();
+}())
+
+ */
+
+
 // see also https://nodejs.org/api/timers.html#timers_timers_promises_api
 
 /**
