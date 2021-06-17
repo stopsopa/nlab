@@ -4,8 +4,8 @@
 /**
  * Not needed since node v16
  
- 
- // import {setTimeout} from "timers/promises";
+// https://nodejs.org/api/timers.html#timers_timerspromises_settimeout_delay_value_options  
+// import {setTimeout} from "timers/promises";
 const { setTimeout } = require('timers/promises')
 
 async function demoNew() {
