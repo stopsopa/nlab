@@ -17,11 +17,16 @@ u: # update npm and git (generates new tag)
 uf: # update even if there is nothing new committed
 	@/bin/bash update.sh force
 
+yarn:
+	/bin/bash bash/swap-files.sh -m travis -- yarn
+
 #ct: # karma parameters.json
 #	@/bin/bash update.sh --travis
+# use make yarn instead
 
 #cp: # jest parameters.json
 #	@/bin/bash update.sh --prod
+# use make yarn instead
 
 t: # just run tests once
 	@/bin/bash test.sh

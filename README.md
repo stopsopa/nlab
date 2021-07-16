@@ -411,6 +411,20 @@ if (xor(xor(data, key), key) === data) {
 
 ```
 
+# curry
+
+```javascript
+
+import curry from 'nlab/curry';
+
+const curry = require('nlab/curry');
+
+const fn = curry((a, b, c) => (a + b + c));
+
+expect( fn(2, 4) (8) ).toEqual(14);
+
+```
+
 # generateSalt
 
 ```javascript
