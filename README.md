@@ -228,6 +228,56 @@ app.all((req, res) => {
 
 ```
 
+# CachePromise
+
+```javascript
+
+const CachePromise = require('nlab/CachePromise');
+
+import CachePromise from 'nlab/CachePromise';
+
+async done => {
+
+    try {
+
+        const cachePromise = new CachePromise({
+            ttlms: 5,
+        });
+
+        let mainPromise = cachePromise.get(
+            {a: 'b3'},
+            () => new Promise(res => setTimeout(res, 5, 'abc')),
+        );
+
+        let data = await mainPromise;
+
+        expect(data).toEqual('abc');
+
+        await delay(15)
+
+        mainPromise = cachePromise.get(
+            {a: 'b3'},
+            () => new Promise(res => setTimeout(res, 5, 'abcd')),
+        );
+
+        data = await mainPromise;
+
+        expect(data).toEqual('abcd');
+
+        done();
+
+    }
+    catch (e) {
+
+        done({
+            error: e
+        })
+    }
+}
+
+````
+
+
 # isObject()
 
 It's more strict method to test if given arg is an object - more strict than implementation from lodash or underscore.js
