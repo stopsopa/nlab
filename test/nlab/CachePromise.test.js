@@ -20,6 +20,7 @@ it('CachePromise - simple', async done => {
         const data = await mainPromise;
 
         expect(data).toEqual('abc');
+        
 
         done();
 
