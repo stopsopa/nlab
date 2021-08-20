@@ -1,8 +1,9 @@
 
 const th = msg => new Error(`CachePromise error: ${msg}`);
 
-const now = () => (new Date()).getTime();
-
+/**
+ * Test and coverage: https://github.com/stopsopa/nlab
+ */
 function CachePromise(opt) {
 
     this.opt = opt = {
@@ -51,9 +52,9 @@ CachePromise.prototype.get = async function (key, getPromise) {
 
         buff = this.cache[key];
 
-        const n = now();
+        const n = Date.now();
 
-        if ( typeof buff === 'undefined' || ( n - buff.n) >= this.opt.ttlms ) {
+        if ( typeof buff === 'undefined' || ( n - buff.n ) >= this.opt.ttlms ) {
 
             const p = Promise.resolve(getPromise());
 
