@@ -26,7 +26,7 @@ let content = fs.readFileSync(README_md).toString();
 
 content = content.split("\n");
 
-// let regnpm = /^\[!\[Build Status\]/;
+let regnpm = /^\[!\[Build Status\]/;
 //let regcov = /^\[!\[Coverage Status\]/;
 let regcov = /^\[!\[codecov\]/;
 
@@ -36,10 +36,7 @@ let done = 0;
 
 for (let i = 0, l = content.length ; i < l ; i += 1 ) {
 
-    // if (regnpm.test(content[i]) || regcov.test(content[i])) {
-    if (regcov.test(content[i])) {
-
-        console.log('found: ' + content[i])
+    if (regnpm.test(content[i]) || regcov.test(content[i])) {
 
         content[i] = content[i].replace(/v\d+\.\d+\.\d+/g, n);
 
@@ -48,14 +45,14 @@ for (let i = 0, l = content.length ; i < l ; i += 1 ) {
             done += 1;
         }
 
-        if ( done === 1) {
+        if ( done === 2) {
 
             break;
         }
     }
 }
 
-if ( done !== 1 ) {
+if ( done !== 2 ) {
 
     throw `Badges not found, invalid badges or missing badges in file '${README_md}'`;
 
