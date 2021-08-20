@@ -25,7 +25,7 @@ function CachePromise(opt) {
     this.cache = {};
 }
 
-CachePromise.prototype.get = async function (key, getPromise) {
+CachePromise.prototype.get = async function (key, getPromise, event = () => {}) {
 
     let buff;
 
@@ -64,6 +64,12 @@ CachePromise.prototype.get = async function (key, getPromise) {
                 n,
                 p
             };
+
+            event('live');
+        }
+        else {
+
+            event('cache', false);
         }
 
         return this.cache[key].p;
@@ -72,8 +78,12 @@ CachePromise.prototype.get = async function (key, getPromise) {
 
         if ( typeof buff !== 'undefined' && this.opt.returnExpiredCacheIfRejected ) {
 
+            event('cache', true);
+
             return buff.p;
         }
+
+        event('error');
 
         throw e;
     }
