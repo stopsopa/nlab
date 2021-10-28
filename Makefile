@@ -38,7 +38,7 @@ twa: # run tests in watchAll mode
 	@/bin/bash test.sh --watchAll
 
 ts:
-	/bin/bash test/servers.sh
+	/bin/bash test/servers.sh nlabflag
 
 nt: # test .npmignore
 	@npm pack

@@ -4,10 +4,10 @@
 
 main="$1"
 
+THISFILE=${BASH_SOURCE[0]}
+DIR="$( cd "$( dirname "${THISFILE}" )" && pwd -P )"
 
-__DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P )"
-
-source "$__DIR/../colours.sh";
+source "${DIR}/../colours.sh";
 
 set -e
 set -x
@@ -19,11 +19,11 @@ if [ "$#" -lt 1 ] ; then
     exit 1;
 fi
 
-if [ "$(git rev-parse --abbrev-ref HEAD)" != $main ]; then
+if [ "$(git rev-parse --abbrev-ref HEAD)" != ${main} ]; then
 
-    { red "[error] switch first branch to '$main'"; } 2>&3
+    { red "[error] switch first branch to '${main}'"; } 2>&3
 
     exit 1
 fi
 
-{ green "[ok] current branch '$main'"; } 2>&3
+{ green "[ok] current branch '${main}'"; } 2>&3

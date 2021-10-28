@@ -14,8 +14,6 @@ cat package.json
 
 yarn
 
-sleep 1 # give server some time
-
 #yarn list
 
 EXECUTE="/bin/bash test.sh"

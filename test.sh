@@ -1,5 +1,4 @@
 
-
 exec 3<> /dev/null
 function red {
     printf "\e[91m$1\e[0m\n"
@@ -62,6 +61,19 @@ else
 
     { green "local jest - found"; } 2>&3
 fi
+
+FLAG="nlabflag"
+
+function cleanup {
+
+    echo "cleanup...";
+
+    ps aux | grep "$FLAG" | grep -v grep | awk '{print $2}' | xargs kill
+}
+
+trap cleanup EXIT
+
+/bin/bash test/servers.sh "$FLAG"
 
 TEST="$(cat <<END
 $JEST \

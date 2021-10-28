@@ -1,8 +1,8 @@
 
-# call with one argument, script will return value of environment variable from .env under $1 name variable
+# call with one argument, script will return value of environment variable from .env under ${1} name variable
 # /bin/bash bash/env.sh ../.env PROTECTED_MYSQL_HOST
 
-if [ "$1" = "--help" ]; then
+if [ "${1}" = "--help" ]; then
 
 cat << EOF
 
@@ -21,10 +21,10 @@ nothing existing already under this path
   --gen test -> "-test-"  --> will generate file like: ttt-test-74ab.sh
   --gen fooo -> "-fooo-"  --> will generate file like: ttt-fooo-74ab.sh
 
-TMP="\$(/bin/bash $0 .env --clear)"
-TMP="\$(/bin/bash $0 .env --clean)"
-TMP="\$(/bin/bash $0 .env -c)"
-TMP="\$(/bin/bash $0 .env --gen 'gen')"
+TMP="\$(/bin/bash ${0} .env --clear)"
+TMP="\$(/bin/bash ${0} .env --clean)"
+TMP="\$(/bin/bash ${0} .env -c)"
+TMP="\$(/bin/bash ${0} .env --gen 'gen')"
 TMP="\$(/bin/bash $0 .env -g 'gen')"
 TMP="\$(/bin/bash $0 .env -g 'gen' -c)"
 
@@ -53,7 +53,7 @@ while (( "$#" )); do
       ;;
     -g|--gen)
       if [ "$2" = "" ]; then
-        echo "$0 Error: --gen value can't be empty" >&2
+        echo "$0 error: --gen value can't be empty" >&2
         exit 1
       fi
       _GEN="$2";
@@ -64,7 +64,7 @@ while (( "$#" )); do
       break
       ;;
     -*|--*=) # unsupported flags
-      echo "$0 Error: Unsupported flag $1" >&2
+      echo "$0 error: Unsupported flag $1" >&2
       exit 1
       ;;
     *) # preserve positional arguments
@@ -100,14 +100,19 @@ PB="$(basename "$1")"
 EXTENSION="${PB##*.}"
 FILENAME="${PB%.*}"
 if [ "$FILENAME" = "" ]; then
-
   FILENAME="$PB"
   EXTENSION=""
 fi
 if [ "$FILENAME" = "$PB" ]; then
-
   EXTENSION=""
 fi
+
+#EXTENSION="$(echo -n "$EXTENSION" | tr '[:upper:]' '[:lower:]')"
+
+#echo "PD ='$PD'";
+#echo "PB ='$PB'";
+#echo "FILENAME ='$FILENAME'";
+#echo "EXTENSION ='$EXTENSION'";
 
 
 
@@ -123,11 +128,11 @@ if [ "$_CLEANOLD" = "1" ]; then
       EREG="\.$(/bin/bash "$_DIR/preg_quote.sh" "$EXTENSION")"
     fi
 
-    CLEARLIST="$(find "$PD" -type f -maxdepth 1 | sed -nE "/\/$PREG-$_GEN-[a-f0-9]{4}$EREG$/p")"
+    CLEARLIST="$(find -L "$PD" -type f -maxdepth 1 | sed -nE "/\/$PREG-$_GEN-[a-f0-9]{4}$EREG$/p")"
 
     for file in $CLEARLIST
     do
-        unlink "$file" || true
+        unlink "${file}" || true
     done
 fi
 

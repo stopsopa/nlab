@@ -1,7 +1,7 @@
 
 # USE LIKE:
-# /bin/bash $0 $HEADLINES $TAILLINES /bin/bash other.sh arg1 arg2 ...
-# /bin/bash $0 $HEADLINES $TAILLINES node script.js arg1 arg2 ...
+# /bin/bash ${0} ${HEADLINES} ${TAILLINES} /bin/bash other.sh arg1 arg2 ...
+# /bin/bash ${0} ${HEADLINES} ${TAILLINES} node script.js arg1 arg2 ...
 
 # WARNING:
 # BE AWARE THAT STDOUT AND STDERR OF INTERNAL COMMAND
@@ -9,17 +9,17 @@
 # WARNING:
 
 trim() {
-    local var="$*"
+    local var="${*}"
     # remove leading whitespace characters
     var="${var#"${var%%[![:space:]]*}"}"
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"
-    echo -n "$var"
+    echo -n "${var}"
 }
 
 if [ "$#" -lt "2" ]; then
 
-    printf "\ngive any command to execute like\n\n    /bin/bash $0 40 40 /bin/bash script.sh\n\n"
+    echo -e "\ngive any command to execute like\n\n    /bin/bash $0 40 40 /bin/bash script.sh\n\n"
 
     exit 1
 fi
@@ -28,7 +28,7 @@ HEAD="$1"
 
 if [[ ! "$HEAD" =~ ^[0-9]+$ ]]; then
 
-    printf "limit '$HEAD' (first argument) is not a number > 0\n"
+    echo -e "limit '$HEAD' (first argument) is not a number > 0\n"
 
     exit 1
 fi
@@ -39,7 +39,7 @@ TAIL="$1"
 
 if [[ ! "$TAIL" =~ ^[0-9]+$ ]]; then
 
-    printf "limit '$TAIL' (second argument) is not a number > 0\n"
+    echo -e "limit '$TAIL' (second argument) is not a number > 0\n"
 
     exit 1
 fi

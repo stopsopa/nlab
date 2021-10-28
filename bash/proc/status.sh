@@ -5,24 +5,29 @@ set -x
 
 _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd -P )"
 
-source "$_DIR/../colours.sh";
+source "${_DIR}/../colours.sh";
 
-source "$_DIR/../trim.sh"
+source "${_DIR}/../trim.sh"
 
-if [ "$#" -lt "2" ]; then
+if [ "${#}" -lt "2" ]; then
 
-    { red "$0 error: run like /bin/bash $0 pathto/.env ENV_NAME_WITH_FLAG"; } 2>&3
+    { red "${0} error: run like /bin/bash $0 pathto/.env ENV_NAME_WITH_FLAG"; } 2>&3
 
     exit 1
 fi
 
-ENVFILE="$_DIR/$1";
+ENVFILE="$1";
 
-if [ ! -e "$ENVFILE" ]; then
+if [ ! -f "$ENVFILE" ]; then
 
-    { red "$0 error: file: '$ENVFILE' doesn't exist"; } 2>&3
+    ENVFILE="$_DIR/$1";
 
-    exit 1;
+    if [ ! -f "$ENVFILE" ]; then
+
+        { red "$0 error: file: '$ENVFILE' nor '$1' doesn't exist"; } 2>&3
+
+        exit 1;
+    fi
 fi
 
 { yellow "importing $ENVFILE vvv"; } 2>&3

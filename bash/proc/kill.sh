@@ -6,6 +6,11 @@
 # /bin/bash kill.sh flag-name $$
 # /bin/bash kill.sh flag-name $$ something-else-to-ignore "and something else to ignore"
 
+# alternatively as a oneliner
+# ps aux | grep "jfkdsjlkfjdskljfkdsjf" | grep -v grep | awk '{print $2}' | xargs kill
+# or more aggressively
+# ps aux | grep "jfkdsjlkfjdskljfkdsjf" | grep -v grep | awk '{print $2}' | xargs kill -9
+
 
 set -e
 set -x
@@ -26,11 +31,11 @@ fi
 
 ENVFILE="$1";
 
-if [ ! -e "$ENVFILE" ]; then
+if [ ! -f "$ENVFILE" ]; then
 
     ENVFILE="$_DIR/$1";
 
-    if [ ! -e "$ENVFILE" ]; then
+    if [ ! -f "$ENVFILE" ]; then
 
         { red "$0 error: file: '$ENVFILE' nor '$1' doesn't exist"; } 2>&3
 
@@ -67,8 +72,8 @@ LIST=$(ps aux | grep "$FLAG" | grep -v grep | grep -v " $THISFILE") || true
 
 if [ "$#" -gt 1 ]; then
 
-    # https://stackoverflow.com/a/1336245/5560682
-    # https://stackoverflow.com/a/2390870/5560682
+    # https://stackoverflow.com/a/1336245
+    # https://stackoverflow.com/a/2390870
     IGNORE=("${@:2}") || true
 
     # to see what's inside array:
@@ -80,8 +85,8 @@ if [ "$#" -gt 1 ]; then
 
     for i in "${IGNORE[@]}"
     do
-        LIST=$(echo -e "$LIST"  | grep -v "$i") || true;
-        # echo -e "after '$i': >>$LIST<<";
+        LIST=$(echo -e "$LIST"  | grep -v "${i}") || true;
+        # echo -e "after '${i}': >>$LIST<<";
     done
 fi
 
@@ -95,8 +100,8 @@ PIDS=$(echo -e "$LIST" | awk '{print $2}') || true;
 
 for pid in $PIDS
 do
-    { yellow "attempt to kill $pid"; } 2>&3
-    kill -s 9 $pid && echo 'success' || echo 'failure'
+    { yellow "attempt to kill ${pid}"; } 2>&3
+    kill -s 9 ${pid} && echo 'success' || echo 'failure'
 done
 
 { echo -e "\n"; } 2>&3

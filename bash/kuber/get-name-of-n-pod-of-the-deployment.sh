@@ -2,22 +2,24 @@
 # for future improvements
 # https://kubernetes.io/docs/concepts/workloads/controllers/job/#running-an-example-job
 # pods=$(kubectl get pods --selector=job-name=pi --output=jsonpath='{.items[*].metadata.name}')
-# echo $pods
+# echo ${pods}
 
-if [ "$1" = "--help" ]; then
+if [ "${1}" = "--help" ]; then
 
 cat << EOF
 
-/bin/bash $0 name-of-deployment
+/bin/bash ${0} name-of-deployment
    will return first pod name
 
-/bin/bash $0 name-of-deployment all
+/bin/bash ${0} name-of-deployment all
    will return all pods
 
-/bin/bash $0 name-of-deployment 1 [namespace]
+/bin/bash ${0} name-of-deployment 1 [namespace]
    will return first pod name from particular namespace
 
-/bin/bash $0 name-of-deployment all [namespace]
+   INFO: 1 is latest
+
+/bin/bash ${0} name-of-deployment all [namespace]
    obviously will return all pods name from particular namespace
 
 [namespace] - if namespace is not given then it search through default namespace
@@ -27,25 +29,36 @@ EOF
     exit 0;
 fi
 
-if [ "$1" = "" ]; then
+NAMESPACE=""
 
-    echo "$0 error: name of deployment is not specified - first argument"
+if [ "${1}" = "-n" ]; then
+
+  NAMESPACE=" -n ${2}"
+
+  shift;
+
+  shift;
+fi
+
+if [ "${1}" = "" ]; then
+
+    echo "${0} error: name of deployment is not specified - first argument"
 
     exit 1
 fi
 
-DEPLOY="$1"
+DEPLOY="${1}"
 
 shift;
 
-NUM="$1"
-if [ "$NUM" = "" ]; then
+NUM="${1}"
+if [ "${NUM}" = "" ]; then
     NUM="1"
 fi
 
 shift;
 
-if [ "$NUM" != "" ] && [ "$NUM" != "all" ] ; then
+if [ "${NUM}" != "" ] && [ "$NUM" != "all" ] ; then
 
     TEST="^[0-9]+$"
     if ! [[ $NUM =~ $TEST ]]; then
@@ -78,7 +91,9 @@ shift;
 set -e
 set -o pipefail
 
-CMD="kubectl get pod$N -o wide | tail -n +2 | awk '$AWK' | sed -nE \"/^$DEPLOY-/p\"";
+#echo "kubectl get pod$N -o wide --sort-by=.metadata.creationTimestamp | tail -n +2 | tac | awk '$AWK' | sed -nE \"/^$DEPLOY-/p\""
+
+CMD="kubectl get pod$N$NAMESPACE -o wide --sort-by=.metadata.creationTimestamp | tail -n +2 | tac | awk '$AWK' | sed -nE \"/^$DEPLOY-/p\"";
 
 LIST="$(eval $CMD)"
 
@@ -96,17 +111,18 @@ fi
 COUNT="$(echo "$LIST" | wc -l)"
 
 trim() {
-    local var="$*"
+    local var="${*}"
     # remove leading whitespace characters
     var="${var#"${var%%[![:space:]]*}"}"
     # remove trailing whitespace characters
     var="${var%"${var##*[![:space:]]}"}"
-    echo -n "$var"
+    echo -n "${var}"
 }
 
 COUNT="$(trim "$COUNT")"
 
 if [ "$NUM" -gt "$COUNT" ] ; then
+
     NUM="$COUNT"
 fi
 

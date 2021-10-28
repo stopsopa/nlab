@@ -1,5 +1,5 @@
 
-# /bin/bash $0 kubersecretname .env.kub .env.targetnameoffileinsecret
+# /bin/bash ${0} kubersecretname .env.kub .env.targetnameoffileinsecret
 # /bin/bash $0 kubersecretname .env.kub .env.targetnameoffileinsecret [.env.kub .env.targetnameoffileinsecret] [.env.kub .env.targetnameoffileinsecret]
 #                                                                      ^                                       ^
 #                                                                      |-- optional another pair of files      |-- and another
@@ -13,6 +13,17 @@
 #         kubectl create secret generic my-secret --from-env-file=path/to/bar.env
 # more:
 #         kubectl create secret generic --help
+
+NAMESPACE=""
+
+if [ "$1" = "-n" ]; then
+
+  NAMESPACE=" -n $2"
+
+  shift;
+
+  shift;
+fi
 
 if [ "$1" = "" ]; then
 
@@ -63,9 +74,9 @@ function cleanup {
   for i in "${DELETE[@]}"
   do
 
-      echo -e "\nremoving '$i'";
+      echo -e "\nremoving '${i}'";
 
-      unlink "$i" || true
+      unlink "${i}" || true
   done
 }
 
@@ -140,7 +151,7 @@ set -e
 set -x
 
 # https://stackoverflow.com/a/45881259
-kubectl create secret generic "$SECRET" $FROMFILE --dry-run -o yaml | kubectl apply -f -
+kubectl create secret generic "$SECRET" $FROMFILE$NAMESPACE --dry-run -o yaml | kubectl apply -f -
 
 kubectl get secrets
 
@@ -148,4 +159,4 @@ kubectl describe secret "$SECRET"
 
 set +x
 
-printf "\n    all good\n"
+echo -e "\n    all good\n"
