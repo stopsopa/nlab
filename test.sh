@@ -63,7 +63,6 @@ else
     { green "local jest - found"; } 2>&3
 fi
 
-# --bail \
 TEST="$(cat <<END
 $JEST \
 $@ \

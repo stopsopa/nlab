@@ -12,10 +12,13 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "codecov": "3.7.2",
-    "express": "^4.16.4",
+    "dotenv-up": "^1.0.30",
+    "express": "^4.17.1",
+    "forever": "^4.0.1",
     "inspc": "^0.0.16",
     "jest": "^24.0.0",
     "md5": "^2.2.1",
+    "qs": "^6.10.1",
     "sjcl": "^1.0.8",
     "socket.io": "^2.2.0"
   },

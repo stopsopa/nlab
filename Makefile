@@ -8,7 +8,7 @@ h: # show any help that is available
 c: # run local server to browse coverage
 	@node server.js --log 15 --dir coverage
 
-cc: # run local server to general testing
+cc: # run local server for general testing
 	@nodemon -e js,html server.js --log 15
 
 u: # update npm and git (generates new tag)
@@ -36,6 +36,9 @@ tw: # run tests in watch mode
 
 twa: # run tests in watchAll mode
 	@/bin/bash test.sh --watchAll
+
+ts:
+	/bin/bash test/servers.sh
 
 nt: # test .npmignore
 	@npm pack
