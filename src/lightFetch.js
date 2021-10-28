@@ -20,7 +20,6 @@ const def = {
   timeout               : 30 * 1000,
   query                 : {},
   headers               : {},
-
   body                  : undefined,
   nobody                : false,
 
@@ -152,7 +151,6 @@ module.exports = function (url, opt = {}) {
       const request = {
         hostname    : uri.hostname,
         port        : uri.port || ( (uri.protocol === 'https:') ? '443' : '80'),
-        // path        : uri.pathname + uri.search + (querystring ? (uri.search.includes('?') ? '&' : '?') + querystring : ''),
         path        : uri.pathname + (querystring.length > 0 ? `?${querystring}` : ''),
         method,
         headers,

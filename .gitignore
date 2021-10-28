@@ -1,6 +1,7 @@
 /.idea/
 node_modules
 *.tgz
+/yarn.lock
 yarn-error*
 /local.txt
 /coverage/
