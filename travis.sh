@@ -7,6 +7,11 @@ function green {
     printf "\e[32m$1\e[0m\n"
 }
 
+if [ ! -f "yarn.lock" ]; then
+
+  { red "\n\n    yarn.lock should exist - travis will install dependencies faster if it does\n\n"; } 2>&3
+fi
+
 set -e
 set -x
 
