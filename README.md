@@ -9,6 +9,7 @@
 
 - [Promise delay](#promise-delay)
 - [promiseall](#promiseall)
+- [lightFetch](#lightfetch)
 - [promiseany](#promiseany)
 - [parallel](#parallel)
 - [md5](#md5)
