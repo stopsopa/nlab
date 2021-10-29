@@ -1,6 +1,6 @@
-[![Build Status](https://app.travis-ci.com/stopsopa/nlab.svg?branch=v0.0.119)](https://app.travis-ci.com/stopsopa/nlab)
+[![Build Status](https://app.travis-ci.com/stopsopa/nlab.svg?branch=v0.0.120)](https://app.travis-ci.com/stopsopa/nlab)
 [![npm version](https://badge.fury.io/js/nlab.svg)](https://badge.fury.io/js/nlab)
-[![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.119/graph/badge.svg?token=guaYpL4vYL)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.119)
+[![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.120/graph/badge.svg?token=guaYpL4vYL)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.120)
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 
 # Table of Contents
