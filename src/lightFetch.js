@@ -21,7 +21,7 @@ const def = {
   query                 : {},
   headers               : {},
   body                  : undefined,
-  nobody                : false,
+  noBody                : false,
 
   // If you wish lightFetch to automatically decode json:
   // true     - try always try decode - if it fail
@@ -73,7 +73,7 @@ module.exports = function (url, opt = {}) {
     headers,
     debugRequest,
     body,
-    nobody,
+    noBody,
     decodeJson,
     promiseResolvingStatusCodes,
     qsOptions,
@@ -227,7 +227,7 @@ module.exports = function (url, opt = {}) {
               ...rs
             };
 
-            if (nobody === false) {
+            if (noBody === false) {
 
               payload.body = body;
             }

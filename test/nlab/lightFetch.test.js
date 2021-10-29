@@ -237,7 +237,7 @@ it(`lightFetch - crush`, async done => {
     }
 });
 
-it(`lightFetch - nobody`, async done => {
+it(`lightFetch - noBody`, async done => {
 
     try {
 
@@ -246,7 +246,7 @@ it(`lightFetch - nobody`, async done => {
             body: {
                 some: 'data'
             },
-            nobody: true,
+            noBody: true,
         });
 
         cleanHeaders(res);
