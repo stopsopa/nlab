@@ -163,6 +163,37 @@ It just return array of payloads from those resolved promises.
 
 promiseall in this variant is designed to address some particular issues with race condition
 
+# lightFetch
+
+```javascript
+
+const lightFetch = require('nlab/lightFetch');
+
+import lightFetch from 'nlab/lightFetch';
+
+(async function () {
+ 
+  try {
+    
+    const res = await lightFetch('/url', {
+      method: 'POST',
+      body: { // because body is object it will be sent as json
+        some: 'data',        
+      },
+      timeout: 4000, // 4 sec
+    })
+  }
+  catch (e) {
+    
+    console.log(`general error: ${e}`)
+  }
+}());
+
+```
+
+[Doc](/src/lightFetch.js#L18)
+
+
 # promiseany
 
 ```javascript
