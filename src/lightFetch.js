@@ -204,8 +204,13 @@ module.exports = function (url, opt = {}) {
               }
               catch (e) {
 
-                e.message = emsg(`JSON.parse(response body) error: ${e}`);
+                e.message = emsg(`JSON.parse(response body) error: ${e}`);                
+                
+                if (debugRequest.includes("res")) {
 
+                  console.log(`${name} response ${uniq} raw response: >>>${body}<<<:`);
+                }
+                
                 return reject(e);
               }
             }
