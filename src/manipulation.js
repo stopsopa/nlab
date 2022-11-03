@@ -1,5 +1,7 @@
 
 const manipulation = {
+    // there is alternative
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement
     after: function (referenceNode, newNode) {
         return this.before(referenceNode.nextSibling, newNode);
     },
