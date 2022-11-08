@@ -37,10 +37,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
-    "conventional-changelog-conventionalcommits": "^5.0.0",
     "cookie-parser": "^1.4.6",
     "husky": "^8.0.2",
-    "semantic-release": "^19.0.5",
     "serve-index": "^1.9.1"
   }
 }
