@@ -24,5 +24,8 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }

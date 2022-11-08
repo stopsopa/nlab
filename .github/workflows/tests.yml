@@ -1,0 +1,46 @@
+name: Tests
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically by github itself https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [14, 15, 16, 17, 18] # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.version }}
+      - name: Yarn install
+        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
+      - name: jest tests
+        run: /bin/bash jest.sh
+
+  release:
+    needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - name: Install semantic-release
+        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
+      - name: npm pack
+        run: npm pack
+      # https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/ci-configurations/github-actions.md
+      - name: Release
+        run: node node_modules/.bin/semantic-release --debug

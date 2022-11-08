@@ -12,9 +12,17 @@ if ( typeof process.argv[2] !== 'string' ) {
   throw new Error(`port not specified - specify it as a first argument`);
 }
 
-const host      = process.env.HOST;
+const host = process.env.HOST;
 
 const port      = process.env[process.argv[2]];
+
+if (!/^\d+$/.test(port)) {
+  throw new Error(`port invalid >${port}<`);
+}
+
+if (typeof host !== "string" || !host.trim()) {
+  throw new Error(`host invalid >${host}<`);
+}
 
 if ( ! /^\d+$/.test(port) ) {
 
@@ -72,7 +80,7 @@ app.all('/timeout', async (req, res) => {
   });
 });
 
-app.all('/crush', () => {
+app.all('/crash', () => {
   process.exit(1);
 });
 

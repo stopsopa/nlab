@@ -18,7 +18,7 @@ function fetch(url, opt) {
 function fetchCrush(url, opt) {
 
     return lightFetch(
-      `http://${process.env.HOST}:${process.env.CRUSH_PORT}${url}`,
+      `http://${process.env.HOST}:${process.env.CRASH_PORT}${url}`,
       opt
     )
 }
@@ -225,7 +225,7 @@ it(`lightFetch - crush`, async done => {
 
     try {
 
-        await fetchCrush(`/crush`);
+        await fetchCrush(`/crash`);
 
         done(`test error: should reject`);
     }
