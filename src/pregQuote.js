@@ -13,7 +13,8 @@
  
  *    and check also: https://github.com/remix-run/react-router/blob/1ca0e8f6dbb4f02874183dadd6b2481a6d599008/packages/react-router-dom/modules/NavLink.js#L57
  */
-var matchOperatorsRe = /[|\\{}()[\]^$+*?.-]/g;
+//var matchOperatorsRe = /[|\\{}()[\]^$+*?.-]/g;
+var matchOperatorsRe = /[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g;
 
 function pregQuote(str) {
 
