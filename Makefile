@@ -24,3 +24,12 @@ j: # just run tests once
 
 nt: # test .npmignore
 	@npm pack
+
+style_list:
+	/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn style:list	
+
+style_check:
+	/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn style:check	
+
+style_fix:
+	/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn style:fix	
