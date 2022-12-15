@@ -1,2 +1,1 @@
-
-module.exports = require('./src/lcstorage');
+module.exports = require("./src/lcstorage");

@@ -1,2 +1,1 @@
-
-module.exports = require('./src/throttlePromises');
+module.exports = require("./src/throttlePromises");

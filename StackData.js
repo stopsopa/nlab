@@ -1,2 +1,1 @@
-
-module.exports = require('./src/StackData');
+module.exports = require("./src/StackData");

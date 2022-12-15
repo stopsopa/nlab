@@ -1,2 +1,1 @@
-
-module.exports = require('./src/aes256');
+module.exports = require("./src/aes256");

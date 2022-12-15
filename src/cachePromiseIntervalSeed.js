@@ -1,4 +1,3 @@
-
 // import cachePromiseIntervalSeed from 'nlab/cachePromiseIntervalSeed';
 //
 // import { generate } from 'nlab/ms';
@@ -28,227 +27,206 @@
 //             refreshinterval: generate({h: 1}) // 1 minute cache
 //         });
 
-const log       = require('inspc');
+const log = require("inspc");
 
-const crypto    = require('crypto');
+const crypto = require("crypto");
 
-const ms        = require('../ms');
+const ms = require("../ms");
 
-const isObject  = require('../isObject');
+const isObject = require("../isObject");
 
-const msg       = m => `cachePromiseIntervalSeed error: ${m}`
+const msg = (m) => `cachePromiseIntervalSeed error: ${m}`;
 
-const th        = m => new Error(msg(m));
+const th = (m) => new Error(msg(m));
 
-const now       = () => (new Date()).getTime();
+const now = () => new Date().getTime();
 
-const cache     = {};
+const cache = {};
 
-const tool      = key => {
+const tool = (key) => {
+  if (typeof key !== "string") {
+    throw th(`key is not a string`);
+  }
 
-    if ( typeof key !== 'string' ) {
+  if (!key.trim()) {
+    throw th(`key is an empty string`);
+  }
 
-        throw th(`key is not a string`);
+  if (!isObject(cache[key])) {
+    cache[key] = {};
+  }
+
+  return (opt = {}) => {
+    const o = {
+      seed: null,
+      create: null,
+      refreshinterval: null,
+      firstcrach: true,
+      errordepth: 3,
+      verbose: false,
+      ...opt,
+    };
+
+    if (typeof o.args !== "undefined") {
+      throw th(`using 'args' argument is deprecaded, use 'seed' instead`);
     }
 
-    if ( ! key.trim() ) {
+    let add = {};
 
-        throw th(`key is an empty string`);
+    if (o.test) {
+      add = {
+        n: "\n\n\n\n\n\n",
+      };
     }
 
-    if ( ! isObject(cache[key]) ) {
+    let ckey;
 
-        cache[key] = {};
-    }
+    try {
+      if (typeof o.create !== "function") {
+        throw th(`o.create is not a function`);
+      }
 
-    return (opt = {}) => {
+      if (typeof o.firstcrach !== "boolean") {
+        throw th(`o.firstcrach is not boolean`);
+      }
 
-        const o = {
-            seed            : null,
-            create          : null,
-            refreshinterval : null,
-            firstcrach      : true,
-            errordepth      : 3,
-            verbose         : false,
-            ...opt,
+      if (!Array.isArray(o.seed)) {
+        throw th(`o.seed is not an array`);
+      }
+
+      if (o.refreshinterval !== false) {
+        if (typeof o.refreshinterval !== "number") {
+          throw th(`o.refreshinterval is not false nor number`);
         }
 
-        if ( typeof o.args !== 'undefined' ) {
-
-            throw th(`using 'args' argument is deprecaded, use 'seed' instead`);
+        if (o.refreshinterval < 10) {
+          throw th(
+            `o.refreshinterval is number but it is < than 10, it is '${o.refreshinterval}'`
+          );
         }
+      }
 
-        let add = {};
+      const sha256 = crypto.createHash("sha256");
 
-        if (o.test) {
+      sha256.update(JSON.stringify(o.seed));
 
-            add = {
-                n: "\n\n\n\n\n\n",
-            }
-        }
+      ckey = `${key}_${sha256.digest("hex")}`;
 
-        let ckey;
+      if (!cache[key][ckey]) {
+        cache[key][ckey] = Promise.resolve(o.create());
 
-        try {
+        cache[key][ckey].now = now();
 
-            if ( typeof o.create !== 'function' ) {
+        o.refreshinterval &&
+          (function () {
+            const loop = async () => {
+              try {
+                const p = await o.create();
 
-                throw th(`o.create is not a function`);
-            }
-
-            if ( typeof o.firstcrach !== 'boolean' ) {
-
-                throw th(`o.firstcrach is not boolean`);
-            }
-
-            if ( ! Array.isArray(o.seed) ) {
-
-                throw th(`o.seed is not an array`);
-            }
-
-            if ( o.refreshinterval !== false ) {
-
-                if ( typeof o.refreshinterval !== 'number') {
-
-                    throw th(`o.refreshinterval is not false nor number`);
-                }
-
-                if ( o.refreshinterval < 10 ) {
-
-                    throw th(`o.refreshinterval is number but it is < than 10, it is '${o.refreshinterval}'`);
-                }
-            }
-
-            const sha256    = crypto.createHash('sha256');
-
-            sha256.update(JSON.stringify(o.seed));
-
-            ckey = `${key}_${sha256.digest('hex')}`;
-
-            if ( ! cache[key][ckey] ) {
-
-                cache[key][ckey] = Promise.resolve(o.create());
+                cache[key][ckey] = Promise.resolve(p);
 
                 cache[key][ckey].now = now();
 
-                o.refreshinterval && (function () {
+                // process.stdout.write("\n\n\n\n\n\n\nresolved\n\n\n\n\n\n\n");
+              } catch (e) {
+                o.verbose &&
+                  log.dump(
+                    {
+                      key,
+                      ckey,
+                      error: `o.refreshinterval next call error`,
+                      e,
+                      ...add,
+                    },
+                    o.errordepth
+                  );
+              }
 
-                    const loop = async () => {
+              cache[key][ckey].handler = setTimeout(loop, o.refreshinterval);
+            };
 
-                        try {
+            cache[key][ckey].handler = setTimeout(loop, o.refreshinterval);
+          })();
+      }
 
-                            const p = await o.create();
+      return cache[key][ckey]
+        .then((data) => {
+          const ret = {};
 
-                            cache[key][ckey] = Promise.resolve(p);
+          ret.last = cache[key][ckey].now;
 
-                            cache[key][ckey].now = now();
+          ret.now = now();
 
-                            // process.stdout.write("\n\n\n\n\n\n\nresolved\n\n\n\n\n\n\n");
-                        }
-                        catch (e) {
+          ret.next = "populated once";
 
-                            o.verbose && log.dump({
-                                key,
-                                ckey,
-                                error: `o.refreshinterval next call error`,
-                                e,
-                                ...add,
-                            }, o.errordepth);
-                        }
+          if (o.refreshinterval) {
+            ret.next = ret.last + o.refreshinterval;
 
-                        cache[key][ckey].handler = setTimeout(loop, o.refreshinterval);
-                    };
+            ret.interval = o.refreshinterval;
 
-                    cache[key][ckey].handler = setTimeout(loop, o.refreshinterval);
-                }());
-            }
+            ret.intervalHuman = ms(o.refreshinterval);
 
-            return cache[key][ckey].then(data => {
+            ret.left = ret.next - ret.now;
 
-                const ret = {};
+            ret.leftHuman = ms(ret.left);
+          }
 
-                ret.last    = cache[key][ckey].now;
+          ret.data = data;
 
-                ret.now     = now();
+          cache[key][ckey].firstcrach = true;
 
-                ret.next    = 'populated once';
-
-                if (o.refreshinterval) {
-
-                    ret.next            = ret.last + o.refreshinterval;
-
-                    ret.interval        = o.refreshinterval;
-
-                    ret.intervalHuman   = ms(o.refreshinterval);
-
-                    ret.left            = ret.next - ret.now;
-
-                    ret.leftHuman       = ms(ret.left);
-                }
-
-                ret.data    = data;
-
-                cache[key][ckey].firstcrach = true;
-
-                return ret;
-
-            }).catch(e => {
-
-                o.verbose && log.dump({
-                    key,
-                    ckey,
-                    catch: msg(`promise catch`),
-                    o,
-                    e,
-                    firstcrach: cache[key][ckey].firstcrach,
-                    ...add,
-                }, o.errordepth)
-
-                if ( cache[key][ckey].firstcrach !== true && o.firstcrach ) {
-
-                    if (o.test) {
-
-                        return Promise.reject(`<<2>>:${e}`);
-                    }
-                    else {
-
-                        process.exit(1);
-                    }
-                }
-                else {
-
-                    throw e;
-                }
-            });
-        }
-        catch (e) {
-
-            o.verbose && log.dump({
+          return ret;
+        })
+        .catch((e) => {
+          o.verbose &&
+            log.dump(
+              {
                 key,
                 ckey,
-                catch: msg(`main catch`),
+                catch: msg(`promise catch`),
                 o,
                 e,
+                firstcrach: cache[key][ckey].firstcrach,
                 ...add,
-            }, o.errordepth)
+              },
+              o.errordepth
+            );
 
-            if ( o.firstcrach ) {
-
-                if (o.test) {
-
-                    return Promise.reject(`<<1>>:${e}`)
-                }
-                else {
-
-                    process.exit(2);
-                }
+          if (cache[key][ckey].firstcrach !== true && o.firstcrach) {
+            if (o.test) {
+              return Promise.reject(`<<2>>:${e}`);
+            } else {
+              process.exit(1);
             }
-            else {
+          } else {
+            throw e;
+          }
+        });
+    } catch (e) {
+      o.verbose &&
+        log.dump(
+          {
+            key,
+            ckey,
+            catch: msg(`main catch`),
+            o,
+            e,
+            ...add,
+          },
+          o.errordepth
+        );
 
-                throw e;
-            }
+      if (o.firstcrach) {
+        if (o.test) {
+          return Promise.reject(`<<1>>:${e}`);
+        } else {
+          process.exit(2);
         }
-    };
-}
+      } else {
+        throw e;
+      }
+    }
+  };
+};
 
 module.exports = tool;

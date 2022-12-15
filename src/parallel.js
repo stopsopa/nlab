@@ -1,14 +1,11 @@
+const path = require("path");
 
-const path = require('path');
+const isObject = require("./isObject");
 
-const isObject = require('./isObject');
-
-const th = msg => new Error(`${path.basename(__filename)} error: ${msg}`);
+const th = (msg) => new Error(`${path.basename(__filename)} error: ${msg}`);
 
 module.exports = function () {
-
-  if ( arguments.length > 0 ) {
-
+  if (arguments.length > 0) {
     throw th(`Don't pass any arguments to constructor`);
   }
 
@@ -19,17 +16,13 @@ module.exports = function () {
   let slots = {};
 
   function trigger() {
-
-    if ( queue.length > 0 ) {
-
+    if (queue.length > 0) {
       const keys = Object.keys(slots);
 
-      for ( let i = 0, l = keys.length ; i < l ; i += 1 ) {
-
+      for (let i = 0, l = keys.length; i < l; i += 1) {
         const key = keys[i];
 
-        if ( slots[key] === false ) {
-
+        if (slots[key] === false) {
           slots[key] = true;
 
           let unitOfWork = queue.shift();
@@ -39,27 +32,24 @@ module.exports = function () {
           let unitOfWork_ = unitOfWork;
 
           if (isObject(unitOfWork)) {
-
-            const {
-              unitOfWork,
-              ...extra
-            } = unitOfWork;
+            const { unitOfWork, ...extra } = unitOfWork;
 
             extra_ = extra;
 
             unitOfWork_ = unitOfWork;
           }
 
-          unitOfWork_(key, function releaseSlot() {
+          unitOfWork_(
+            key,
+            function releaseSlot() {
+              if (typeof slots[key] !== "undefined") {
+                slots[key] = false;
+              }
 
-            if ( typeof slots[key] !== 'undefined') {
-
-              slots[key] = false;
-            }
-
-            trigger();
-
-          }, extra_);
+              trigger();
+            },
+            extra_
+          );
 
           return;
         }
@@ -67,24 +57,17 @@ module.exports = function () {
     }
   }
 
-  const tool = unitOfWork => {
-
-    if ( typeof opt.numberOfThreads === 'undefined' ) {
-
+  const tool = (unitOfWork) => {
+    if (typeof opt.numberOfThreads === "undefined") {
       throw th(`opt.numberOfThreads is undefined, first use setup() method`);
     }
 
-    if ( isObject(unitOfWork) ) {
-
-      if ( typeof unitOfWork.unitOfWork !== 'function') {
-
+    if (isObject(unitOfWork)) {
+      if (typeof unitOfWork.unitOfWork !== "function") {
         throw th(`unitOfWork.unitOfWork is not a function`);
       }
-    }
-    else {
-
-      if ( typeof unitOfWork !== 'function') {
-
+    } else {
+      if (typeof unitOfWork !== "function") {
         throw th(`unitOfWork is not a function`);
       }
     }
@@ -92,25 +75,20 @@ module.exports = function () {
     queue.push(unitOfWork);
 
     trigger();
-  }
+  };
 
-  tool.setup = options => {
-
-    if ( typeof options.numberOfThreads !== 'undefined' ) {
-
-      if ( ! Number.isInteger(options.numberOfThreads) ) {
-
+  tool.setup = (options) => {
+    if (typeof options.numberOfThreads !== "undefined") {
+      if (!Number.isInteger(options.numberOfThreads)) {
         throw th(`options.numberOfThreads is not an integer`);
       }
 
-      if ( options.numberOfThreads < 1) {
-
+      if (options.numberOfThreads < 1) {
         throw th(`options.numberOfThreads < 1`);
       }
     }
 
     slots = [...Array(options.numberOfThreads).keys()].reduce((a, v) => {
-
       const key = v + 1;
 
       a[key] = slots[key] || false;
@@ -121,11 +99,11 @@ module.exports = function () {
     opt = {
       ...opt,
       ...options,
-    }
-  }
+    };
+  };
 
   tool.getSetup = () => ({
-    ...opt
+    ...opt,
   });
 
   tool.getQueue = () => queue;

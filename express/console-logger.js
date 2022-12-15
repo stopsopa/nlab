@@ -1,2 +1,1 @@
-
-module.exports = require('../src/express/console-logger');
+module.exports = require("../src/express/console-logger");

@@ -1,18 +1,15 @@
+const sha256 = require("./sha256");
 
-const sha256                = require('./sha256');
-
-const prepareToStamp        = require('./prepareToStamp');
+const prepareToStamp = require("./prepareToStamp");
 
 // const log                   = require('inspc');
 
-const now = d => {
+const now = (d) => {
+  if (d) {
+    return new Date(d).getTime();
+  }
 
-    if (d) {
-
-        return (new Date(d)).getTime()
-    }
-
-    return (new Date()).getTime()
+  return new Date().getTime();
 };
 
 /**
@@ -20,358 +17,330 @@ const now = d => {
  * all rest is just optimizing to use those request in most efficient way to serve individual http responses
  */
 const tool = function (opt) {
+  const { requests, perTimeMsec, dump } = Object.assign(
+    {
+      dump: false,
+    },
+    opt
+  );
 
-    const {
-        requests,
-        perTimeMsec,
-        dump,
-    } = Object.assign({
-        dump: false,
-    }, opt);
+  if (!(typeof dump === "function" || dump === false)) {
+    throw new Error(`promiseThrottle: dump must be a function or boolean`);
+  }
 
-    if ( ! (typeof dump === 'function' || dump === false) ) {
+  if (!Number.isInteger(requests) || requests < 1) {
+    throw new Error(
+      `promiseThrottle(): requests should be positive integer, it is: ` +
+        JSON.stringify(requests)
+    );
+  }
 
-        throw new Error(`promiseThrottle: dump must be a function or boolean`);
-    }
+  if (!Number.isInteger(perTimeMsec) || perTimeMsec < 1) {
+    throw new Error(
+      `promiseThrottle(): perTimeMsec should be positive integer, it is: ` +
+        JSON.stringify(perTimeMsec)
+    );
+  }
 
-    if ( ! Number.isInteger(requests) || requests < 1 ) {
-
-        throw new Error(`promiseThrottle(): requests should be positive integer, it is: ` + JSON.stringify(requests));
-    }
-
-    if ( ! Number.isInteger(perTimeMsec) || perTimeMsec < 1 ) {
-
-        throw new Error(`promiseThrottle(): perTimeMsec should be positive integer, it is: ` + JSON.stringify(perTimeMsec));
-    }
-
-    let t, last = {
-        // [hash]: expire_time_integer
-    }
-
-    let cache = {
-        // [key]: {
-        //     //e: //expire
-        //     //p:
-        // }
+  let t,
+    last = {
+      // [hash]: expire_time_integer
     };
 
-    let schedule = [
-        // {
-        //     // k: hash
-        //     resolve,
-        //     reject,
-        // }
-    ];
+  let cache = {
+    // [key]: {
+    //     //e: //expire
+    //     //p:
+    // }
+  };
 
-    let handler = false;
+  let schedule = [
+    // {
+    //     // k: hash
+    //     resolve,
+    //     reject,
+    // }
+  ];
 
-    let lastInfo;
+  let handler = false;
 
-    function cleanAndReturnNextCleanTimeoutTime(n) {
+  let lastInfo;
 
-        if (n === undefined) {
-
-            n = now();
-        }
-
-        let lastKeys        = Object.keys(last);
-
-        let lastNum         = lastKeys.length;
-
-        let nextTrigger     = perTimeMsec;
-
-        let tt, i, l;
-
-        for ( i = 0, l = lastKeys.length ; i < l ; i += 1 ) {
-
-            t = last[lastKeys[i]];
-
-            if ( t < n ) {
-
-                delete last[lastKeys[i]];
-
-                lastNum -= 1;
-            }
-            else {
-
-                tt = t - n;
-
-                if ( tt < nextTrigger ) {
-
-                    nextTrigger = tt;
-                }
-            }
-        }
-
-        lastKeys        = Object.keys(cache);
-
-        for ( i = 0, l = lastKeys.length ; i < l ; i += 1 ) {
-
-            t = cache[lastKeys[i]].e;
-
-            if ( t < n ) {
-
-                delete cache[lastKeys[i]];
-            }
-        }
-
-        return [
-            nextTrigger,
-            lastNum,
-        ];
+  function cleanAndReturnNextCleanTimeoutTime(n) {
+    if (n === undefined) {
+      n = now();
     }
 
-    function triggerScheduled() {
+    let lastKeys = Object.keys(last);
 
-        const tmp = [];
+    let lastNum = lastKeys.length;
 
-        for ( let i = 0, l = schedule.length ; i < l ; i += 1 ) {
+    let nextTrigger = perTimeMsec;
 
-            t = schedule[i];
+    let tt, i, l;
 
-            if (cache[t.key]) {
+    for (i = 0, l = lastKeys.length; i < l; i += 1) {
+      t = last[lastKeys[i]];
 
-                cache[t.key].p.then(t.resolve, t.reject);
-            }
-            else {
+      if (t < n) {
+        delete last[lastKeys[i]];
 
-                tmp.push(t);
-            }
+        lastNum -= 1;
+      } else {
+        tt = t - n;
+
+        if (tt < nextTrigger) {
+          nextTrigger = tt;
         }
-
-        schedule = tmp;
+      }
     }
 
-    function sendScheduled(nextTrigger, tool, dump) {
+    lastKeys = Object.keys(cache);
 
-        if ( handler || schedule.length === 0 ) {
+    for (i = 0, l = lastKeys.length; i < l; i += 1) {
+      t = cache[lastKeys[i]].e;
 
-            return;
-        }
-
-        setTimeout(() => {
-
-            handler = false;
-
-            const n                     = now();
-
-            const [
-                nextTrigger,
-                lastNum
-            ]                           = cleanAndReturnNextCleanTimeoutTime(n);
-
-            triggerScheduled();
-
-            const sendHowMany = requests - lastNum;
-
-            if (sendHowMany > 0) {
-
-                for ( let i = 0 ; i < sendHowMany ; i += 1 ) {
-
-                    const set = schedule.shift();
-
-                    if (set) {
-
-                        const {
-                            keepInCacheForMsec,
-                            key,
-                            createPromise,
-                            resolve,
-                            reject,
-                        } = set;
-
-                        let promise;
-
-                        try {
-
-                            promise = createPromise();
-                        }
-                        catch (e) {
-
-                            reject(e);
-
-                            promise = Promise.reject(e);
-                        }
-
-                        promise = Promise.resolve(promise);
-
-                        promise.then(resolve, reject);
-
-                        cache[key] = {
-                            e: n + keepInCacheForMsec,
-                            p: promise,
-                        };
-                    }
-                }
-            }
-
-            sendScheduled(nextTrigger, tool, dump);
-
-            dump && dump({
-                time: now(),
-                event: `sendScheduled`,
-                inspect: tool.inspect(),
-                lastInfo: tool.lastInfo(),
-            })
-
-        }, nextTrigger);
+      if (t < n) {
+        delete cache[lastKeys[i]];
+      }
     }
 
-    const tool = function (forKey, createPromise, keepInCacheForMsec, forceLive = false) {
+    return [nextTrigger, lastNum];
+  }
 
-        if ( ! Number.isInteger(keepInCacheForMsec) || keepInCacheForMsec < 1 ) {
+  function triggerScheduled() {
+    const tmp = [];
 
-            throw new Error(`throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec should be positive integer, it is: ` + JSON.stringify(keepInCacheForMsec));
-        }
+    for (let i = 0, l = schedule.length; i < l; i += 1) {
+      t = schedule[i];
 
-        if ( keepInCacheForMsec < perTimeMsec) {
+      if (cache[t.key]) {
+        cache[t.key].p.then(t.resolve, t.reject);
+      } else {
+        tmp.push(t);
+      }
+    }
 
-            throw new Error(`throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec [${keepInCacheForMsec}] can't be smaller than perTimeMsec [${perTimeMsec}] given in main function throttlePromies(requests, perTimeMsec)`);
-        }
+    schedule = tmp;
+  }
 
-        if ( typeof createPromise !== 'function' ) {
+  function sendScheduled(nextTrigger, tool, dump) {
+    if (handler || schedule.length === 0) {
+      return;
+    }
 
-            throw new Error(`throttlePromies(forKey, createPromise, keepInCacheForMsec): createPromise is not a funciton, it is: ` + JSON.stringify(createPromise));
-        }
+    setTimeout(() => {
+      handler = false;
 
-        if ( forKey === undefined ) {
+      const n = now();
 
-            throw new Error(`throttlePromies(forKey, createPromise, keepInCacheForMsec): forKey can't be undefined, it is: ` + JSON.stringify(forKey));
-        }
+      const [nextTrigger, lastNum] = cleanAndReturnNextCleanTimeoutTime(n);
 
-        if ( forceLive ) {
+      triggerScheduled();
 
-            lastInfo = 'forcelive';
+      const sendHowMany = requests - lastNum;
 
-            return createPromise();
-        }
+      if (sendHowMany > 0) {
+        for (let i = 0; i < sendHowMany; i += 1) {
+          const set = schedule.shift();
 
-        const n                     = now();
+          if (set) {
+            const { keepInCacheForMsec, key, createPromise, resolve, reject } =
+              set;
 
-        const [
-            nextTrigger,
-            lastNum
-        ]                           = cleanAndReturnNextCleanTimeoutTime(n);
+            let promise;
 
-        const key                   = sha256(JSON.stringify(prepareToStamp(forKey)));
+            try {
+              promise = createPromise();
+            } catch (e) {
+              reject(e);
 
-        if (cache[key]) {
+              promise = Promise.reject(e);
+            }
 
-            lastInfo = 'cache';
+            promise = Promise.resolve(promise);
 
-            dump && dump({
-                time: now(),
-                event: `cache[${key}]`,
-                inspect: tool.inspect(),
-                lastInfo: tool.lastInfo(),
-            })
-
-            return cache[key].p;
-        }
-
-        let promise;
-
-        if ( lastNum < requests ) {
-
-            last[key]       = n + perTimeMsec;
-
-            promise   = createPromise();
+            promise.then(resolve, reject);
 
             cache[key] = {
-                e: n + keepInCacheForMsec,
-                p: promise,
-            }
-
-            triggerScheduled();
-
-            lastInfo = 'live';
-
-            dump && dump({
-                time: now(),
-                event: `live: ${key}`,
-                inspect: tool.inspect(),
-                lastInfo: tool.lastInfo(),
-            })
+              e: n + keepInCacheForMsec,
+              p: promise,
+            };
+          }
         }
-        else {
+      }
 
-            let resolve, reject;
+      sendScheduled(nextTrigger, tool, dump);
 
-            promise = new Promise((res, rej) => {
-                resolve     = res;
-                reject      = rej;
-            });
+      dump &&
+        dump({
+          time: now(),
+          event: `sendScheduled`,
+          inspect: tool.inspect(),
+          lastInfo: tool.lastInfo(),
+        });
+    }, nextTrigger);
+  }
 
-            schedule.push({
-                keepInCacheForMsec,
-                key,
-                createPromise,
-                resolve,
-                reject,
-            });
-
-            sendScheduled(nextTrigger, tool, dump);
-
-            lastInfo = 'scheduled';
-
-            dump && dump({
-                time: now(),
-                event: `scheduled: ${key}`,
-                inspect: tool.inspect(),
-                lastInfo: tool.lastInfo(),
-            })
-        }
-
-        return promise;
+  const tool = function (
+    forKey,
+    createPromise,
+    keepInCacheForMsec,
+    forceLive = false
+  ) {
+    if (!Number.isInteger(keepInCacheForMsec) || keepInCacheForMsec < 1) {
+      throw new Error(
+        `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec should be positive integer, it is: ` +
+          JSON.stringify(keepInCacheForMsec)
+      );
     }
 
-    tool.lastInfo = () => lastInfo;
+    if (keepInCacheForMsec < perTimeMsec) {
+      throw new Error(
+        `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec [${keepInCacheForMsec}] can't be smaller than perTimeMsec [${perTimeMsec}] given in main function throttlePromies(requests, perTimeMsec)`
+      );
+    }
 
-    tool.inspect = () => {
+    if (typeof createPromise !== "function") {
+      throw new Error(
+        `throttlePromies(forKey, createPromise, keepInCacheForMsec): createPromise is not a funciton, it is: ` +
+          JSON.stringify(createPromise)
+      );
+    }
 
-        const n = now()
+    if (forKey === undefined) {
+      throw new Error(
+        `throttlePromies(forKey, createPromise, keepInCacheForMsec): forKey can't be undefined, it is: ` +
+          JSON.stringify(forKey)
+      );
+    }
 
-        return {
-            schedule,
-            last,
-            cache: Object.keys(cache).reduce((acc, key) => {
+    if (forceLive) {
+      lastInfo = "forcelive";
 
-                acc[key] = Object.assign(cache[key], {
-                    expireIn: (cache[key].e - n) / 1000,
-                });
+      return createPromise();
+    }
 
-                return acc;
-            }, {}),
-        };
+    const n = now();
+
+    const [nextTrigger, lastNum] = cleanAndReturnNextCleanTimeoutTime(n);
+
+    const key = sha256(JSON.stringify(prepareToStamp(forKey)));
+
+    if (cache[key]) {
+      lastInfo = "cache";
+
+      dump &&
+        dump({
+          time: now(),
+          event: `cache[${key}]`,
+          inspect: tool.inspect(),
+          lastInfo: tool.lastInfo(),
+        });
+
+      return cache[key].p;
+    }
+
+    let promise;
+
+    if (lastNum < requests) {
+      last[key] = n + perTimeMsec;
+
+      promise = createPromise();
+
+      cache[key] = {
+        e: n + keepInCacheForMsec,
+        p: promise,
+      };
+
+      triggerScheduled();
+
+      lastInfo = "live";
+
+      dump &&
+        dump({
+          time: now(),
+          event: `live: ${key}`,
+          inspect: tool.inspect(),
+          lastInfo: tool.lastInfo(),
+        });
+    } else {
+      let resolve, reject;
+
+      promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+
+      schedule.push({
+        keepInCacheForMsec,
+        key,
+        createPromise,
+        resolve,
+        reject,
+      });
+
+      sendScheduled(nextTrigger, tool, dump);
+
+      lastInfo = "scheduled";
+
+      dump &&
+        dump({
+          time: now(),
+          event: `scheduled: ${key}`,
+          inspect: tool.inspect(),
+          lastInfo: tool.lastInfo(),
+        });
+    }
+
+    return promise;
+  };
+
+  tool.lastInfo = () => lastInfo;
+
+  tool.inspect = () => {
+    const n = now();
+
+    return {
+      schedule,
+      last,
+      cache: Object.keys(cache).reduce((acc, key) => {
+        acc[key] = Object.assign(cache[key], {
+          expireIn: (cache[key].e - n) / 1000,
+        });
+
+        return acc;
+      }, {}),
     };
+  };
 
-    tool.clear = () =>{
+  tool.clear = () => {
+    cleanAndReturnNextCleanTimeoutTime();
 
-        cleanAndReturnNextCleanTimeoutTime();
+    dump &&
+      dump({
+        time: now(),
+        event: `clear`,
+        inspect: tool.inspect(),
+        lastInfo: tool.lastInfo(),
+      });
+  };
 
-        dump && dump({
-            time: now(),
-            event: `clear`,
-            inspect: tool.inspect(),
-            lastInfo: tool.lastInfo(),
-        })
-    };
+  tool.trigger = () => {
+    cleanAndReturnNextCleanTimeoutTime();
 
-    tool.trigger = () => {
+    triggerScheduled();
 
-        cleanAndReturnNextCleanTimeoutTime();
+    dump &&
+      dump({
+        time: now(),
+        event: `trigger`,
+        inspect: tool.inspect(),
+        lastInfo: tool.lastInfo(),
+      });
+  };
 
-        triggerScheduled();
-
-        dump && dump({
-            time: now(),
-            event: `trigger`,
-            inspect: tool.inspect(),
-            lastInfo: tool.lastInfo(),
-        })
-    };
-
-    return tool;
+  return tool;
 };
 
 tool.now = now;

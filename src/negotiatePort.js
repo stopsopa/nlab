@@ -1,73 +1,58 @@
+"use strict";
 
-'use strict';
+const trim = require("./trim");
 
-const trim = require('./trim');
-
-const th = msg => new Error(`negotiatePort error: ${msg}`);
+const th = (msg) => new Error(`negotiatePort error: ${msg}`);
 
 /**
  * @doc https://github.com/stopsopa/nlab#negotiatePort
  */
 const negotiatePort = function (protocol, port, prefix) {
+  if (typeof protocol !== "string") {
+    throw th(`protocol '${protocol}' is not a string`);
+  }
 
-    if (typeof protocol !== 'string') {
+  protocol = trim(protocol, "/:");
 
-        throw th(`protocol '${protocol}' is not a string`);
+  protocol = protocol.toLowerCase();
+
+  if (!/^https?$/.test(protocol)) {
+    throw th(`protocol '${protocol}' don't match /^https?$/`);
+  }
+
+  if (port === undefined) {
+    return "";
+  }
+
+  if (port === "") {
+    return "";
+  }
+
+  if (!/^\d+$/.test(port)) {
+    throw th(`port '${port}' is not a number`);
+  }
+
+  port = String(port);
+
+  var ret = "";
+
+  if (protocol === "https") {
+    if (port != 443) {
+      ret = port;
     }
-
-    protocol = trim(protocol, '/:');
-
-    protocol = protocol.toLowerCase();
-
-    if ( ! /^https?$/.test(protocol) ) {
-
-        throw th(`protocol '${protocol}' don't match /^https?$/`);
+  } else {
+    if (port != 80) {
+      ret = port;
     }
+  }
 
-    if (port === undefined) {
-
-        return '';
+  if (ret) {
+    if (typeof prefix === "string") {
+      return prefix + ret;
     }
+  }
 
-    if (port === '') {
-
-        return '';
-    }
-
-    if ( ! /^\d+$/.test(port) ) {
-
-        throw th(`port '${port}' is not a number`);
-    }
-
-    port = String(port);
-
-    var ret = '';
-
-    if (protocol === 'https') {
-
-        if (port != 443) {
-
-            ret = port;
-        }
-    }
-    else {
-
-        if (port != 80) {
-
-            ret = port;
-        }
-    }
-
-
-    if (ret) {
-
-        if (typeof prefix === 'string') {
-
-            return prefix + ret;
-        }
-    }
-
-    return ret;
-}
+  return ret;
+};
 
 module.exports = negotiatePort;

@@ -1,2 +1,1 @@
-
-module.exports = require('./src/ms');
+module.exports = require("./src/ms");

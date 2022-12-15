@@ -1,2 +1,1 @@
-
-module.exports = require('./src/sha256');
+module.exports = require("./src/sha256");

@@ -348,7 +348,9 @@ it("cachePromiseInterval crash 4", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.refreshinterval is not false nor number");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseInterval error: o.refreshinterval is not false nor number"
+      );
 
       done();
     }
@@ -377,7 +379,9 @@ it("cachePromiseInterval crash 5", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.args is not an array");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseInterval error: o.args is not an array"
+      );
 
       done();
     }
@@ -473,7 +477,9 @@ it("cachePromiseInterval firstcrach not false", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.firstcrach is not boolean");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseInterval error: o.firstcrach is not boolean"
+      );
 
       done();
     }
@@ -501,7 +507,9 @@ it("cachePromiseInterval create not function", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseInterval error: o.create is not a function");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseInterval error: o.create is not a function"
+      );
 
       done();
     }
@@ -515,7 +523,9 @@ it("cachePromiseInterval key not string", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("Error: cachePromiseInterval error: key is not a string");
+      expect(String(e)).toEqual(
+        "Error: cachePromiseInterval error: key is not a string"
+      );
 
       done();
     }
@@ -529,7 +539,9 @@ it("cachePromiseInterval key an empty string", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("Error: cachePromiseInterval error: key is an empty string");
+      expect(String(e)).toEqual(
+        "Error: cachePromiseInterval error: key is an empty string"
+      );
 
       done();
     }

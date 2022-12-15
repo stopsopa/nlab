@@ -1,2 +1,1 @@
-
-module.exports = require('./src/alphaid');
+module.exports = require("./src/alphaid");

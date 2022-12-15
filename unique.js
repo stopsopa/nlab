@@ -1,2 +1,1 @@
-
-module.exports = require('./src/unique');
+module.exports = require("./src/unique");

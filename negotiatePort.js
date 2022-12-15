@@ -1,2 +1,1 @@
-
-module.exports = require('./src/negotiatePort');
+module.exports = require("./src/negotiatePort");

@@ -1,5 +1,4 @@
-
-const node = require('./isNode');
+const node = require("./isNode");
 
 /**
  // navigator.userAgent:
@@ -25,38 +24,30 @@ const node = require('./isNode');
  * getUserAgent((function () {try {return staticContext.req.headers['user-agent']}catch(e){}}()))
  */
 module.exports = function (ua) {
+  let u = false;
 
-    let u = false;
+  let l;
 
-    let l;
+  try {
+    if (node) {
+      if (typeof ua !== "undefined") {
+        u = ua;
+      }
 
-    try {
-
-        if (node) {
-
-            if (typeof ua !== 'undefined') {
-
-                u = ua;
-            }
-
-            if ( u === false ) {
-
-                throw `getUserAgent: can't get userAgent`;
-            }
-        }
-        else {
-
-            u = navigator.userAgent
-        }
-
-        l = u.toLowerCase();
-    }
-    catch (e) {
-
-        throw `getUserAgent: Can't detect browser: ` + (e + '');
+      if (u === false) {
+        throw `getUserAgent: can't get userAgent`;
+      }
+    } else {
+      u = navigator.userAgent;
     }
 
-    return {
-        u, l
-    }
+    l = u.toLowerCase();
+  } catch (e) {
+    throw `getUserAgent: Can't detect browser: ` + (e + "");
+  }
+
+  return {
+    u,
+    l,
+  };
 };

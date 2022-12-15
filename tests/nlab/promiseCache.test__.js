@@ -1,182 +1,153 @@
+const { start, diff } = require("./timer");
 
-const { start, diff }   = require('./timer');
+const promiseCache = require("../../promiseCache");
 
-const promiseCache      = require('../../promiseCache');
+const log = require("inspc");
 
-const log               = require('inspc');
+const delay = require("../../src/delay");
 
-const delay             = require('../../src/delay');
+const unique = require("../../src/unique");
 
-const unique            = require('../../src/unique');
-
-const {
-    prepareToStamp,
-    throttle,
-    nowHR,
-    now,
-} = promiseCache;
+const { prepareToStamp, throttle, nowHR, now } = promiseCache;
 
 jest.setTimeout(1400);
 
-it('throttle second from cache in withinTimeMS', async done => {
+it("throttle second from cache in withinTimeMS", async (done) => {
+  const throttler = throttle(2, 100, 50);
 
-    const throttler     = throttle(2, 100, 50);
+  const r1 = await throttler("key", () => delay(40, "first"));
 
-    const r1            = await throttler('key', () => delay(40, 'first'));
+  expect(r1).toEqual("first");
 
-    expect(r1).toEqual('first');
+  expect(throttler.lastInfo()).toEqual("live");
 
-    expect(throttler.lastInfo()).toEqual('live');
+  const r2 = await throttler("key", () => delay(40, "second"));
 
-    const r2            = await throttler('key', () => delay(40, 'second'));
+  expect(r2).toEqual("first");
 
-    expect(r2).toEqual('first');
+  expect(throttler.lastInfo()).toEqual("from cache");
 
-    expect(throttler.lastInfo()).toEqual('from cache');
-
-    done();
+  done();
 });
 
+it("throttle second live, beyond withinTimeMS", async (done) => {
+  const throttler = throttle(2, 20, 50);
 
-it('throttle second live, beyond withinTimeMS', async done => {
+  const r1 = await throttler("key", () => delay(40, "first"));
 
-    const throttler     = throttle(2, 20, 50);
+  expect(r1).toEqual("first");
 
-    const r1            = await throttler('key', () => delay(40, 'first'));
+  expect(throttler.lastInfo()).toEqual("live");
 
-    expect(r1).toEqual('first');
+  const r2 = await throttler("key", () => delay(40, "second"));
 
-    expect(throttler.lastInfo()).toEqual('live');
+  expect(r2).toEqual("second");
 
-    const r2            = await throttler('key', () => delay(40, 'second'));
+  expect(throttler.lastInfo()).toEqual("live");
 
-    expect(r2).toEqual('second');
-
-    expect(throttler.lastInfo()).toEqual('live');
-
-    done();
+  done();
 });
 
+it("throttle second live, beyond withinTimeMS", async (done) => {
+  const throttler = throttle(2, 100, 50);
 
+  const r1 = await throttler("key", () => delay(40, "first")); // 40
 
-it('throttle second live, beyond withinTimeMS', async done => {
+  expect(r1).toEqual("first");
 
-    const throttler     = throttle(2, 100, 50);
+  expect(throttler.lastInfo()).toEqual("live");
 
-    const r1            = await throttler('key', () => delay(40, 'first')); // 40
+  await delay(40); // 40
 
-    expect(r1).toEqual('first');
+  const r2 = await throttler("key", () => delay(40, "second")); // 0
 
-    expect(throttler.lastInfo()).toEqual('live');
+  expect(r2).toEqual("first");
 
-    await delay(40); // 40
+  expect(throttler.lastInfo()).toEqual("from cache");
 
-    const r2            = await throttler('key', () => delay(40, 'second')); // 0
+  await delay(40); // 40
 
-    expect(r2).toEqual('first');
+  const r3 = await throttler("key", () => delay(40, "thrid"));
 
-    expect(throttler.lastInfo()).toEqual('from cache');
+  expect(r3).toEqual("thrid");
 
-    await delay(40); // 40
+  expect(throttler.lastInfo()).toEqual("live");
 
-    const r3            = await throttler('key', () => delay(40, 'thrid'));
+  await delay(40);
 
-    expect(r3).toEqual('thrid');
+  const r4 = await throttler("key", () => delay(40, "forth"));
 
-    expect(throttler.lastInfo()).toEqual('live');
+  expect(r4).toEqual("thrid");
 
-    await delay(40);
+  expect(throttler.lastInfo()).toEqual("from cache");
 
-    const r4            = await throttler('key', () => delay(40, 'forth'));
-
-    expect(r4).toEqual('thrid');
-
-    expect(throttler.lastInfo()).toEqual('from cache');
-
-    done();
+  done();
 });
 
+it("throttle second live, beyond withinTimeMS", async (done) => {
+  const s = now();
 
+  const throttler = throttle(1, 100, 50);
 
-it('throttle second live, beyond withinTimeMS', async done => {
+  const r1 = await throttler("key1", () => delay(40, "first")); // 40
 
+  expect(r1).toEqual("first");
+
+  expect(throttler.lastInfo()).toEqual("live");
+
+  // await delay(40); // 40
+
+  const r2 = await throttler("key2", () => delay(40, "second")); // 0
+
+  expect(r2).toEqual("second");
+
+  expect(throttler.lastInfo()).toEqual("scheduled");
+
+  const pr3 = throttler("key3", () => delay(40, "thrid")); // 0
+
+  const pr4 = throttler("key4", () => delay(40, "forth")); // 0
+
+  const r3 = await pr3;
+
+  const r4 = await pr4;
+
+  expect(r3).toEqual("thrid");
+
+  expect(throttler.lastInfo()).toEqual("scheduled");
+
+  done();
+});
+
+it("throttle crash 2", async (done) => {
+  try {
     const s = now();
 
-    const throttler     = throttle(1, 100, 50);
+    const throttler = throttle(1, 100, 50);
 
-    const r1            = await throttler('key1', () => delay(40, 'first')); // 40
+    const r1 = await throttler("key1", () => "test"); // 40
 
-    expect(r1).toEqual('first');
-
-    expect(throttler.lastInfo()).toEqual('live');
-
-    // await delay(40); // 40
-
-    const r2            = await throttler('key2', () => delay(40, 'second')); // 0
-
-    expect(r2).toEqual('second');
-
-    expect(throttler.lastInfo()).toEqual('scheduled');
-
-
-    const pr3               = throttler('key3', () => delay(40, 'thrid')); // 0
-
-    const pr4               = throttler('key4', () => delay(40, 'forth')); // 0
-
-    const r3                = await pr3;
-
-    const r4                = await pr4;
-
-    expect(r3).toEqual('thrid');
-
-    expect(throttler.lastInfo()).toEqual('scheduled');
+    const r2 = await throttler("key2", () => {
+      throw new Error(`error2`);
+    }); // 40
+  } catch (e) {
+    expect(e.message).toEqual("error2");
 
     done();
+  }
 });
 
-it('throttle crash 2', async done => {
+it("throttle crash", async (done) => {
+  try {
+    const s = now();
 
-    try {
+    const throttler = throttle(1, 100);
 
-        const s = now();
+    const r1 = await throttler("key1", () => {
+      throw new Error(`error1`);
+    }); // 40
+  } catch (e) {
+    expect(e.message).toEqual("error1");
 
-        const throttler     = throttle(1, 100, 50);
-
-        const r1            = await throttler('key1', () => 'test'); // 40
-
-        const r2            = await throttler('key2', () => {throw new Error(`error2`)}); // 40
-    }
-    catch (e) {
-
-        expect(e.message).toEqual('error2');
-
-        done();
-    }
+    done();
+  }
 });
-
-it('throttle crash', async done => {
-
-    try {
-
-        const s = now();
-
-        const throttler     = throttle(1, 100);
-
-        const r1            = await throttler('key1', () => {throw new Error(`error1`)}); // 40
-    }
-    catch (e) {
-
-        expect(e.message).toEqual('error1');
-
-        done();
-    }
-});
-
-
-
-
-
-
-
-
-

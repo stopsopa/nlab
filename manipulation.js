@@ -1,2 +1,1 @@
-
-module.exports = require('./src/manipulation');
+module.exports = require("./src/manipulation");

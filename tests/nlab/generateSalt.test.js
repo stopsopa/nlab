@@ -33,7 +33,9 @@ it(`generateSalt - false`, (done) => {
 
       done("error");
     } catch (e) {
-      expect(String(e)).toEqual("Error: generateSalt error: characters is not an integer");
+      expect(String(e)).toEqual(
+        "Error: generateSalt error: characters is not an integer"
+      );
 
       done();
     }

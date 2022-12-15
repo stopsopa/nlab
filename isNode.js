@@ -1,2 +1,1 @@
-
-module.exports = require('./src/isNode');
+module.exports = require("./src/isNode");

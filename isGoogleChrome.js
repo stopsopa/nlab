@@ -1,2 +1,1 @@
-
-module.exports = require('./src/isGoogleChrome');
+module.exports = require("./src/isGoogleChrome");

@@ -3,7 +3,7 @@
  */
 
 function isDate(o) {
-    return Object.prototype.toString.call(o) === '[object Date]';
+  return Object.prototype.toString.call(o) === "[object Date]";
 }
 
 module.exports = isDate;

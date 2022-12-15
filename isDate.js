@@ -1,2 +1,1 @@
-
-module.exports = require('./src/isDate');
+module.exports = require("./src/isDate");

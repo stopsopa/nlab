@@ -1,5 +1,4 @@
-
-const getUserAgent = require('./getUserAgent');
+const getUserAgent = require("./getUserAgent");
 
 /**
  * @param ua
@@ -10,13 +9,11 @@ const getUserAgent = require('./getUserAgent');
  * isGoogleChrome((function () {try {return staticContext.req.headers['user-agent']}catch(e){}}()))
  */
 module.exports = function (ua) {
+  const { u, l } = getUserAgent(ua);
 
-    const {
-        u,l
-    } = getUserAgent(ua);
-
-    return l.indexOf('chrome') > -1
-        && l.indexOf('chromium') === -1
-        && l.indexOf('opr') === -1
-    ;
+  return (
+    l.indexOf("chrome") > -1 &&
+    l.indexOf("chromium") === -1 &&
+    l.indexOf("opr") === -1
+  );
 };

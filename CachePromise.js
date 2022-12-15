@@ -1,2 +1,1 @@
-
-module.exports = require('./src/CachePromise');
+module.exports = require("./src/CachePromise");

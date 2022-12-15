@@ -1,18 +1,15 @@
-
 function now() {
-  return (new Date()).toISOString().substring(0, 19).replace('T', ' ');
+  return new Date().toISOString().substring(0, 19).replace("T", " ");
 }
 
 const exit = (function (e) {
-  return code => e(code);
-}(process.exit));
+  return (code) => e(code);
+})(process.exit);
 
 let used = false;
 
 module.exports = async (promise, options) => {
-
   if (used) {
-
     throw new Error(`${__filename} ${now()} event already registered`);
   }
 
@@ -26,25 +23,36 @@ module.exports = async (promise, options) => {
     verbose,
     bindTo,
     overrideExit,
-  } = Object.assign({}, {
-    resume              : true,
-    // https://nodejs.org/api/process.html#process_signal_events
-    bindTo              : ['exit', 'SIGINT', 'SIGTERM', 'SIGHUP', 'SIGBREAK', 'SIGUSR1', 'SIGUSR2', 'uncaughtException'],
+  } = Object.assign(
+    {},
+    {
+      resume: true,
+      // https://nodejs.org/api/process.html#process_signal_events
+      bindTo: [
+        "exit",
+        "SIGINT",
+        "SIGTERM",
+        "SIGHUP",
+        "SIGBREAK",
+        "SIGUSR1",
+        "SIGUSR2",
+        "uncaughtException",
+      ],
 
-    exitCodeNormal      : 0,
-    exitCodeTimeout     : 1,
-    promiseTimeoutMsec  : 30000,
-    verbose             : true,
-    errors              : true,
-    overrideExit        : true,
-  }, options);
+      exitCodeNormal: 0,
+      exitCodeTimeout: 1,
+      promiseTimeoutMsec: 30000,
+      verbose: true,
+      errors: true,
+      overrideExit: true,
+    },
+    options
+  );
 
   let stop = false;
 
   async function onExit(origin, exitCodeManual) {
-
     if (stop) {
-
       return;
     }
 
@@ -55,29 +63,25 @@ module.exports = async (promise, options) => {
     let timeoutHandler;
 
     if (Number.isInteger(promiseTimeoutMsec)) {
-
       timeoutHandler = setTimeout(() => {
-
-        errors && console.error(`${__filename} ${now()} promiseTimeoutMsec(${promiseTimeoutMsec})`);
+        errors &&
+          console.error(
+            `${__filename} ${now()} promiseTimeoutMsec(${promiseTimeoutMsec})`
+          );
 
         exit(exitCodeTimeout);
-
       }, promiseTimeoutMsec);
     }
 
     if (resume) {
-
-// https://stackoverflow.com/a/14032965/5560682
-// https://nodejs.org/api/process.html#process_signal_events
+      // https://stackoverflow.com/a/14032965/5560682
+      // https://nodejs.org/api/process.html#process_signal_events
       process.stdin.resume(); //so the program will not close instantly
     }
 
     try {
-
       exitCodeNormal = parseInt(await promise(origin), 10);
-    }
-    catch (e) {
-
+    } catch (e) {
       errors && console.error(`${__filename} ${now()} error: ${e}`);
     }
 
@@ -89,10 +93,8 @@ module.exports = async (promise, options) => {
   }
 
   if (overrideExit) {
-
-    process.exit = code => onExit('manual', code);
+    process.exit = (code) => onExit("manual", code);
   }
-
 
   // // do something when app is closing
   // process.on('exit', onExit.bind(null,'exit'));
@@ -107,10 +109,9 @@ module.exports = async (promise, options) => {
   // // catches uncaught exceptions
   // process.on('uncaughtException', onExit.bind(null, 'uncaughtException'));
 
-  bindTo.forEach(event => {
-
+  bindTo.forEach((event) => {
     // console.log(`bind ${event}`)
 
-    process.on(event, onExit.bind(null, event))
+    process.on(event, onExit.bind(null, event));
   });
-}
+};

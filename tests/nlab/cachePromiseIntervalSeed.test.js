@@ -6,7 +6,8 @@ const log = require("inspc");
 
 const delay = require("../../delay");
 
-it("cachePromiseIntervalSeed", (done) => {  (async function () {
+it("cachePromiseIntervalSeed", (done) => {
+  (async function () {
     try {
       const t = cache(`cp1`);
 
@@ -378,7 +379,9 @@ it("cachePromiseIntervalSeed crash 5", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.seed is not an array");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseIntervalSeed error: o.seed is not an array"
+      );
 
       done();
     }
@@ -474,7 +477,9 @@ it("cachePromiseIntervalSeed firstcrach not false", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.firstcrach is not boolean");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseIntervalSeed error: o.firstcrach is not boolean"
+      );
 
       done();
     }
@@ -502,7 +507,9 @@ it("cachePromiseIntervalSeed create not function", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.create is not a function");
+      expect(String(e)).toEqual(
+        "<<1>>:Error: cachePromiseIntervalSeed error: o.create is not a function"
+      );
 
       done();
     }
@@ -516,7 +523,9 @@ it("cachePromiseIntervalSeed key not string", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is not a string");
+      expect(String(e)).toEqual(
+        "Error: cachePromiseIntervalSeed error: key is not a string"
+      );
 
       done();
     }
@@ -530,7 +539,9 @@ it("cachePromiseIntervalSeed key an empty string", (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is an empty string");
+      expect(String(e)).toEqual(
+        "Error: cachePromiseIntervalSeed error: key is an empty string"
+      );
 
       done();
     }

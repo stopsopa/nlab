@@ -7,11 +7,17 @@ const se = require("../../se");
 jest.setTimeout(100);
 
 function fetch(url, opt) {
-  return lightFetch(`http://${process.env.HOST}:${process.env.PORT}${url}`, opt);
+  return lightFetch(
+    `http://${process.env.HOST}:${process.env.PORT}${url}`,
+    opt
+  );
 }
 
 function fetchCrush(url, opt) {
-  return lightFetch(`http://${process.env.HOST}:${process.env.CRASH_PORT}${url}`, opt);
+  return lightFetch(
+    `http://${process.env.HOST}:${process.env.CRASH_PORT}${url}`,
+    opt
+  );
 }
 
 function cleanHeaders(req) {
@@ -77,9 +83,11 @@ it(`lightFetch - json/invalid/with/header - decode`, (done) => {
 
       done(`test error: should reject`);
     } catch (e) {
-      expect(String(e).includes("JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input")).toEqual(
-        true
-      );
+      expect(
+        String(e).includes(
+          "JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input"
+        )
+      ).toEqual(true);
 
       done();
     }
@@ -152,7 +160,9 @@ it(`lightFetch - fail through promiseResolvingStatusCodes`, (done) => {
 
       done(`test error: should reject`);
     } catch (e) {
-      expect(String(e).includes("Not resolving response status code")).toEqual(true);
+      expect(String(e).includes("Not resolving response status code")).toEqual(
+        true
+      );
 
       done();
     }
@@ -170,9 +180,11 @@ it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
 
       done(`test error: should reject`);
     } catch (e) {
-      expect(String(e).includes("lib.request end method error: Error: promiseResolvingStatusCodes throw")).toEqual(
-        true
-      );
+      expect(
+        String(e).includes(
+          "lib.request end method error: Error: promiseResolvingStatusCodes throw"
+        )
+      ).toEqual(true);
 
       done();
     }
@@ -266,7 +278,11 @@ it(`lightFetch - not valid parameter`, (done) => {
 
       done(`test error: should reject`);
     } catch (e) {
-      expect(String(e).includes(`key 'notvalidparam' is not on the list of allowed parameters method`)).toEqual(true);
+      expect(
+        String(e).includes(
+          `key 'notvalidparam' is not on the list of allowed parameters method`
+        )
+      ).toEqual(true);
 
       done();
     }
@@ -317,7 +333,9 @@ it(`lightFetch - method GET but still body provided`, (done) => {
       done(`test error: should reject`);
     } catch (e) {
       expect(
-        String(e).includes(`since you have specified the body for request probably method shouldn't be GET`)
+        String(e).includes(
+          `since you have specified the body for request probably method shouldn't be GET`
+        )
       ).toEqual(true);
 
       done();
@@ -448,7 +466,9 @@ it(`lightFetch - decodeJson = true, invalid json`, (done) => {
 
       done(`test error: should reject`);
     } catch (e) {
-      expect(String(e).includes(`SyntaxError: Unexpected end of JSON input`)).toEqual(true);
+      expect(
+        String(e).includes(`SyntaxError: Unexpected end of JSON input`)
+      ).toEqual(true);
 
       done();
     }

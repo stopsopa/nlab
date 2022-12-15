@@ -1,2 +1,1 @@
-
-module.exports = require('./src/delay');
+module.exports = require("./src/delay");
