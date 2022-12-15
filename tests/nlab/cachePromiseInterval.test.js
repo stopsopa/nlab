@@ -8,6 +8,9 @@ const delay     = require('../../delay');
 
 it('cachePromiseInterval', async done => {
 
+
+    (async function () {
+
     try {
 
         const t = cache(`cp1`);
@@ -78,6 +81,9 @@ it('cachePromiseInterval', async done => {
 
 it('cachePromiseInterval 2', async done => {
 
+
+    (async function () {
+
     try {
 
         const t = cache(`cp2`);
@@ -146,6 +152,9 @@ it('cachePromiseInterval 2', async done => {
 
 
 it('cachePromiseInterval 3', async done => {
+
+
+    (async function () {
 
     try {
 
@@ -217,6 +226,9 @@ it('cachePromiseInterval 3', async done => {
 
 it('cachePromiseInterval crash', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -270,6 +282,9 @@ it('cachePromiseInterval crash', async done => {
 
 it('cachePromiseInterval crash 2', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -305,6 +320,9 @@ it('cachePromiseInterval crash 2', async done => {
 
 it('cachePromiseInterval crash 22', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -338,6 +356,9 @@ it('cachePromiseInterval crash 22', async done => {
 });
 
 it('cachePromiseInterval crash 3', async done => {
+
+
+    (async function () {
 
     try {
 
@@ -373,6 +394,9 @@ it('cachePromiseInterval crash 3', async done => {
 
 it('cachePromiseInterval crash 4', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -407,6 +431,9 @@ it('cachePromiseInterval crash 4', async done => {
 
 it('cachePromiseInterval crash 5', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -438,6 +465,9 @@ it('cachePromiseInterval crash 5', async done => {
 });
 
 it('cachePromiseInterval firstcrach false', async done => {
+
+
+    (async function () {
 
     try {
 
@@ -494,6 +524,9 @@ it('cachePromiseInterval firstcrach false', async done => {
 
 it('cachePromiseInterval firstcrach not false', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -549,6 +582,9 @@ it('cachePromiseInterval firstcrach not false', async done => {
 
 it('cachePromiseInterval create not function', async done => {
 
+
+    (async function () {
+
     try {
 
         let called = 0;
@@ -582,6 +618,9 @@ it('cachePromiseInterval create not function', async done => {
 
 it('cachePromiseInterval key not string', async done => {
 
+
+    (async function () {
+
     try {
 
         const t = cache(4);
@@ -600,6 +639,9 @@ it('cachePromiseInterval key not string', async done => {
 
 it('cachePromiseInterval key an empty string', async done => {
 
+
+    (async function () {
+
     try {
 
         const t = cache(' ');
@@ -617,6 +659,9 @@ it('cachePromiseInterval key an empty string', async done => {
 
 
 it('cachePromiseInterval all good', async done => {
+
+
+    (async function () {
 
     try {
 
@@ -670,6 +715,9 @@ it('cachePromiseInterval all good', async done => {
 
 
 it('cachePromiseInterval all good 3', async done => {
+
+
+    (async function () {
 
     try {
 
@@ -778,6 +826,9 @@ it('cachePromiseInterval all good 3', async done => {
 
 
 it('cachePromiseInterval time', async done => {
+
+
+    (async function () {
 
     try {
 

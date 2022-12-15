@@ -36,7 +36,7 @@ function discard (o) {
     }, {});
 }
 
-it('ms.generate 1', async done => {
+it('ms.generate 1', done => {
 
     try {
 
@@ -56,7 +56,7 @@ it('ms.generate 1', async done => {
     }
 });
 
-it('ms.generate 2000ms 5s', async done => {
+it('ms.generate 2000ms 5s', done => {
 
     try {
 
@@ -77,7 +77,7 @@ it('ms.generate 2000ms 5s', async done => {
     }
 });
 
-it('ms.generate 56ms 5s', async done => {
+it('ms.generate 56ms 5s', done => {
 
     try {
 
@@ -98,7 +98,7 @@ it('ms.generate 56ms 5s', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 4d', async done => {
+it('ms.generate 56ms 5s 4d', done => {
 
     try {
 
@@ -120,7 +120,7 @@ it('ms.generate 56ms 5s 4d', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 0d', async done => {
+it('ms.generate 56ms 5s 0d', done => {
 
     try {
 
@@ -142,7 +142,7 @@ it('ms.generate 56ms 5s 0d', async done => {
     }
 });
 
-it('ms.generate 56ms 0s 0d', async done => {
+it('ms.generate 56ms 0s 0d', done => {
 
     try {
 
@@ -164,7 +164,7 @@ it('ms.generate 56ms 0s 0d', async done => {
     }
 });
 
-it('ms.generate 0ms 0s 0d', async done => {
+it('ms.generate 0ms 0s 0d', done => {
 
     try {
 
@@ -186,7 +186,7 @@ it('ms.generate 0ms 0s 0d', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 19h 4d', async done => {
+it('ms.generate 56ms 5s 19h 4d', done => {
 
     try {
 
@@ -210,7 +210,7 @@ it('ms.generate 56ms 5s 19h 4d', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 19h 4d 6y', async done => {
+it('ms.generate 56ms 5s 19h 4d 6y', done => {
 
     try {
 
@@ -234,7 +234,7 @@ it('ms.generate 56ms 5s 19h 4d 6y', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 19h 4d 0y', async done => {
+it('ms.generate 56ms 5s 19h 4d 0y', done => {
 
     try {
 
@@ -258,7 +258,7 @@ it('ms.generate 56ms 5s 19h 4d 0y', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 19h 4d 0y 7z', async done => {
+it('ms.generate 56ms 5s 19h 4d 0y 7z', done => {
 
     try {
 
@@ -283,7 +283,7 @@ it('ms.generate 56ms 5s 19h 4d 0y 7z', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 45m 19h 4d 6y', async done => {
+it('ms.generate 56ms 5s 45m 19h 4d 6y', done => {
 
     try {
 
@@ -308,7 +308,7 @@ it('ms.generate 56ms 5s 45m 19h 4d 6y', async done => {
     }
 });
 
-it('ms.generate 56ms 5s 145m 19h 4d 6y', async done => {
+it('ms.generate 56ms 5s 145m 19h 4d 6y', done => {
 
     try {
 
@@ -333,7 +333,7 @@ it('ms.generate 56ms 5s 145m 19h 4d 6y', async done => {
     }
 });
 
-it('ms.generate 0ms 0s 0m 0h 0d 0y', async done => {
+it('ms.generate 0ms 0s 0m 0h 0d 0y', done => {
 
     try {
 
@@ -358,7 +358,7 @@ it('ms.generate 0ms 0s 0m 0h 0d 0y', async done => {
     }
 });
 
-it('ms.generate 0ms 0s 0m 0h 0d 1y', async done => {
+it('ms.generate 0ms 0s 0m 0h 0d 1y', done => {
 
     try {
 
@@ -384,7 +384,7 @@ it('ms.generate 0ms 0s 0m 0h 0d 1y', async done => {
     }
 });
 
-it('ms.generate wrong unit', async done => {
+it('ms.generate wrong unit', done => {
 
     try {
 
@@ -410,7 +410,7 @@ it('ms.generate wrong unit', async done => {
     }
 });
 
-it('ms.generate 56ms 60s 145m 19h 4d 6y - m', async done => {
+it('ms.generate 56ms 60s 145m 19h 4d 6y - m', done => {
 
     try {
 
@@ -435,7 +435,7 @@ it('ms.generate 56ms 60s 145m 19h 4d 6y - m', async done => {
     }
 });
 
-it('ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d', async done => {
+it('ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d', done => {
 
     try {
 
@@ -460,7 +460,7 @@ it('ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d', async done => {
     }
 });
 
-it('ms.generate 2d 7y - y', async done => {
+it('ms.generate 2d 7y - y', done => {
 
     try {
 
@@ -481,7 +481,7 @@ it('ms.generate 2d 7y - y', async done => {
     }
 });
 
-it('ms.generate 2d 7y - ms', async done => {
+it('ms.generate 2d 7y - ms', done => {
 
     try {
 
@@ -512,7 +512,7 @@ it('ms.generate 2d 7y - ms', async done => {
     }
 });
 
-it('ms.generate unit y', async done => {
+it('ms.generate unit y', done => {
 
     try {
 
@@ -540,7 +540,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -560,7 +560,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -588,7 +588,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -611,7 +611,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -633,7 +633,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -655,7 +655,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -677,7 +677,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -699,7 +699,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -726,7 +726,7 @@ it('ms.generate unit y', async done => {
 
 (function (i) {
 
-    it('raw - ' + f(i), async done => {
+    it('raw - ' + f(i), done => {
 
         try {
 
@@ -757,7 +757,7 @@ it('ms.generate unit y', async done => {
 
 
 
-it('raw - wrong opt', async done => {
+it('raw - wrong opt', done => {
 
     try {
 
@@ -773,7 +773,7 @@ it('raw - wrong opt', async done => {
     }
 });
 
-it('raw - first arg not a number', async done => {
+it('raw - first arg not a number', done => {
 
     try {
 
@@ -790,7 +790,7 @@ it('raw - first arg not a number', async done => {
 });
 
 
-it('ms - time undefined', async done => {
+it('ms - time undefined', done => {
 
     try {
 
@@ -806,7 +806,7 @@ it('ms - time undefined', async done => {
     }
 });
 
-it('ms - time string', async done => {
+it('ms - time string', done => {
 
     try {
 
@@ -822,7 +822,7 @@ it('ms - time string', async done => {
     }
 });
 
-it('ms - 56ms', async done => {
+it('ms - 56ms', done => {
 
     try {
 
@@ -838,7 +838,7 @@ it('ms - 56ms', async done => {
     }
 });
 
-it('ms - wrong unit', async done => {
+it('ms - wrong unit', done => {
 
     try {
 
@@ -857,7 +857,7 @@ it('ms - wrong unit', async done => {
 
 
 
-it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
+it('ms - 2y 3d 4h 47m 46s 45ms', done => {
 
     try {
 
@@ -880,7 +880,7 @@ it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
     }
 });
 
-it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
+it('ms - 2y 3d 4h 47m 46s 45ms', done => {
 
     try {
 
@@ -904,7 +904,7 @@ it('ms - 2y 3d 4h 47m 46s 45ms', async done => {
 
 
 
-it('ms - 2y 368d 4h 47m 46s 45ms - day overclock', async done => {
+it('ms - 2y 368d 4h 47m 46s 45ms - day overclock', done => {
 
     try {
 
@@ -929,7 +929,7 @@ it('ms - 2y 368d 4h 47m 46s 45ms - day overclock', async done => {
 
 
 
-it('ms - 2y 3d 4h 67m 46s 45ms - m overclock', async done => {
+it('ms - 2y 3d 4h 67m 46s 45ms - m overclock', done => {
 
     try {
 
@@ -953,7 +953,7 @@ it('ms - 2y 3d 4h 67m 46s 45ms - m overclock', async done => {
 });
 
 
-it('ms - 2y 3d 4h 67m 46s 3045ms - ms overclock', async done => {
+it('ms - 2y 3d 4h 67m 46s 3045ms - ms overclock', done => {
 
     try {
 
@@ -976,7 +976,7 @@ it('ms - 2y 3d 4h 67m 46s 3045ms - ms overclock', async done => {
     }
 });
 
-it('ms - 2y 3d 4h 67m 46s 45ms - different base units', async done => {
+it('ms - 2y 3d 4h 67m 46s 45ms - different base units', done => {
 
     try {
 
@@ -1000,7 +1000,7 @@ it('ms - 2y 3d 4h 67m 46s 45ms - different base units', async done => {
 });
 
 
-it('ms - change output units', async done => {
+it('ms - change output units', done => {
 
     try {
         const t = ms(generate({

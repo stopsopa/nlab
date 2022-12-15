@@ -164,8 +164,8 @@ mkdirP.sync = function sync (p, opts, made) {
     return made;
 };
     return module.exports;
-}())                
-                
+}())
+
 
 const prepareDir = target => {
 
@@ -1085,7 +1085,7 @@ else {
     });
 
     log(`
-         🌎  Listening on port ${port}, start time: ${time()}
+         🌎  Listening on port http://0.0.0.0:${port}, start time: ${time()}
             serving files from directory ${dir}, --help for more info
     `);
 

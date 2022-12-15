@@ -12,19 +12,6 @@
     "qs": "^6.10.1",
     "sjcl": "^1.0.8"
   },
-  "jest": {
-    "verbose": true,
-    "bail": true,
-    "collectCoverage": true,
-    "coverageReporters": [
-      "html",
-      "lcov",
-      "text"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ]
-  },
   "scripts": {
     "prepare": "husky install"
   }
