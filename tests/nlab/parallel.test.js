@@ -1,251 +1,181 @@
-
-const parallel = require('../../parallel');
+const parallel = require("../../parallel");
 
 jest.setTimeout(10000);
 
-it('no setup exception', async done => {
-
+it("no setup exception", (done) => {
+  (async function () {
     try {
+      const p = parallel();
 
-        const p = parallel();
+      p(function () {});
+    } catch (e) {
+      expect(String(e)).toEqual("Error: parallel.js error: opt.numberOfThreads is undefined, first use setup() method");
 
-        p(function () {});
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: parallel.js error: opt.numberOfThreads is undefined, first use setup() method");
-
-        done()
-    }
-
+  })();
 });
 
-it('simple', async done => {
-
+it("simple", (done) => {
+  (async function () {
     const p = parallel();
 
     p.setup({
-        numberOfThreads: 3,
+      numberOfThreads: 3,
     });
 
     const stack = [];
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 300)
-
+      setTimeout(() => release(), 300);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 10)
-
+      setTimeout(() => release(), 10);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 30)
-
+      setTimeout(() => release(), 30);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 40)
-
+      setTimeout(() => release(), 40);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 50)
-
+      setTimeout(() => release(), 50);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 70)
-
+      setTimeout(() => release(), 70);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 90)
-
+      setTimeout(() => release(), 90);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 110)
-
+      setTimeout(() => release(), 110);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 130)
-
+      setTimeout(() => release(), 130);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 150)
-
+      setTimeout(() => release(), 150);
     });
 
     setTimeout(function () {
+      // console.log(JSON.stringify(stack, null, 4));
 
-        // console.log(JSON.stringify(stack, null, 4));
+      expect(stack).toEqual(["1", "2", "3", "2", "3", "2", "3", "2", "3", "2"]);
 
-        expect(stack).toEqual([
-            "1",
-            "2",
-            "3",
-            "2",
-            "3",
-            "2",
-            "3",
-            "2",
-            "3",
-            "2"
-        ])
-
-        done();
+      done();
     }, 400);
-
-
+  })();
 });
 
-it('setup on the way', async done => {
-
+it("setup on the way", (done) => {
+  (async function () {
     const p = parallel();
 
     p.setup({
-        numberOfThreads: 3,
+      numberOfThreads: 3,
     });
 
     const stack = [];
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 10)
-
+      setTimeout(() => release(), 10);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 20)
-
+      setTimeout(() => release(), 20);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 30)
-
+      setTimeout(() => release(), 30);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 40)
-
+      setTimeout(() => release(), 40);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 50)
-
+      setTimeout(() => release(), 50);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
+      setTimeout(() => {
+        p.setup({ numberOfThreads: 2 });
 
-        setTimeout(() => {
-
-            p.setup({numberOfThreads:2})
-
-            release();
-        }, 70)
-
+        release();
+      }, 70);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 80)
-
+      setTimeout(() => release(), 80);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 90)
-
+      setTimeout(() => release(), 90);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 100)
-
+      setTimeout(() => release(), 100);
     });
 
     p(function (key, release) {
+      stack.push(key);
 
-        stack.push(key);
-
-        setTimeout(() => release(), 110)
-
+      setTimeout(() => release(), 110);
     });
 
     setTimeout(function () {
+      // console.log(JSON.stringify(stack, null, 4));
 
-        // console.log(JSON.stringify(stack, null, 4));
+      expect(stack).toEqual(["1", "2", "3", "1", "2", "3", "1", "2", "1", "2"]);
 
-        expect(stack).toEqual([
-            "1",
-            "2",
-            "3",
-            "1",
-            "2",
-            "3",
-            "1",
-            "2",
-            "1",
-            "2"
-        ])
-
-        done();
+      done();
     }, 200);
-
+  })();
 });

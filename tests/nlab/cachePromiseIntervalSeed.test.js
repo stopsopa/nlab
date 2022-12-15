@@ -6,8 +6,7 @@ const log = require("inspc");
 
 const delay = require("../../delay");
 
-it("cachePromiseIntervalSeed", async (done) => {
-  (async function () {
+it("cachePromiseIntervalSeed", (done) => {  (async function () {
     try {
       const t = cache(`cp1`);
 
@@ -66,7 +65,7 @@ it("cachePromiseIntervalSeed", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed 2", async (done) => {
+it("cachePromiseIntervalSeed 2", (done) => {
   (async function () {
     try {
       const t = cache(`cp2`);
@@ -126,7 +125,7 @@ it("cachePromiseIntervalSeed 2", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed 3", async (done) => {
+it("cachePromiseIntervalSeed 3", (done) => {
   (async function () {
     try {
       const t = cache(`cp3`);
@@ -186,7 +185,7 @@ it("cachePromiseIntervalSeed 3", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash", async (done) => {
+it("cachePromiseIntervalSeed crash", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -233,7 +232,7 @@ it("cachePromiseIntervalSeed crash", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash 2", async (done) => {
+it("cachePromiseIntervalSeed crash 2", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -264,7 +263,7 @@ it("cachePromiseIntervalSeed crash 2", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash 22", async (done) => {
+it("cachePromiseIntervalSeed crash 22", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -295,7 +294,7 @@ it("cachePromiseIntervalSeed crash 22", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash 3", async (done) => {
+it("cachePromiseIntervalSeed crash 3", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -326,7 +325,7 @@ it("cachePromiseIntervalSeed crash 3", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash 4", async (done) => {
+it("cachePromiseIntervalSeed crash 4", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -357,7 +356,7 @@ it("cachePromiseIntervalSeed crash 4", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed crash 5", async (done) => {
+it("cachePromiseIntervalSeed crash 5", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -379,16 +378,14 @@ it("cachePromiseIntervalSeed crash 5", async (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "<<1>>:Error: cachePromiseIntervalSeed error: o.seed is not an array"
-      );
+      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.seed is not an array");
 
       done();
     }
   })();
 });
 
-it("cachePromiseIntervalSeed firstcrach false", async (done) => {
+it("cachePromiseIntervalSeed firstcrach false", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -436,7 +433,7 @@ it("cachePromiseIntervalSeed firstcrach false", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed firstcrach not false", async (done) => {
+it("cachePromiseIntervalSeed firstcrach not false", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -477,16 +474,14 @@ it("cachePromiseIntervalSeed firstcrach not false", async (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "<<1>>:Error: cachePromiseIntervalSeed error: o.firstcrach is not boolean"
-      );
+      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.firstcrach is not boolean");
 
       done();
     }
   })();
 });
 
-it("cachePromiseIntervalSeed create not function", async (done) => {
+it("cachePromiseIntervalSeed create not function", (done) => {
   (async function () {
     try {
       let called = 0;
@@ -507,48 +502,42 @@ it("cachePromiseIntervalSeed create not function", async (done) => {
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "<<1>>:Error: cachePromiseIntervalSeed error: o.create is not a function"
-      );
+      expect(String(e)).toEqual("<<1>>:Error: cachePromiseIntervalSeed error: o.create is not a function");
 
       done();
     }
   })();
 });
 
-it("cachePromiseIntervalSeed key not string", async (done) => {
+it("cachePromiseIntervalSeed key not string", (done) => {
   (async function () {
     try {
       const t = cache(4);
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: cachePromiseIntervalSeed error: key is not a string"
-      );
+      expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is not a string");
 
       done();
     }
   })();
 });
 
-it("cachePromiseIntervalSeed key an empty string", async (done) => {
+it("cachePromiseIntervalSeed key an empty string", (done) => {
   (async function () {
     try {
       const t = cache(" ");
 
       done(`this test shouldn't crush`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: cachePromiseIntervalSeed error: key is an empty string"
-      );
+      expect(String(e)).toEqual("Error: cachePromiseIntervalSeed error: key is an empty string");
 
       done();
     }
   })();
 });
 
-it("cachePromiseIntervalSeed all good", async (done) => {
+it("cachePromiseIntervalSeed all good", (done) => {
   (async function () {
     try {
       const t = cache(`cpallgood`);
@@ -595,7 +584,7 @@ it("cachePromiseIntervalSeed all good", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed all good 3", async (done) => {
+it("cachePromiseIntervalSeed all good 3", (done) => {
   (async function () {
     try {
       let called = {
@@ -699,7 +688,7 @@ it("cachePromiseIntervalSeed all good 3", async (done) => {
   })();
 });
 
-it("cachePromiseIntervalSeed time", async (done) => {
+it("cachePromiseIntervalSeed time", (done) => {
   (async function () {
     try {
       const t = cache(`cpalltime`);
