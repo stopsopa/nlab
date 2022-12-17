@@ -1,2 +1,1 @@
-
-module.exports = require('./src/stringToRegex');
+module.exports = require("./src/stringToRegex");

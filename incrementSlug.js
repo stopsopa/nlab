@@ -1,2 +1,1 @@
-
-module.exports = require('./src/incrementSlug');
+module.exports = require("./src/incrementSlug");

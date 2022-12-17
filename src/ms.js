@@ -2,172 +2,166 @@
  * @doc https://github.com/stopsopa/nlab#ms
  */
 function th(msg) {
-
-    throw new Error("nlab/ms library error: " + String(msg));
+  throw new Error("nlab/ms library error: " + String(msg));
 }
 
 var dividers = {
-    ms: 1,
-    s: 1000,
-    m: 60,
-    h: 60,
-    d: 24,
-    y: 365,
-}
+  ms: 1,
+  s: 1000,
+  m: 60,
+  h: 60,
+  d: 24,
+  y: 365,
+};
 
 var shift = {
-    ms: 1000,
-    s: 60,
-    m: 60,
-    h: 24,
-    d: 365,
-    y: 365,
-}
+  ms: 1000,
+  s: 60,
+  m: 60,
+  h: 24,
+  d: 365,
+  y: 365,
+};
 
-var shiftkeys     = Object.keys(shift);
+var shiftkeys = Object.keys(shift);
 
-var keys          = Object.keys(dividers);
+var keys = Object.keys(dividers);
 
 var dict = keys.reduce((acc, key) => {
-    acc[key] = key;
-    return acc;
+  acc[key] = key;
+  return acc;
 }, {});
 
 function ms(time, opt) {
+  if (typeof opt === "string") {
+    opt = {
+      unit: opt,
+    };
+  }
 
-    if (typeof opt === 'string') {
+  var tmp = Object.assign(
+    {
+      unit: "ms",
+    },
+    opt
+  );
 
-        opt = {
-            unit: opt,
-        }
-    }
+  tmp.dict = Object.assign({}, dict, tmp.dict || {});
 
-    var tmp = Object.assign({
-        unit: 'ms',
-    }, opt);
+  var t = raw(time, tmp.unit);
 
-    tmp.dict = Object.assign({}, dict, tmp.dict || {});
+  return Object.keys(t)
+    .reduce((acc, key) => {
+      if (t[key]) {
+        acc.unshift(String(t[key] + tmp.dict[key]));
+      }
 
-    var t = raw(time, tmp.unit);
-
-    return Object.keys(t).reduce((acc, key) => {
-
-        if (t[key]) {
-
-            acc.unshift(String(t[key] + tmp.dict[key]));
-        }
-
-        return acc;
-    }, []).join(' ');
+      return acc;
+    }, [])
+    .join(" ");
 }
 
 /**
  * https://github.com/stopsopa/nlab#ms
  */
 function raw(time, unit) {
+  if (typeof unit !== "string") {
+    unit = "ms";
+  }
 
-    if ( typeof unit !== 'string' ) {
+  if (typeof time !== "number") {
+    throw th("time is not a number");
+  }
 
-        unit = 'ms';
-    }
+  if (!dividers[unit]) {
+    throw th(
+      "unit '" +
+        unit +
+        "' is string but it is not on the list: '" +
+        keys.join(", ") +
+        "'"
+    );
+  }
 
-    if (typeof time !== 'number') {
+  var ret = {
+    ms: 0,
+    s: 0,
+    m: 0,
+    h: 0,
+    d: 0,
+    y: 0,
+  };
 
-        throw th("time is not a number");
-    }
+  var list = shiftkeys.slice(shiftkeys.indexOf(unit));
 
-    if ( ! dividers[unit] ) {
+  var div, tmp;
 
-        throw th("unit '" + unit + "' is string but it is not on the list: '" + keys.join(', ') + "'");
-    }
+  for (var i = 0, l = list.length; i < l; i += 1) {
+    tmp = list[i];
 
-    var ret = {
-        ms: 0,
-        s: 0,
-        m: 0,
-        h: 0,
-        d: 0,
-        y: 0,
-    };
+    div = shift[tmp];
 
-    var list = shiftkeys.slice(shiftkeys.indexOf(unit));
+    ret[tmp] = parseInt(time % div, 10);
 
-    var div, tmp;
+    time -= ret[tmp];
 
-    for ( var i = 0, l = list.length ; i < l ; i += 1 ) {
+    time /= div;
+  }
 
-        tmp = list[i];
-
-        div = shift[tmp];
-
-        ret[tmp] = parseInt( time % div, 10);
-
-        time -= ret[tmp];
-
-        time /= div;
-    }
-
-    return ret;
+  return ret;
 }
 
 function generate(opt, unit) {
+  if (typeof unit !== "string") {
+    unit = "ms";
+  }
 
-    if (typeof unit !== 'string') {
+  if (!dividers[unit]) {
+    throw th(
+      `generate: unknown unit (${unit}), valid units are: '${keys.join(", ")}'`
+    );
+  }
 
-        unit = 'ms';
+  var t = 0;
+
+  Object.keys(opt).forEach((k) => {
+    if (k === "ms") {
+      t += opt[k];
+
+      return;
     }
 
-    if ( ! dividers[unit] ) {
+    if (dividers[k]) {
+      var tt = 1;
 
-        throw th(`generate: unknown unit (${unit}), valid units are: '${keys.join(', ')}'`);
+      keys.slice(0, keys.indexOf(k)).forEach((kk) => {
+        tt *= shift[kk];
+      });
+
+      tt *= opt[k];
+
+      t += tt;
     }
+  });
 
-    var t = 0;
-
-    Object.keys(opt).forEach(k => {
-
-        if (k === 'ms') {
-
-            t += opt[k];
-
-            return;
-        }
-
-        if (dividers[k]) {
-
-            var tt = 1;
-
-            keys.slice(0, keys.indexOf(k)).forEach(kk => {
-
-                tt *= shift[kk];
-            });
-
-            tt *= opt[k];
-
-            t += tt;
-        }
+  if (unit !== "ms") {
+    keys.slice(0, keys.indexOf(unit)).forEach((u) => {
+      t = parseInt(t / shift[u], 10);
     });
+  }
 
-    if (unit !== 'ms') {
-
-        keys.slice(0, keys.indexOf(unit)).forEach(u => {
-
-            t = parseInt(t / shift[u], 10);
-        })
-    }
-
-    return t;
+  return t;
 }
 
-ms.raw          = raw;
+ms.raw = raw;
 
-ms.generate     = generate;
+ms.generate = generate;
 
-ms.shift        = shift;
+ms.shift = shift;
 
-ms.dividers     = dividers;
+ms.dividers = dividers;
 
-module.exports  = ms;
+module.exports = ms;
 
 /**
  * Old version used in roderic, but it is limited in its functionality
@@ -203,4 +197,3 @@ module.exports  = ms;
 //         return tmp.join(' ');
 //     }
 // }());
-

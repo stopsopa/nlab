@@ -1,2 +1,1 @@
-
-module.exports = require('../src/express/extend-res');
+module.exports = require("../src/express/extend-res");

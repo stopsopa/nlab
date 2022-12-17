@@ -1,2 +1,1 @@
-
-module.exports = require('./src/promiseany');
+module.exports = require("./src/promiseany");

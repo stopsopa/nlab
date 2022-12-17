@@ -2,30 +2,26 @@
  * @doc https://github.com/stopsopa/nlab#xor
  */
 function xor(data, key) {
+  if (typeof key !== "string") {
+    throw new Error(`xor.js: key is not a string`);
+  }
 
-    if ( typeof key !== 'string') {
+  if (!key) {
+    throw new Error(`xor.js: key is an empty string`);
+  }
 
-        throw new Error(`xor.js: key is not a string`);
-    }
+  if (typeof data !== "string") {
+    throw new Error(`xor.js: data is not a string`);
+  }
 
-    if ( ! key ) {
+  var ret = "",
+    l = key.length;
 
-        throw new Error(`xor.js: key is an empty string`);
-    }
+  for (var i = 0; i < data.length; i++) {
+    ret += String.fromCharCode(key.charCodeAt(i % l) ^ data.charCodeAt(i));
+  }
 
-    if ( typeof data !== 'string') {
-
-        throw new Error(`xor.js: data is not a string`);
-    }
-
-    var ret = '', l = key.length;
-
-    for ( var i = 0 ; i < data.length ; i++ ) {
-
-        ret += String.fromCharCode(key.charCodeAt(i % l) ^ data.charCodeAt(i));
-    }
-
-    return ret;
-};
+  return ret;
+}
 
 module.exports = xor;

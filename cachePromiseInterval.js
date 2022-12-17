@@ -1,2 +1,1 @@
-
-module.exports = require('./src/cachePromiseInterval');
+module.exports = require("./src/cachePromiseInterval");

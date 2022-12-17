@@ -1,7 +1,7 @@
 Makefile
 /.idea/
 *.tgz
-/coverage/
+/docs/
 /tests/
 /update.sh
 /update-badge.js

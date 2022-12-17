@@ -1,2 +1,1 @@
-
-module.exports = require('./src/generateSalt');
+module.exports = require("./src/generateSalt");

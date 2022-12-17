@@ -1,4 +1,3 @@
-
 // @doc https://github.com/stopsopa/nlab#isarray
 
 //  ✓isObject - []                                                  -> false
@@ -19,12 +18,9 @@
 //  ✓isObject - Symbol('test')                                      -> false
 
 function isAsyncFunction(fn) {
-
   try {
-
     return fn.constructor.name === "AsyncFunction";
-  }
-  catch (e) {}
+  } catch (e) {}
 
   return false;
 }

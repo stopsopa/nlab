@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 //  ✓isObject - {}                                                  -> true
 //  ✓isObject - using with object that have implemented toString()  -> true
@@ -17,40 +17,45 @@
 //  ✓isObject - Symbol('test')                                      -> false
 //  ✓isObject - new Date()                                          -> false
 
-const isObject = require('../../isObject');
+const isObject = require("../../isObject");
 
 jest.setTimeout(100);
 
-it('isObject - {} -> true', async done => {
-
+it("isObject - {} -> true", (done) => {
+  (async function () {
     expect(isObject({})).toBeTruthy();
 
     done();
+  })();
 });
 
-it('isObject - new function () {} -> true', async done => {
-
-    expect(isObject(new function () {})).toBeTruthy();
+it("isObject - new function () {} -> true", (done) => {
+  (async function () {
+    expect(isObject(new (function () {})())).toBeTruthy();
 
     done();
+  })();
 });
 
-it('isObject - using with object that have implemented toString() -> true', async done => {
-
-    var k = function () {}
-    k.prototype.toString = function () {return 'test...'};
+it("isObject - using with object that have implemented toString() -> true", (done) => {
+  (async function () {
+    var k = function () {};
+    k.prototype.toString = function () {
+      return "test...";
+    };
 
     var t = new k();
 
-    expect(t + '').toEqual('test...');
+    expect(t + "").toEqual("test...");
 
     expect(isObject(t)).toBeTruthy();
 
     done();
+  })();
 });
 
-it('isObject - extended object -> true', async done => {
-
+it("isObject - extended object -> true", (done) => {
+  (async function () {
     var a = function () {};
 
     var b = function () {};
@@ -62,102 +67,117 @@ it('isObject - extended object -> true', async done => {
     expect(isObject(new b())).toBeTruthy();
 
     done();
+  })();
 });
 
-it('isObject - [] -> false', async done => {
-
+it("isObject - [] -> false", (done) => {
+  (async function () {
     expect(isObject([])).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - null -> false', async done => {
-
+it("isObject - null -> false", (done) => {
+  (async function () {
     expect(isObject(null)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - function () {} -> false', async done => {
-
+it("isObject - function () {} -> false", (done) => {
+  (async function () {
     expect(isObject(function () {})).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - async function () {} -> false', async done => {
-
+it("isObject - async function () {} -> false", (done) => {
+  (async function () {
     expect(isObject(async function () {})).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - () => {} -> false', async done => {
-
+it("isObject - () => {} -> false", (done) => {
+  (async function () {
     expect(isObject(() => {})).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - true -> false', async done => {
-
+it("isObject - true -> false", (done) => {
+  (async function () {
     expect(isObject(true)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - false -> false', async done => {
-
+it("isObject - false -> false", (done) => {
+  (async function () {
     expect(isObject(false)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - NaN -> false', async done => {
-
+it("isObject - NaN -> false", (done) => {
+  (async function () {
     expect(isObject(NaN)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - undefined -> false', async done => {
-
+it("isObject - undefined -> false", (done) => {
+  (async function () {
     expect(isObject(undefined)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - no arg -> false', async done => {
-
+it("isObject - no arg -> false", (done) => {
+  (async function () {
     expect(isObject()).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - 4 -> false', async done => {
-
+it("isObject - 4 -> false", (done) => {
+  (async function () {
     expect(isObject(4)).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - string -> false', async done => {
-
-    expect(isObject('test')).toBeFalsy();
+it("isObject - string -> false", (done) => {
+  (async function () {
+    expect(isObject("test")).toBeFalsy();
 
     done();
+  })();
 });
 
-it(`isObject - Symbol('test') -> false`, async done => {
-
-    expect(isObject(Symbol('test'))).toBeFalsy();
+it(`isObject - Symbol('test') -> false`, (done) => {
+  (async function () {
+    expect(isObject(Symbol("test"))).toBeFalsy();
 
     done();
+  })();
 });
 
-it('isObject - new Date() -> false', async done => {
-
+it("isObject - new Date() -> false", (done) => {
+  (async function () {
     expect(isObject(new Date())).toBeFalsy();
 
     done();
+  })();
 });

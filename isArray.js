@@ -1,2 +1,1 @@
-
-module.exports = require('./src/isArray');
+module.exports = require("./src/isArray");

@@ -1,2 +1,1 @@
-
-module.exports = require('./src/lightFetch');
+module.exports = require("./src/lightFetch");

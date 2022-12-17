@@ -1,2 +1,1 @@
-
-module.exports = require('./src/combineReducers');
+module.exports = require("./src/combineReducers");

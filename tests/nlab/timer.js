@@ -1,45 +1,35 @@
-
 let cache = undefined;
 
 function now() {
-
-    return parseInt((new Date()).getTime(), 10);
+  return parseInt(new Date().getTime(), 10);
 }
 
 function diff(given) {
+  let tmp;
 
-    let tmp;
-
-    if ( typeof given === 'undefined' ) {
-
-        if (cache === undefined) {
-
-            throw `cache nor given are not initialized`;
-        }
-        else {
-
-            tmp = cache;
-        }
+  if (typeof given === "undefined") {
+    if (cache === undefined) {
+      throw `cache nor given are not initialized`;
+    } else {
+      tmp = cache;
     }
-    else {
+  } else {
+    tmp = given;
+  }
 
-        tmp = given;
-    }
+  const d = now() - tmp;
 
-    const d = now() - tmp;
+  cache = undefined;
 
-    cache = undefined;
-
-    return d;
+  return d;
 }
 
 function start() {
-
-    return cache = now();
-};
+  return (cache = now());
+}
 
 module.exports = {
-    now,
-    start,
-    diff,
-}
+  now,
+  start,
+  diff,
+};

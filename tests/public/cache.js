@@ -1,5 +1,4 @@
-
-const throttlePromises = require('../../src/throttlePromises');
+const throttlePromises = require("../../src/throttlePromises");
 
 // const {
 //     prepareToStamp,
@@ -11,8 +10,6 @@ const throttlePromises = require('../../src/throttlePromises');
 const cache = throttlePromises(1, 8);
 
 module.exports = cache;
-
-
 
 // const promiseCache = require('../../src/promiseCache');
 //
@@ -26,9 +23,3 @@ module.exports = cache;
 // const cache = throttle(1, 10 * 1000);
 //
 // module.exports = cache;
-
-
-
-
-
-

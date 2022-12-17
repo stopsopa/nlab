@@ -1,52 +1,43 @@
+const curry = require("../../curry");
 
-const curry = require('../../curry');
+it("curry 2, 4, 8", (done) => {
+  const fn = curry((a, b, c) => a + b + c);
 
-it('curry 2, 4, 8', done => {
+  expect(fn(2)(4)(8)).toEqual(14);
 
-    const fn = curry((a, b, c) => (a + b + c));
-
-    expect( fn(2) (4) (8) ).toEqual(14);
-
-    done();
+  done();
 });
 
-it('curry 2 4, 8', done => {
+it("curry 2 4, 8", (done) => {
+  const fn = curry((a, b, c) => a + b + c);
 
-    const fn = curry((a, b, c) => (a + b + c));
+  expect(fn(2, 4)(8)).toEqual(14);
 
-    expect( fn(2, 4) (8) ).toEqual(14);
-
-    done();
+  done();
 });
 
-it('curry 2, 4 8', done => {
+it("curry 2, 4 8", (done) => {
+  const fn = curry((a, b, c) => a + b + c);
 
-    const fn = curry((a, b, c) => (a + b + c));
+  expect(fn(2)(4, 8)).toEqual(14);
 
-    expect( fn(2) (4, 8) ).toEqual(14);
-
-    done();
+  done();
 });
 
-it('curry 2 4 8', done => {
+it("curry 2 4 8", (done) => {
+  const fn = curry((a, b, c) => a + b + c);
 
-    const fn = curry((a, b, c) => (a + b + c));
+  expect(fn(2, 4, 8)).toEqual(14);
 
-    expect( fn(2, 4, 8) ).toEqual(14);
-
-    done();
+  done();
 });
 
-it('curry not a fn', done => {
+it("curry not a fn", (done) => {
+  try {
+    curry();
 
-    try {
-
-        curry();
-
-        done(`should't succeed`);
-    }
-    catch (e) {
-
-        done()
-    }
+    done(`should't succeed`);
+  } catch (e) {
+    done();
+  }
 });

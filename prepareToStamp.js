@@ -1,2 +1,1 @@
-
-module.exports = require('./src/prepareToStamp');
+module.exports = require("./src/prepareToStamp");

@@ -1,455 +1,374 @@
 // //'use strict';
 
-const CachePromise = require('../../CachePromise');
+const CachePromise = require("../../CachePromise");
 
-const log = require('inspc');
+const log = require("inspc");
 
-const delay = require('../../delay');
+const delay = require("../../delay");
 
-it('CachePromise - simple', async done => {
-    
+it("CachePromise - simple", (done) => {
+  (async function () {
     try {
-        
-        const cachePromise = new CachePromise();
+      const cachePromise = new CachePromise();
 
-        const mainPromise = cachePromise.get(
-            {a: 'b1'}, 
-            () => new Promise(res => setTimeout(res, 10, 'abc'))
-        );
+      const mainPromise = cachePromise.get(
+        { a: "b1" },
+        () => new Promise((res) => setTimeout(res, 10, "abc"))
+      );
 
-        const data = await mainPromise;
+      const data = await mainPromise;
 
-        expect(data).toEqual('abc');
+      expect(data).toEqual("abc");
 
-        done();
+      done();
+    } catch (e) {
+      // log.dump({
+      //     e,
+      // })
 
+      done({
+        error: e,
+      });
     }
-    catch (e) {
-
-        // log.dump({
-        //     e,
-        // })
-
-        done({
-            error: e
-        })
-    }
+  })();
 });
 
-it('CachePromise - double cached', async done => {
-
+it("CachePromise - double cached", (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      let mainPromise = cachePromise.get(
+        { a: "b2" },
+        () => new Promise((res) => setTimeout(res, 10, "abc"))
+      );
 
-        let mainPromise = cachePromise.get(
-            {a: 'b2'},
-            () => new Promise(res => setTimeout(res, 10, 'abc'))
-        );
+      let data = await mainPromise;
 
-        let data = await mainPromise;
+      expect(data).toEqual("abc");
 
-        expect(data).toEqual('abc');
+      mainPromise = cachePromise.get(
+        { a: "b2" },
+        () => new Promise((res) => setTimeout(res, 10, "abcd"))
+      );
 
-        mainPromise = cachePromise.get(
-            {a: 'b2'},
-            () => new Promise(res => setTimeout(res, 10, 'abcd'))
-        );
+      data = await mainPromise;
 
-        data = await mainPromise;
+      expect(data).toEqual("abc");
 
-        expect(data).toEqual('abc');
+      done();
+    } catch (e) {
+      // log.dump({
+      //     e,
+      // })
 
-        done();
-
+      done({
+        error: e,
+      });
     }
-    catch (e) {
-
-        // log.dump({
-        //     e,
-        // })
-
-        done({
-            error: e
-        })
-    }
+  })();
 });
 
-
-
-it('CachePromise - double refreshed', async done => {
-
+it("CachePromise - double refreshed", (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise({
+        ttlms: 5,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 5,
-        });
+      let mainPromise = cachePromise.get(
+        { a: "b3" },
+        () => new Promise((res) => setTimeout(res, 5, "abc"))
+      );
 
-        let mainPromise = cachePromise.get(
-            {a: 'b3'},
-            () => new Promise(res => setTimeout(res, 5, 'abc')),
-        );
+      let data = await mainPromise;
 
-        let data = await mainPromise;
+      expect(data).toEqual("abc");
 
-        expect(data).toEqual('abc');
+      await delay(15);
 
-        await delay(15)
+      mainPromise = cachePromise.get(
+        { a: "b3" },
+        () => new Promise((res) => setTimeout(res, 5, "abcd"))
+      );
 
-        mainPromise = cachePromise.get(
-            {a: 'b3'},
-            () => new Promise(res => setTimeout(res, 5, 'abcd')),
-        );
+      data = await mainPromise;
 
-        data = await mainPromise;
+      expect(data).toEqual("abcd");
 
-        expect(data).toEqual('abcd');
-
-        done();
-
+      done();
+    } catch (e) {
+      done({
+        error: e,
+      });
     }
-    catch (e) {
-
-        done({
-            error: e
-        })
-    }
+  })();
 });
 
-
-it('CachePromise - rejected', async done => {
-
-
+it("CachePromise - rejected", (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      await cachePromise.get("rej", () => Promise.reject("abcr"));
 
-        await cachePromise.get(
-            'rej',
-            () => Promise.reject('abcr'),
-        );
+      done(`Shouldn't resolve1`);
+    } catch (e) {
+      expect(e).toEqual("abcr");
 
-        done(`Shouldn't resolve1`);
+      done();
     }
-    catch (e) {
-
-        expect(e).toEqual('abcr');
-
-        done()
-    }
+  })();
 });
 
-
-
-it('CachePromise - rejected expired flag off', async done => {
-
-    const key = 'flagoff';
+it("CachePromise - rejected expired flag off", (done) => {
+  (async function () {
+    const key = "flagoff";
 
     try {
+      const cachePromise = new CachePromise({
+        ttlms: 10,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 10,
-        });
+      await cachePromise.get(key, () => Promise.reject("abcd"));
 
-        await cachePromise.get(
-            key,
-            () => Promise.reject('abcd'),
-        );
+      await delay(100);
 
-        await delay(100);
+      done(`Shouldn't resolve2`);
+    } catch (e) {
+      expect(e).toEqual("abcd");
 
-        done(`Shouldn't resolve2`);
+      done();
     }
-    catch (e) {
-
-        expect(e).toEqual('abcd');
-
-        done()
-    }
+  })();
 });
 
-
-
-it('CachePromise - rejected expired flag off', async done => {
-
-    const key = 'flagoff2';
+it("CachePromise - rejected expired flag off", (done) => {
+  (async function () {
+    const key = "flagoff2";
 
     try {
+      const cachePromise = new CachePromise({
+        ttlms: 10,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 10,
-        });
+      await cachePromise.get(key, () => Promise.resolve("abc"));
 
-        await cachePromise.get(
-            key,
-            () => Promise.resolve('abc'),
-        );
+      await delay(100);
 
-        await delay(100);
+      await cachePromise.get(key, () => Promise.reject("abcd"));
 
-        await cachePromise.get(
-            key,
-            () => Promise.reject('abcd'),
-        );
+      done(`Shouldn't resolve2`);
+    } catch (e) {
+      expect(e).toEqual("abcd");
 
-        done(`Shouldn't resolve2`);
+      done();
     }
-    catch (e) {
-
-        expect(e).toEqual('abcd');
-
-        done()
-    }
+  })();
 });
 
-it('CachePromise - rejected expired flag off', async done => {
-
-    const key = 'flagoff3';
+it("CachePromise - rejected expired flag off", (done) => {
+  (async function () {
+    const key = "flagoff3";
 
     try {
+      const cachePromise = new CachePromise({
+        ttlms: 10,
+        returnExpiredCacheIfRejected: true,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 10,
-            returnExpiredCacheIfRejected: true,
-        });
+      await cachePromise.get(key, () => Promise.resolve("abc"));
 
-        await cachePromise.get(
-          key,
-          () => Promise.resolve('abc'),
-        );
+      await delay(100);
 
-        await delay(100);
+      const data = await cachePromise.get(key, () => Promise.reject("abcd"));
 
-        const data = await cachePromise.get(
-          key,
-          () => Promise.reject('abcd'),
-        );
+      expect(data).toEqual("abc");
 
-        expect(data).toEqual('abc');
-
-        done()
+      done();
+    } catch (e) {
+      done(`Shouldn't reject`);
     }
-    catch (e) {
-
-        done(`Shouldn't reject`);
-    }
+  })();
 });
 
-
-it('CachePromise - returnExpiredCacheIfRejected = true on first call', async done => {
-
-    const key = 'flagoff4';
+it("CachePromise - returnExpiredCacheIfRejected = true on first call", (done) => {
+  (async function () {
+    const key = "flagoff4";
 
     try {
+      const cachePromise = new CachePromise({
+        ttlms: 10,
+        returnExpiredCacheIfRejected: true,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 10,
-            returnExpiredCacheIfRejected: true,
-        });
+      await cachePromise.get(key, () => Promise.reject("abc"));
 
-        await cachePromise.get(
-          key,
-          () => Promise.reject('abc'),
-        );
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual("abc");
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual('abc');
-
-        done()
-    }
+  })();
 });
-
 
 // // for coverage
 
-it(`CachePromise - can't serialise`, async done => {
-
+it(`CachePromise - can't serialise`, (done) => {
+  (async function () {
     const key = {
-        obj: 'true',
+      obj: "true",
     };
 
     key.key = key;
 
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      await cachePromise.get(key, () => Promise.reject("abc"));
 
-        await cachePromise.get(
-          key,
-          () => Promise.reject('abc'),
-        );
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e).includes("circular")).toEqual(true);
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e).includes('circular')).toEqual(true);
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - can't serialise`, async done => {
-
-    const key = 'ttl err 1'
+it(`CachePromise - can't serialise`, (done) => {
+  (async function () {
+    const key = "ttl err 1";
 
     try {
+      const cachePromise = new CachePromise({
+        ttlms: -1,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: -1,
-        });
+      await cachePromise.get(key, () => Promise.reject("abc"));
 
-        await cachePromise.get(
-          key,
-          () => Promise.reject('abc'),
-        );
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual(
+        "Error: CachePromise error: ttlms can't be smaller than 1"
+      );
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: CachePromise error: ttlms can't be smaller than 1");
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - ttlms < 1`, async done => {
-
+it(`CachePromise - ttlms < 1`, (done) => {
+  (async function () {
     try {
+      new CachePromise({
+        ttlms: -1,
+      });
 
-        new CachePromise({
-            ttlms: -1,
-        });
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual(
+        "Error: CachePromise error: ttlms can't be smaller than 1"
+      );
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: CachePromise error: ttlms can't be smaller than 1");
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - undefined instead of string`, async done => {
-
+it(`CachePromise - undefined instead of string`, (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      await cachePromise.get(undefined, () => Promise.reject("abc"));
 
-        await cachePromise.get(
-          undefined,
-          () => Promise.reject('abc'),
-        );
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual(
+        "Error: CachePromise error: key after being serialised is not a string"
+      );
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: CachePromise error: key after being serialised is not a string");
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - not integer`, async done => {
-
+it(`CachePromise - not integer`, (done) => {
+  (async function () {
     try {
+      new CachePromise({
+        ttlms: 8.8,
+      });
 
-        new CachePromise({
-            ttlms: 8.8,
-        });
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual(
+        "Error: CachePromise error: ttlms is not an integer"
+      );
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: CachePromise error: ttlms is not an integer");
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - not a function`, async done => {
-
+it(`CachePromise - not a function`, (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      await cachePromise.get("test", undefined);
 
-        await cachePromise.get(
-          'test',
-          undefined,
-        );
+      done(`Shouldn't resolve`);
+    } catch (e) {
+      expect(String(e)).toEqual(
+        "Error: CachePromise error: getPromise is not a function"
+      );
 
-        done(`Shouldn't resolve`);
+      done();
     }
-    catch (e) {
-
-        expect(String(e)).toEqual("Error: CachePromise error: getPromise is not a function");
-
-        done()
-    }
+  })();
 });
 
-it(`CachePromise - size`, async done => {
-
+it(`CachePromise - size`, (done) => {
+  (async function () {
     try {
+      const cachePromise = new CachePromise();
 
-        const cachePromise = new CachePromise();
+      await cachePromise.get("test", () => Promise.resolve("test"));
 
-        await cachePromise.get(
-          'test',
-          () => Promise.resolve('test'),
-        );
+      await cachePromise.get("test2", () => Promise.resolve("test"));
 
-        await cachePromise.get(
-          'test2',
-          () => Promise.resolve('test'),
-        );
+      expect(cachePromise.size()).toEqual(2);
 
-        expect(cachePromise.size()).toEqual(2);
-
-        done()
+      done();
+    } catch (e) {
+      done(`Shouldn't reject: ${e}`);
     }
-    catch (e) {
-
-        done(`Shouldn't reject: ${e}`);
-    }
+  })();
 });
 
-it(`CachePromise - async`, async done => {
-
+it(`CachePromise - async`, (done) => {
+  (async function () {
     try {
+      const key = "async";
 
-        const key = 'async'
+      const cachePromise = new CachePromise({
+        ttlms: 10,
+      });
 
-        const cachePromise = new CachePromise({
-            ttlms: 10
-        });
+      await cachePromise.get(key, async () => "test");
 
-        await cachePromise.get(
-          key,
-          async () => 'test',
-        );
+      await delay(50);
 
-        await delay(50);
+      const data = await cachePromise.get(key, async () => "test2");
 
-        const data = await cachePromise.get(
-          key,
-          async () => 'test2',
-        );
+      expect(data).toEqual("test2");
 
-        expect(data).toEqual('test2');
-
-        done()
+      done();
+    } catch (e) {
+      done(`Shouldn't reject: ${e}`);
     }
-    catch (e) {
-
-        done(`Shouldn't reject: ${e}`);
-    }
+  })();
 });
-

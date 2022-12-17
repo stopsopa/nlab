@@ -1,4 +1,3 @@
-
 // @doc https://github.com/stopsopa/nlab#isobject
 
 // const a = function () {};
@@ -36,7 +35,7 @@
 //  ✓isObject - Symbol('test')
 
 function isObject(o) {
-    return Object.prototype.toString.call(o) === '[object Object]';
+  return Object.prototype.toString.call(o) === "[object Object]";
 }
 
 module.exports = isObject;

@@ -1,2 +1,1 @@
-
-module.exports = require('./src/isAsyncFunction');
+module.exports = require("./src/isAsyncFunction");

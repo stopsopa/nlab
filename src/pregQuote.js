@@ -1,5 +1,4 @@
-
-'use strict';
+"use strict";
 
 /**
  * @doc https://github.com/stopsopa/nlab#pregquote
@@ -17,14 +16,11 @@
 var matchOperatorsRe = /[\^\$\.\*\+\-\?\=\!\:\|\\\/\(\)\[\]\{\}\,]/g;
 
 function pregQuote(str) {
+  if (typeof str !== "string") {
+    return false;
+  }
 
-    if (typeof str !== 'string') {
-
-        return false;
-    }
-
-    return str.replace(matchOperatorsRe, '\\$&');
-};
+  return str.replace(matchOperatorsRe, "\\$&");
+}
 
 module.exports = pregQuote;
-

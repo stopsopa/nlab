@@ -1,73 +1,61 @@
-
 function th(msg) {
-
-    return new Error("promiseany error: " + msg);
+  return new Error("promiseany error: " + msg);
 }
 
-function promiseany (list) {
+function promiseany(list) {
+  if (!Array.isArray(list)) {
+    throw th("list is not an array");
+  }
 
-    if ( ! Array.isArray(list) ) {
+  if (list.length === 0) {
+    throw th("list.length === 0");
+  }
 
-        throw th("list is not an array");
+  var err = false;
+
+  for (var i = 0, l = list.length, t; i < l; i += 1) {
+    if (
+      typeof list[i] === "function" &&
+      list[i].constructor.name === "AsyncFunction"
+    ) {
+      list[i] = Promise.resolve(list[i]());
     }
 
-    if ( list.length === 0 ) {
+    t = list[i];
 
-        throw th("list.length === 0");
+    if (!t || typeof t.then !== "function") {
+      err = th("list[" + i + "] is not a promise");
+    } else {
+      t.then(
+        () => {},
+        () => {}
+      );
     }
+  }
 
-    var err = false
+  if (err) {
+    throw err;
+  }
 
-    for (var i = 0, l = list.length, t ; i < l ; i += 1 ) {
+  return new Promise((resolve, reject) => {
+    var tmp = [];
 
-        if (typeof list[i] === 'function' && list[i].constructor.name === "AsyncFunction") {
+    var max = 0;
 
-            list[i] = Promise.resolve(list[i]());
-        }
+    for (var i = 0, l = list.length; i < l; i += 1) {
+      (function (i) {
+        list[i].then(resolve, (e) => {
+          tmp[i] = e;
 
-        t = list[i];
+          max += 1;
 
-        if ( ! t || typeof t.then !== 'function' ) {
-
-            err = th("list["+i+"] is not a promise");
-        }
-        else {
-
-            t.then(() => {}, () => {});
-        }
+          if (max === l) {
+            reject(tmp);
+          }
+        });
+      })(i);
     }
-
-    if (err) {
-
-        throw err;
-    }
-
-    return new Promise((resolve, reject) => {
-
-        var tmp = [];
-
-        var max = 0;
-
-        for (var i = 0, l = list.length ; i < l ; i += 1 ) {
-
-            (function (i) {
-
-                list[i].then(resolve, e => {
-
-                    tmp[i] = e;
-
-                    max += 1;
-
-                    if (max === l) {
-
-                        reject(tmp);
-                    }
-                });
-
-            }(i))
-        }
-    });
+  });
 }
 
 module.exports = promiseany;
-

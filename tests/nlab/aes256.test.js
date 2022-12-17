@@ -1,46 +1,41 @@
+const aes256 = require("../../aes256");
 
-const aes256 = require('../../aes256');
-
-const unique = require('../../unique');
+const unique = require("../../unique");
 
 jest.setTimeout(100);
 
-it(`aes256 - simple`, async done => {
+it(`aes256 - simple`, (done) => {
+  const c = aes256(`password`);
 
-    const c = aes256(`password`);
+  const msg = `message`;
 
-    const msg = `message`;
+  const enc = c.encrypt(msg);
 
-    const enc = c.encrypt(msg);
+  const dec = c.decrypt(enc);
 
-    const dec = c.decrypt(enc);
+  expect(enc).not.toEqual(msg);
 
-    expect(enc).not.toEqual(msg);
+  expect(dec).toEqual(msg);
 
-    expect(dec).toEqual(msg);
-
-    done();
+  done();
 });
 
-it(`aes256 - long`, async done => {
+it(`aes256 - long`, (done) => {
+  const c = aes256(`password`);
 
-    const c = aes256(`password`);
+  let msg = `message `;
 
-    let msg = `message `;
+  for (let i = 0; i < 200000; i += 1) {
+    msg += unique() + " ";
+  }
 
-    for ( let i = 0 ; i < 200000 ; i += 1 ) {
+  const enc = c.encrypt(msg);
 
-        msg += unique() + ' ';
-    }
+  const dec = c.decrypt(enc);
 
-    const enc = c.encrypt(msg);
+  expect(enc).not.toEqual(msg);
 
-    const dec = c.decrypt(enc);
+  expect(dec).toEqual(msg);
 
-    expect(enc).not.toEqual(msg);
-
-    expect(dec).toEqual(msg);
-
-    done();
+  done();
 });
-

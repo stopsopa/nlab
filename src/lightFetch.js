@@ -1,27 +1,26 @@
-
 // yarn add qs@^6
 
-const URL           = require('url').URL;
+const URL = require("url").URL;
 
-const https         = require('https');
+const https = require("https");
 
-const http          = require('http');
+const http = require("http");
 
 // const querystring   = require('querystring');
 
-const qs            = require('qs');
+const qs = require("qs");
 
-const name          = 'nlab/lightFetch';
+const name = "nlab/lightFetch";
 
-const emsg          = msg => `${name}: ${msg}`;
+const emsg = (msg) => `${name}: ${msg}`;
 
 const def = {
-  method                : 'GET',
-  timeout               : 30 * 1000,
-  query                 : {},
-  headers               : {},
-  body                  : undefined,
-  noBody                : false,
+  method: "GET",
+  timeout: 30 * 1000,
+  query: {},
+  headers: {},
+  body: undefined,
+  noBody: false,
 
   // If you wish lightFetch to automatically decode json:
   // true     - try always try decode - if it fail
@@ -29,8 +28,8 @@ const def = {
   // 'header' - only if Content-type; application/json header detected
   // If conditions will be on for parsing json and JSON.parse throw an error it will result
   // in promise lightFetch to be returned in rejected state with JSON.parse error forwarded in it
-  decodeJson            : 'header',
-  promiseResolvingStatusCodes  : res => {
+  decodeJson: "header",
+  promiseResolvingStatusCodes: (res) => {
     return res.statusCode >= 200 && res.statusCode < 300;
   },
 
@@ -47,7 +46,7 @@ const def = {
   // resb - print also body of response (by default body is skipped)
   // you can combine values like 'req resb',
   // obviously 'all' value turn all
-  debugRequest          : '',
+  debugRequest: "",
 
   // debugRequest use JSON.stringify to print data on the server output, jsonSpace will help in formatting
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#syntax
@@ -57,12 +56,15 @@ const def = {
 const defKeys = Object.keys(def);
 
 module.exports = function (url, opt = {}) {
-
-  Object.keys(opt || {}).forEach(key => {
-
-    if ( ! defKeys.includes(key) ) {
-
-      throw new Error(emsg(`key '${key}' is not on the list of allowed parameters ${defKeys.join(', ')}`));
+  Object.keys(opt || {}).forEach((key) => {
+    if (!defKeys.includes(key)) {
+      throw new Error(
+        emsg(
+          `key '${key}' is not on the list of allowed parameters ${defKeys.join(
+            ", "
+          )}`
+        )
+      );
     }
   });
 
@@ -78,23 +80,20 @@ module.exports = function (url, opt = {}) {
     promiseResolvingStatusCodes,
     qsOptions,
     jsonSpace,
-  } = ({
+  } = {
     ...def,
     ...opt,
-  });
+  };
 
-  if ( typeof debugRequest !== 'string' ) {
-
+  if (typeof debugRequest !== "string") {
     throw new Error(emsg(`debugRequest is not a string`));
   }
 
-  if ( debugRequest === 'all' ) {
-
-    debugRequest = 'reqb resb'
+  if (debugRequest === "all") {
+    debugRequest = "reqb resb";
   }
 
-  if ( typeof method !== 'string' ) {
-
+  if (typeof method !== "string") {
     throw new Error(emsg(`method is not a string`));
   }
 
@@ -103,21 +102,21 @@ module.exports = function (url, opt = {}) {
   const uniq = unique();
 
   return new Promise((resolve, reject) => {
-
     try {
+      const uri = new URL(url);
 
-      const uri   = new URL(url);
+      const lib = uri.protocol === "https:" ? https : http;
 
-      const lib   = (uri.protocol === 'https:') ? https : http;
-
-      const uriParamsAsRegularObject = Array.from(uri.searchParams.keys()).reduce((acc, key) => {
+      const uriParamsAsRegularObject = Array.from(
+        uri.searchParams.keys()
+      ).reduce((acc, key) => {
         acc[key] = uri.searchParams.getAll(key);
         return acc;
       }, {});
 
       const combinedQuery = {
         ...query,
-        ...uriParamsAsRegularObject
+        ...uriParamsAsRegularObject,
       };
 
       const querystring = qs.stringify(combinedQuery, qsOptions);
@@ -126,32 +125,31 @@ module.exports = function (url, opt = {}) {
 
       let rawBody = body;
 
-      if (body !== undefined && method === 'GET') {
-
-        throw new Error(emsg(`since you have specified the body for request probably method shouldn't be GET`));
+      if (body !== undefined && method === "GET") {
+        throw new Error(
+          emsg(
+            `since you have specified the body for request probably method shouldn't be GET`
+          )
+        );
       }
 
       // body is not a string, so probably it need to be sent as a json
       if (isObject(body) || Array.isArray(body)) {
-
         try {
-
           body = JSON.stringify(body);
-        }
-        catch (e) {
-
+        } catch (e) {
           e.message = emsg(`JSON.stringify error: ${e}`);
 
           return reject(e);
         }
 
-        headers['Content-Type'] = 'application/json; charset=utf-8';
+        headers["Content-Type"] = "application/json; charset=utf-8";
       }
 
       const request = {
-        hostname    : uri.hostname,
-        port        : uri.port || ( (uri.protocol === 'https:') ? '443' : '80'),
-        path        : uri.pathname + (querystring.length > 0 ? `?${querystring}` : ''),
+        hostname: uri.hostname,
+        port: uri.port || (uri.protocol === "https:" ? "443" : "80"),
+        path: uri.pathname + (querystring.length > 0 ? `?${querystring}` : ""),
         method,
         headers,
       };
@@ -159,64 +157,57 @@ module.exports = function (url, opt = {}) {
       const rq = {
         url,
         ...request,
-      }
+      };
 
-      if (debugRequest.includes('reqb')) {
-
+      if (debugRequest.includes("reqb")) {
         rq.body = body;
 
         rq.rawBody = rawBody;
       }
 
-      if (debugRequest.includes('req')) {
-
-        console.log(`${name} request ${uniq}:`, JSON.stringify(rq, null, jsonSpace));
+      if (debugRequest.includes("req")) {
+        console.log(
+          `${name} request ${uniq}:`,
+          JSON.stringify(rq, null, jsonSpace)
+        );
       }
 
       let error;
 
-      var req = lib.request(request, res => {
+      var req = lib.request(request, (res) => {
+        res.setEncoding("utf8");
 
-        res.setEncoding('utf8');
+        let body = "";
 
-        let body = '';
-
-        res.on('data', chunk => {
-
-          body += chunk
+        res.on("data", (chunk) => {
+          body += chunk;
         });
 
-        res.on('end', async () => {
-
+        res.on("end", async () => {
           try {
-
             if (
-              decodeJson === true
-              || (
-                decodeJson === 'header'
-                && (res.headers['Content-type'] || '').toLowerCase().includes('application/json')
-              )
+              decodeJson === true ||
+              (decodeJson === "header" &&
+                (res.headers["Content-type"] || "")
+                  .toLowerCase()
+                  .includes("application/json"))
             ) {
-
               try {
-
                 body = JSON.parse(body);
-              }
-              catch (e) {
+              } catch (e) {
+                e.message = emsg(`JSON.parse(response body) error: ${e}`);
 
-                e.message = emsg(`JSON.parse(response body) error: ${e}`);                
-                
                 if (debugRequest.includes("res")) {
-
-                  console.log(`${name} response ${uniq} raw response: >>>${body}<<<:`);
+                  console.log(
+                    `${name} response ${uniq} raw response: >>>${body}<<<:`
+                  );
                 }
-                
+
                 return reject(e);
               }
             }
 
-            if ( ! await promiseResolvingStatusCodes(res) ) {
-
+            if (!(await promiseResolvingStatusCodes(res))) {
               error = `Not resolving response status code (param function 'promiseResolvingStatusCodes'), current status is: ${res.statusCode}`;
 
               return reject(new Error(emsg(error)));
@@ -229,28 +220,26 @@ module.exports = function (url, opt = {}) {
 
             const payload = {
               uniq,
-              ...rs
+              ...rs,
             };
 
             if (noBody === false) {
-
               payload.body = body;
             }
 
-            if (debugRequest.includes('resb')) {
-
+            if (debugRequest.includes("resb")) {
               rs.body = body;
             }
 
-            if (debugRequest.includes('res')) {
-
-              console.log(`${name} response ${uniq}:`, JSON.stringify(rs, null, jsonSpace));
+            if (debugRequest.includes("res")) {
+              console.log(
+                `${name} response ${uniq}:`,
+                JSON.stringify(rs, null, jsonSpace)
+              );
             }
 
-            resolve(payload)
-          }
-          catch (e) {
-
+            resolve(payload);
+          } catch (e) {
             e.message = emsg(`lib.request end method error: ${e}`);
 
             return reject(e);
@@ -258,49 +247,44 @@ module.exports = function (url, opt = {}) {
         });
       });
 
-      req.on('socket', function (socket) {
-
+      req.on("socket", function (socket) {
         socket.setTimeout(timeout);
 
-        socket.on('timeout', () => { // https://stackoverflow.com/a/9910413
+        socket.on("timeout", () => {
+          // https://stackoverflow.com/a/9910413
 
           try {
             req.destroy();
-          }
-          catch (e) {
+          } catch (e) {
             try {
               req.abort(); // since node v14.1.0 Use request.destroy() instead
-            }
-            catch (e) {}
+            } catch (e) {}
           }
 
           reject(new Error(emsg(`timeout (${timeout}ms)`)));
         });
       });
 
-      req.on('error', e => reject(new Error(emsg(`on error: ${e}`))));
+      req.on("error", (e) => reject(new Error(emsg(`on error: ${e}`))));
 
       body && req.write(body);
 
       req.end();
-    }
-    catch (e) {
-
+    } catch (e) {
       reject(new Error(emsg(`general error: ${e}`)));
     }
   });
-}
+};
 
 function isObject(o) {
-  return Object.prototype.toString.call(o) === '[object Object]';
+  return Object.prototype.toString.call(o) === "[object Object]";
 }
 
 function unique(pattern) {
-  pattern || (pattern = 'xyxyxy');
-  return pattern.replace(/[xy]/g,
-    function(c) {
-      var r = Math.random() * 16 | 0,
-        v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
+  pattern || (pattern = "xyxyxy");
+  return pattern.replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }

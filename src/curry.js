@@ -1,24 +1,19 @@
+module.exports = (fn) => {
+  if (typeof fn !== "function") {
+    throw new Error(`curry.js error: fn is not a function`);
+  }
 
-module.exports = fn => {
+  let buff = [];
 
-    if ( typeof fn !== 'function' ) {
+  const pass = (...args) => {
+    buff = buff.concat(args);
 
-        throw new Error(`curry.js error: fn is not a function`);
+    if (fn.length > buff.length) {
+      return pass;
     }
 
-    let buff = [];
+    return fn.apply(this, buff);
+  };
 
-    const pass = (...args) => {
-
-        buff = buff.concat(args);
-
-        if (fn.length > buff.length) {
-
-            return pass;
-        }
-
-        return fn.apply(this, buff);
-    }
-
-    return pass;
-}
+  return pass;
+};

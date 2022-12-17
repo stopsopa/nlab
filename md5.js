@@ -1,2 +1,1 @@
-
-module.exports = require('./src/md5');
+module.exports = require("./src/md5");

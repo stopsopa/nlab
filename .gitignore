@@ -3,5 +3,4 @@ node_modules
 *.tgz
 yarn-error*
 /local.txt
-/coverage/
 /trash/
