@@ -8,38 +8,39 @@ on:
       - "**"
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically by github itself https://docs.github.com/en/actions/security-guides/automatic-token-authentication
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # search in keepassx
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # https://github.com/actions/runner-images#available-images
     strategy:
       fail-fast: false
       matrix:
         version: [14, 15, 16, 17, 18] # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.version }}
       - name: Yarn install
-        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
-      - name: jest tests
-        run: /bin/bash jest.sh
+        run: make yarn
+      - name: tests mysql
+        run: |
+          /bin/bash jest.sh
 
   release:
     needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs
     if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # https://github.com/actions/runner-images#available-images
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 18
-
+          
       - name: Install semantic-release
-        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn add -D semantic-release conventional-changelog-conventionalcommits
+        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn add semantic-release conventional-changelog-conventionalcommits
         # it has to be done here beacause otherwise it will crash for node@15 with error>>> error semantic-release@19.0.5: The engine "node" is incompatible with this module. Expected version ">=16 || ^14.17". Got "15.14.0"
 
       - name: npm pack
