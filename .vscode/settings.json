@@ -22,5 +22,6 @@
     "/dist/": true,
     "/var/": true,
     "var/": true
-  }
+  },
+  "debug.javascript.autoAttachFilter": "always" // https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_auto-attach
 }

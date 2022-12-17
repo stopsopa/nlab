@@ -7,6 +7,6 @@ module.exports = async () => {
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
     snapshotResolver: "./jest.snapshotResolver.js",
     watchPathIgnorePatterns: [".snap.js$"],
-    coverageDirectory: "<rootDir>/docs",
+    coverageDirectory: "docs",
   };
 };
