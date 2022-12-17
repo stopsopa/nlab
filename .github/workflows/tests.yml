@@ -24,7 +24,7 @@ jobs:
           node-version: ${{ matrix.version }}
       - name: Yarn install
         run: make yarn
-      - name: tests mysql
+      - name: tests
         run: |
           /bin/bash jest.sh
 

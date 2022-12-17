@@ -42,9 +42,9 @@ it("ms.generate 1", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -59,9 +59,9 @@ it("ms.generate 2000ms 5s", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -76,9 +76,9 @@ it("ms.generate 56ms 5s", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -94,9 +94,9 @@ it("ms.generate 56ms 5s 4d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -112,9 +112,9 @@ it("ms.generate 56ms 5s 0d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -130,9 +130,9 @@ it("ms.generate 56ms 0s 0d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -148,9 +148,9 @@ it("ms.generate 0ms 0s 0d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -167,9 +167,9 @@ it("ms.generate 56ms 5s 19h 4d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -187,9 +187,9 @@ it("ms.generate 56ms 5s 19h 4d 6y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -207,9 +207,9 @@ it("ms.generate 56ms 5s 19h 4d 0y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -228,9 +228,9 @@ it("ms.generate 56ms 5s 19h 4d 0y 7z", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -249,9 +249,9 @@ it("ms.generate 56ms 5s 45m 19h 4d 6y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -273,9 +273,9 @@ it("ms.generate 56ms 5s 145m 19h 4d 6y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -294,9 +294,9 @@ it("ms.generate 0ms 0s 0m 0h 0d 0y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -316,9 +316,9 @@ it("ms.generate 0ms 0s 0m 0h 0d 1y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -339,7 +339,7 @@ it("ms.generate wrong unit", (done) => {
 
     expect(v).toEqual(1000 * 60 * 60 * 24 * 365);
 
-    done(`this test should crush`);
+    done(`this test should crash`);
   } catch (e) {
     expect(String(e)).toEqual(
       "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'"
@@ -367,9 +367,9 @@ it("ms.generate 56ms 60s 145m 19h 4d 6y - m", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -391,9 +391,9 @@ it("ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -411,9 +411,9 @@ it("ms.generate 2d 7y - y", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -436,9 +436,9 @@ it("ms.generate 2d 7y - ms", (done) => {
 
     done();
   } catch (e) {
-    expect(String(e)).toEqual(`this test shouldn't crush`);
+    expect(String(e)).toEqual(`this test shouldn't crash`);
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 
@@ -465,7 +465,7 @@ it("ms.generate unit y", (done) => {
       "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'"
     );
 
-    done(`this test shouldn't crush`);
+    done(`this test shouldn't crash`);
   }
 });
 

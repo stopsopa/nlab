@@ -59,9 +59,9 @@ it("cachePromiseInterval", (done) => {
 
       done();
     } catch (e) {
-      expect(String(e)).toEqual(`this test shouldn't crush`);
+      expect(String(e)).toEqual(`this test shouldn't crash`);
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     }
   })();
 });
@@ -119,9 +119,9 @@ it("cachePromiseInterval 2", (done) => {
 
       done();
     } catch (e) {
-      expect(String(e)).toEqual(`this test shouldn't crush`);
+      expect(String(e)).toEqual(`this test shouldn't crash`);
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     }
   })();
 });
@@ -179,9 +179,9 @@ it("cachePromiseInterval 3", (done) => {
 
       done();
     } catch (e) {
-      expect(String(e)).toEqual(`this test shouldn't crush`);
+      expect(String(e)).toEqual(`this test shouldn't crash`);
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     }
   })();
 });
@@ -224,7 +224,7 @@ it("cachePromiseInterval crash", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual("<<2>>:error: 1");
 
@@ -259,7 +259,7 @@ it("cachePromiseInterval crash 2", (done) => {
     } catch (e) {
       expect(String(e)).toEqual("<<2>>:error: 1");
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     }
   })();
 });
@@ -286,7 +286,7 @@ it("cachePromiseInterval crash 22", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual("<<1>>:Error: exception");
 
@@ -315,7 +315,7 @@ it("cachePromiseInterval crash 3", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "<<1>>:Error: cachePromiseInterval error: o.refreshinterval is number but it is < than 10, it is '-90'"
@@ -346,7 +346,7 @@ it("cachePromiseInterval crash 4", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "<<1>>:Error: cachePromiseInterval error: o.refreshinterval is not false nor number"
@@ -377,7 +377,7 @@ it("cachePromiseInterval crash 5", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "<<1>>:Error: cachePromiseInterval error: o.args is not an array"
@@ -427,7 +427,7 @@ it("cachePromiseInterval firstcrach false", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual("error: 1");
 
@@ -475,7 +475,7 @@ it("cachePromiseInterval firstcrach not false", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "<<1>>:Error: cachePromiseInterval error: o.firstcrach is not boolean"
@@ -505,7 +505,7 @@ it("cachePromiseInterval create not function", (done) => {
 
       const one = await call();
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "<<1>>:Error: cachePromiseInterval error: o.create is not a function"
@@ -521,7 +521,7 @@ it("cachePromiseInterval key not string", (done) => {
     try {
       const t = cache(4);
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "Error: cachePromiseInterval error: key is not a string"
@@ -537,7 +537,7 @@ it("cachePromiseInterval key an empty string", (done) => {
     try {
       const t = cache(" ");
 
-      done(`this test shouldn't crush`);
+      done(`this test shouldn't crash`);
     } catch (e) {
       expect(String(e)).toEqual(
         "Error: cachePromiseInterval error: key is an empty string"
@@ -590,7 +590,7 @@ it("cachePromiseInterval all good", (done) => {
       //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
       // })
 
-      done(`this test shouldn't crush..`);
+      done(`this test shouldn't crash..`);
     }
   })();
 });
@@ -694,7 +694,7 @@ it("cachePromiseInterval all good 3", (done) => {
       //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
       // })
 
-      done(`this test shouldn't crush>`);
+      done(`this test shouldn't crash>`);
     }
   })();
 });
@@ -737,7 +737,7 @@ it("cachePromiseInterval time", (done) => {
       //     n: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
       // })
 
-      done(`this test shouldn't crush>`);
+      done(`this test shouldn't crash>`);
     }
   })();
 });

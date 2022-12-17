@@ -1143,7 +1143,7 @@ const fetchCrash2 = (args, data) => {
   //     <e> [String]: >rej: dd< len: 7
   // }
 
-  // server will not crush
+  // server will not crash
 })();
 
 // end of case 4

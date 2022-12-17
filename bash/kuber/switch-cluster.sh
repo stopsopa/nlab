@@ -27,7 +27,7 @@ if [ "${_CODE}" != "0" ]; then
     echo ""
     echo "${0} error:"
     echo -e "command:\n    ${_CMD}"
-    echo "has crushed with status code: >>${_CODE}<<"
+    echo "has crashed with status code: >>${_CODE}<<"
     echo ""
 
     exit ${_CODE};

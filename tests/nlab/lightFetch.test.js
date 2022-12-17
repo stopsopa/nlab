@@ -211,7 +211,7 @@ it(`lightFetch - timeout`, (done) => {
   })();
 });
 
-it(`lightFetch - crush`, (done) => {
+it(`lightFetch - crash`, (done) => {
   (async function () {
     try {
       await fetchCrush(`/crash`);
