@@ -119,7 +119,10 @@ it("cachePromiseIntervalSeed 2", (done) => {
 
       done();
     } catch (e) {
-      expect(String(e)).toEqual(`this test shouldn't crash`);
+      
+      log({
+        e: String(e),
+      })
 
       done(`this test shouldn't crash`);
     }

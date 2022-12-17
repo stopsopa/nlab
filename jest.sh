@@ -68,9 +68,9 @@ function cleanup {
 
     echo cleaning ...
 
-    kill "${PID1}" 1> /dev/null 2> /dev/null || :
+    kill "${PID1}" -9 1> /dev/null 2> /dev/null || :
 
-    kill "${PID2}" 1> /dev/null 2> /dev/null || :
+    kill "${PID2}" -9 1> /dev/null 2> /dev/null || :
 
     sleep 0.3
 }
@@ -81,9 +81,15 @@ node tests/server.js PORT &
 
 PID1="${!}"
 
+echo "PID1: ${PID1}"
+
 node tests/server.js CRASH_PORT &
 
 PID2="${!}"
+
+echo "PID2: ${PID2}"
+
+sleep 2
 
 
 
@@ -94,10 +100,8 @@ set -e
 set -x
 
 # --bail \
-# --detectOpenHandles \
 # --silent=false \
 # --verbose false \
-# --detectOpenHandles \
 
 TEST="$(cat <<END
 node node_modules/.bin/jest \
@@ -123,10 +127,18 @@ STATUS=$?
 
 if [ "$STATUS" = "0" ]; then
 
+    echo ""
+    echo ""
     { green "\n    Tests passed\n"; } 2>&3
+    echo ""
+    echo ""
 else
 
+    echo ""
+    echo ""
     { red "\n    Tests crashed\n"; } 2>&3
+    echo ""
+    echo ""
 
     exit $STATUS
 fi
