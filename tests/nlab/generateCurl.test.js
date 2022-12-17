@@ -1,25 +1,20 @@
-const alphaid = require("../../alphaid");
+const generateCurl = require("../../generateCurl");
 
-it("alphaid basic", (done) => {
+it("generateCurl all parts - no multiline", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const result = generateCurl({
+      url: "http://domain.com/path/endpoint",
+      method: "post",
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+        "X-custom": "custom-value",
+      },
+      body: {
+        some: "data",
+      },
+    });
 
-    expect(t.encode(0)).toEqual("a");
-    expect(t.encode(1)).toEqual("b");
-    expect(t.encode(2)).toEqual("c");
-    expect(t.encode(3)).toEqual("d");
-    expect(t.encode(4)).toEqual("e");
-    expect(t.encode(5)).toEqual("f");
-    expect(t.encode(24)).toEqual("y");
-    expect(t.encode(26)).toEqual("A");
-    expect(t.encode(40)).toEqual("O");
-    expect(t.encode(50)).toEqual("Y");
-    expect(t.encode(60)).toEqual("8");
-    expect(t.encode(61)).toEqual("9");
-    expect(t.encode(62)).toEqual("ba");
-    expect(t.encode(63)).toEqual("bb");
+    expect(result).toMatchSnapshot();
 
     done();
   } catch (e) {
@@ -27,45 +22,22 @@ it("alphaid basic", (done) => {
   }
 });
 
-it("alphaid basic changed", (done) => {
+it("generateCurl all parts - multiline", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0132456789"
-    );
+    const result = generateCurl({
+      url: "http://domain.com/path/endpoint",
+      method: "post",
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+        "X-custom": "custom-value",
+      },
+      body: {
+        some: "data",
+      },
+      multiline: true,
+    });
 
-    expect(t.encode(0)).toEqual("a");
-    expect(t.encode(1)).toEqual("b");
-    expect(t.encode(2)).toEqual("c");
-    expect(t.encode(3)).toEqual("d");
-    expect(t.encode(4)).toEqual("e");
-    expect(t.encode(5)).toEqual("f");
-    expect(t.encode(24)).toEqual("y");
-    expect(t.encode(26)).toEqual("A");
-    expect(t.encode(40)).toEqual("O");
-    expect(t.encode(50)).toEqual("Y");
-    expect(t.encode(60)).toEqual("8");
-    expect(t.encode(61)).toEqual("9");
-    expect(t.encode(62)).toEqual("ba");
-    expect(t.encode(63)).toEqual("bb");
-
-    done();
-  } catch (e) {
-    done(String(e));
-  }
-});
-it("alphaid decode", (done) => {
-  try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
-
-    expect(t.decode(t.encode(5))).toEqual(5);
-    expect(t.decode(t.encode(50))).toEqual(50);
-    expect(t.decode(t.encode(150))).toEqual(150);
-
-    expect(t.encode(54783927584325904378)).toEqual("bdq68g7tM4aa");
-
-    expect(t.decode("bdq68g7tM4aa")).toEqual(54783927584325904378);
+    expect(result).toMatchSnapshot();
 
     done();
   } catch (e) {
@@ -73,13 +45,21 @@ it("alphaid decode", (done) => {
   }
 });
 
-it("alphaid decode 0", (done) => {
+it("generateCurl all parts - slashParenthesis", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const result = generateCurl({
+      url: "http://domain.com/path/endpoint",
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+        "X-custom": 'custom-"value',
+      },
+      body: {
+        some: "data",
+      },
+      multiline: true,
+    });
 
-    expect(t.decode("")).toEqual(0);
+    expect(result).toMatchSnapshot();
 
     done();
   } catch (e) {
@@ -87,108 +67,98 @@ it("alphaid decode 0", (done) => {
   }
 });
 
-it("alphaid decode a", (done) => {
+it("generateCurl all parts - url not defined", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    generateCurl({});
 
-    expect(t.decode("a")).toEqual(0);
+    done(`Shouldn't reach this point`);
+  } catch (e) {
+    expect(String(e)).toEqual(`Error: buildCurl error: url is not a string - not defined`);
 
     done();
-  } catch (e) {
-    done(String(e));
   }
 });
 
-it("alphaid basic ab", (done) => {
+it("generateCurl all parts - no headers", (done) => {
   try {
-    const t = alphaid("01");
+    const result = generateCurl({ url: "x" });
 
-    expect(t.encode(0)).toEqual("0");
-    expect(t.encode(1)).toEqual("1");
-    expect(t.encode(2)).toEqual("10");
-    expect(t.encode(3)).toEqual("11");
-    expect(t.encode(4)).toEqual("100");
-    expect(t.encode(5)).toEqual("101");
-    expect(t.encode(24)).toEqual("11000");
-    expect(t.encode(26)).toEqual("11010");
-    expect(t.encode(40)).toEqual("101000");
-    expect(t.encode(50)).toEqual("110010");
-    expect(t.encode(60)).toEqual("111100");
-    expect(t.encode(61)).toEqual("111101");
-    expect(t.encode(62)).toEqual("111110");
-    expect(t.encode(63)).toEqual("111111");
+    expect(result).toMatchSnapshot();
 
     done();
   } catch (e) {
-    done(String(e));
+    done(`Shouldn't reach this point`);
+
+    throw e;
   }
 });
 
-it("alphaid basic ab rev", (done) => {
+it("generateCurl all parts - headers not an object", (done) => {
   try {
-    const t = alphaid("01");
+    generateCurl({ url: "x", headers: null });
 
-    expect(t.decode(t.encode(0))).toEqual(0);
-    expect(t.decode(t.encode(1))).toEqual(1);
-    expect(t.decode(t.encode(2))).toEqual(2);
-    expect(t.decode(t.encode(3))).toEqual(3);
-    expect(t.decode(t.encode(4))).toEqual(4);
-    expect(t.decode(t.encode(5))).toEqual(5);
-    expect(t.decode(t.encode(24))).toEqual(24);
-    expect(t.decode(t.encode(26))).toEqual(26);
-    expect(t.decode(t.encode(40))).toEqual(40);
-    expect(t.decode(t.encode(50))).toEqual(50);
-    expect(t.decode(t.encode(60))).toEqual(60);
-    expect(t.decode(t.encode(61))).toEqual(61);
-    expect(t.decode(t.encode(62))).toEqual(62);
-    expect(t.decode(t.encode(63))).toEqual(63);
+    done(`Shouldn't reach this point`);
+  } catch (e) {
+    expect(String(e)).toEqual(
+      "Error: buildCurl error: headers if defined should be an object, but it is >[object Null]<"
+    );
 
     done();
-  } catch (e) {
-    done(String(e));
   }
 });
 
-it("alphaid basic", (done) => {
+it("generateCurl all parts - headers empty object", (done) => {
   try {
-    const t = alphaid(
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-    );
+    const result = generateCurl({ url: "x", headers: {} });
 
-    expect(t.encode(0)).toEqual("A");
-    expect(t.encode(1)).toEqual("B");
-    expect(t.encode(2)).toEqual("C");
-    expect(t.encode(3)).toEqual("D");
-    expect(t.encode(4)).toEqual("E");
-    expect(t.encode(5)).toEqual("F");
-    expect(t.encode(24)).toEqual("Y");
-    expect(t.encode(26)).toEqual("a");
-    expect(t.encode(40)).toEqual("o");
-    expect(t.encode(50)).toEqual("y");
-    expect(t.encode(60)).toEqual("8");
-    expect(t.encode(61)).toEqual("9");
-    expect(t.encode(62)).toEqual("-");
-    expect(t.encode(63)).toEqual("_");
-    expect(t.encode(64)).toEqual("BA");
-    expect(t.encode(125)).toEqual("B9");
-    expect(t.encode(126)).toEqual("B-");
-    expect(t.encode(127)).toEqual("B_");
-    expect(t.encode(128)).toEqual("CA");
-    expect(t.encode(129)).toEqual("CB");
-    expect(t.encode(64 * 64 - 1)).toEqual("__");
-    expect(t.encode(64 * 64 * 64 - 1)).toEqual("___");
-    expect(t.encode(64 * 64 * 64 * 64 - 1)).toEqual("____");
-    expect(t.encode(64 * 64 * 64 * 64 * 64 - 1)).toEqual("_____");
-    expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual("______");
-    expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual("_______");
-    expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual(
-      "________"
-    );
+    expect(result).toMatchSnapshot();
 
     done();
   } catch (e) {
-    done(String(e));
+    done(`Shouldn't reach this point`);
+
+    throw e;
+  }
+});
+
+it("generateCurl all parts - headers value not string", (done) => {
+  try {
+    const result = generateCurl({ url: "x", headers: { "X-test": true } });
+
+    expect(result).toMatchSnapshot();
+
+    done();
+  } catch (e) {
+    done(`Shouldn't reach this point`);
+
+    throw e;
+  }
+});
+
+it("generateCurl all parts - body as a string", (done) => {
+  try {
+    const result = generateCurl({ url: "x", body: '{"key":"value"}' });
+
+    expect(result).toMatchSnapshot();
+
+    done();
+  } catch (e) {
+    done(`Shouldn't reach this point`);
+
+    throw e;
+  }
+});
+
+it("generateCurl all parts - body not object, array or string", (done) => {
+  try {
+    generateCurl({ url: "x", body: 6 });
+
+    done(`Shouldn't reach this point`);
+  } catch (e) {
+    expect(String(e)).toEqual(
+      "Error: buildCurl error: body if defined should be an object, array or string but it is >[object Undefined]<"
+    );
+
+    done();
   }
 });

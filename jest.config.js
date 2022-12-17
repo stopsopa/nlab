@@ -5,5 +5,7 @@ module.exports = async () => {
     bail: true,
     coverageReporters: ["html", "lcov", "text"],
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
+    snapshotResolver: "./jest.snapshotResolver.js",
+    watchPathIgnorePatterns: [".snap.js$"],
   };
 };

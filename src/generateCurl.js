@@ -5,18 +5,15 @@ const buildCurl = (function () {
     return Object.prototype.toString.call(obj) === "[object Object]";
   }
 
-  function substituteEmail(body) {
-    if (isObject(body)) {
-      if (typeof body?.shopperInfo?.email === "string") {
-        body.shopperInfo.email = email;
-      }
+  function slashParenthesis(data) {
+    if (data.includes('"')) {
+      return data.replace(/"/g, '\\"');
     }
-    return body;
+    return data;
   }
 
   return function (opt) {
-    let { url, method, headers, body, json, multiline } = {
-      json: true,
+    let { url, method, headers, body, multiline } = {
       multiline: false,
       ...opt,
     };
@@ -25,39 +22,39 @@ const buildCurl = (function () {
       throw th(`url is not a string - not defined`);
     }
 
-    if (!isObject(headers)) {
-      throw th(
-        `headers field from db after json parsing doesn't seem to be an object`
-      );
-    }
-
-    body = substituteEmail(body);
-
     const join = [];
 
     if (typeof method === "string" && method.trim()) {
       method = `-X${method}`;
-    } else {
-      method = "";
+
+      join.push(method.toUpperCase());
     }
 
-    join.push(method);
+    if (headers !== undefined) {
+      if (!isObject(headers)) {
+        throw th(`headers if defined should be an object, but it is >${Object.prototype.toString.call(headers)}<`);
+      }
 
-    if (Object.keys(headers).length > 0) {
-      for (const [key, value] of Object.entries(headers)) {
-        if (
-          typeof key === "string" &&
-          key.trim() &&
-          typeof value === "string" &&
-          value.trim()
-        ) {
-          join.push(`-H "${key}: ${slashParenthesis(value)}"`);
+      if (Object.keys(headers).length > 0) {
+        for (const [key, value] of Object.entries(headers)) {
+          if (typeof key === "string" && key.trim() && typeof value === "string" && value.trim()) {
+            join.push(`-H "${key}: ${slashParenthesis(value)}"`);
+          }
         }
       }
     }
 
-    if (isObject(body)) {
-      join.push(`-d '${JSON.stringify(body, null, 4)}'`);
+    if (body !== undefined) {
+      if (isObject(body) || Array.isArray(body)) {
+        body = JSON.stringify(body, null, multiline ? 4 : 0);
+      }
+      if (typeof body === "string") {
+        join.push(`-d '${body}'`);
+      } else {
+        throw th(
+          `body if defined should be an object, array or string but it is >${Object.prototype.toString.call(headers)}<`
+        );
+      }
     }
 
     join.push(url);
