@@ -2,7 +2,7 @@ const aes256 = require("../../aes256");
 
 const unique = require("../../unique");
 
-const path = require('path');
+const path = require("path");
 
 jest.setTimeout(100);
 

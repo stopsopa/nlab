@@ -35,9 +35,7 @@ let format = process.argv[5] || "yaml";
 const acceptedformats = "plain|yaml|json|jsonh|jsonq";
 
 if (!acceptedformats.split("|").includes(format)) {
-  throw new Error(
-    `accepted format should be one of "${acceptedformats}" but it is "${format}"`
-  );
+  throw new Error(`accepted format should be one of "${acceptedformats}" but it is "${format}"`);
 }
 
 // const value     = process.argv[4];
@@ -142,9 +140,7 @@ function parse(yml) {
 
         if (isObject(dic[label])) {
           if (typeof dic[label].v === "string") {
-            dic[label].e = new Error(
-              `There are more than one sections with label '${label}'`
-            );
+            dic[label].e = new Error(`There are more than one sections with label '${label}'`);
           }
         } else {
           dic[label] = ind[i];
@@ -174,9 +170,7 @@ let yml = fs.readFileSync(file, "utf8").toString();
 const data = parse(yml);
 
 if (!isObject(data.dic[block])) {
-  throw new Error(
-    `Block targeted by string '${block}' is not defined in file '${file}'`
-  );
+  throw new Error(`Block targeted by string '${block}' is not defined in file '${file}'`);
 }
 
 if (!/^\d+$/.test(block) && data.dic[block].e instanceof Error) {
@@ -188,14 +182,10 @@ const ret = getyaml(data.dic[block].v, key);
 switch (format) {
   case "plain":
     if (isObject(ret)) {
-      throw new Error(
-        `Found value is an object it shouldn't probably be rendered as a string`
-      );
+      throw new Error(`Found value is an object it shouldn't probably be rendered as a string`);
     }
     if (isArray(ret)) {
-      throw new Error(
-        `Found value is an array it shouldn't probably be rendered as a string`
-      );
+      throw new Error(`Found value is an array it shouldn't probably be rendered as a string`);
     }
     process.stdout.write(String(ret));
     break;

@@ -47,31 +47,15 @@ var etag = (function () {
       f = i && "boolean" == typeof i.weak ? i.weak : o;
     var u;
     if (!o && "string" != typeof n && !Buffer.isBuffer(n))
-      throw new TypeError(
-        "argument entity must be string, Buffer, or fs.Stats"
-      );
+      throw new TypeError("argument entity must be string, Buffer, or fs.Stats");
     var a,
       s,
       c = o
-        ? ((s = (a = n).mtime.getTime().toString(16)),
-          '"' + a.size.toString(16) + "-" + s + '"')
+        ? ((s = (a = n).mtime.getTime().toString(16)), '"' + a.size.toString(16) + "-" + s + '"')
         : (function (e) {
             if (0 === e.length) return '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"';
-            var r = t
-              .createHash("sha1")
-              .update(e, "utf8")
-              .digest("base64")
-              .substring(0, 27);
-            return (
-              '"' +
-              ("string" == typeof e
-                ? Buffer.byteLength(e, "utf8")
-                : e.length
-              ).toString(16) +
-              "-" +
-              r +
-              '"'
-            );
+            var r = t.createHash("sha1").update(e, "utf8").digest("base64").substring(0, 27);
+            return '"' + ("string" == typeof e ? Buffer.byteLength(e, "utf8") : e.length).toString(16) + "-" + r + '"';
           })(n);
     return f ? "W/" + c : c;
   };
@@ -464,9 +448,7 @@ if (staticServer && gc) {
   checkPath = path.resolve(staticServerAbs, checkPath);
 
   if (fs.existsSync(checkPath)) {
-    process.stdout.write(
-      `Error:\n    Can't create controller '${checkPath}' path is already taken`
-    );
+    process.stdout.write(`Error:\n    Can't create controller '${checkPath}' path is already taken`);
 
     process.exit(1);
   }
@@ -534,9 +516,7 @@ module.exports = controller;
   if (fs.existsSync(file)) {
     process.stdout.write(`Controller '${file}' successfully created`);
   } else {
-    process.stdout.write(
-      `Error:\n    Controller '${file}' couldn't be created`
-    );
+    process.stdout.write(`Error:\n    Controller '${file}' couldn't be created`);
 
     process.exit(1);
   }
@@ -572,21 +552,16 @@ const diff = function (a, b) {
 
 (function (d) {
   if (d.length) {
-    log(
-      `Unknown parameters: ${d.join(
-        ", "
-      )}\ncheck \n\n    node ${thisScript} --help\n\nfor more help`
-    );
+    log(`Unknown parameters: ${d.join(", ")}\ncheck \n\n    node ${thisScript} --help\n\nfor more help`);
 
     process.exit(1);
   }
 })(
   diff(
     Object.keys(args.all()),
-    (
-      "port dir noindex log help watch ignore inject debug config dump flag cache" +
-      (staticServer ? " gc" : "")
-    ).split(" ")
+    ("port dir noindex log help watch ignore inject debug config dump flag cache" + (staticServer ? " gc" : "")).split(
+      " "
+    )
   )
 );
 
@@ -699,17 +674,10 @@ if (watch) {
     if (filename) {
       if (isArray(ignore)) {
         for (var i = 0, l = ignore.length; i < l; i += 1) {
-          debug &&
-            log(
-              `before test (ignore): /${ignore[i].source}/${ignore[i].flags} against: ` +
-                filename
-            );
+          debug && log(`before test (ignore): /${ignore[i].source}/${ignore[i].flags} against: ` + filename);
 
           if (ignore[i].test(filename)) {
-            debug &&
-              log(
-                `ignored: /${ignore[i].source}/${ignore[i].flags} ` + filename
-              );
+            debug && log(`ignored: /${ignore[i].source}/${ignore[i].flags} ` + filename);
 
             return event.unlock();
           }
@@ -718,15 +686,10 @@ if (watch) {
 
       if (isArray(watch)) {
         for (var matched = false, i = 0, l = watch.length; i < l; i += 1) {
-          debug &&
-            log(
-              `before test (watch): /${watch[i].source}/${watch[i].flags} against: ` +
-                filename
-            );
+          debug && log(`before test (watch): /${watch[i].source}/${watch[i].flags} against: ` + filename);
 
           if (watch[i].test(filename)) {
-            debug &&
-              log(`matched: /${watch[i].source}/${watch[i].flags} ` + filename);
+            debug && log(`matched: /${watch[i].source}/${watch[i].flags} ` + filename);
 
             matched = true;
 
@@ -771,11 +734,7 @@ if (watch) {
 
   var type = (function (types) {
     return function (req, res, ext) {
-      ext =
-        ext ||
-        path
-          .extname(req.url.toLowerCase().split("?")[0])
-          .replace(/[^a-z0-9]/g, "");
+      ext = ext || path.extname(req.url.toLowerCase().split("?")[0]).replace(/[^a-z0-9]/g, "");
 
       types[ext] && res.setHeader("Content-Type", types[ext]);
 
@@ -816,9 +775,9 @@ if (watch) {
     logs & 2 && log(`${time()} \x1b[35m${res.statusCode}\x1b[0m: ${req.url}`);
 
     res.end(
-      `<div style="color: #92317B; font-family: tahoma;">${
-        notype ? "" : isDir ? "directory" : "file"
-      } ${req.url} no access.</div>`
+      `<div style="color: #92317B; font-family: tahoma;">${notype ? "" : isDir ? "directory" : "file"} ${
+        req.url
+      } no access.</div>`
     );
   }
 
@@ -930,17 +889,11 @@ if (watch) {
       if (typeof query._redirect === "string") {
         res.writeHead(query._status || 301, { Location: query._redirect });
 
-        return setTimeout(
-          () => res.end(),
-          query._timeout ? parseInt(query._timeout, 10) || 0 : 0
-        );
+        return setTimeout(() => res.end(), query._timeout ? parseInt(query._timeout, 10) || 0 : 0);
       }
     }
 
-    var file = path.resolve(
-      dir,
-      "." + path.sep + decodeURI(url).replace(/\.\.+/g, ".")
-    );
+    var file = path.resolve(dir, "." + path.sep + decodeURI(url).replace(/\.\.+/g, "."));
 
     if (fs.existsSync(file)) {
       var isDir = fs.statSync(file).isDirectory();
@@ -953,12 +906,7 @@ if (watch) {
         if (url.length > 1 && url.substr(-1) !== "/") {
           res.writeHead(302, { Location: url + "/" });
 
-          logs & 4 &&
-            log(
-              `${time()} \x1b[33m${res.statusCode}\x1b[0m: ${url} -> ${
-                url + "/"
-              }`
-            );
+          logs & 4 && log(`${time()} \x1b[33m${res.statusCode}\x1b[0m: ${url} -> ${url + "/"}`);
 
           return res.end();
         }
@@ -987,9 +935,7 @@ if (watch) {
             .readdirSync(file)
             .map((f) => {
               var dir = fs.statSync(path.resolve(file, f)).isDirectory();
-              return `<li>${dir ? "📁" : "📄"}<a href="./${f}${
-                dir ? "/" : ""
-              }">${f}</a></li>`;
+              return `<li>${dir ? "📁" : "📄"}<a href="./${f}${dir ? "/" : ""}">${f}</a></li>`;
             })
             .join("\n");
 
@@ -998,12 +944,7 @@ if (watch) {
           return noAccess(req, res, isDir);
         }
 
-        logs & 8 &&
-          log(
-            `${time()} \x1b[36m${
-              res.statusCode
-            }\x1b[0m: [\x1b[36mautoindex\x1b[0m] ${req.url}`
-          );
+        logs & 8 && log(`${time()} \x1b[36m${res.statusCode}\x1b[0m: [\x1b[36mautoindex\x1b[0m] ${req.url}`);
 
         return res.end(addWatcher(list, type(req, res, "html")));
       }
@@ -1077,17 +1018,13 @@ if (watch) {
           }
         });
 
-        logs & 1 &&
-          log(`${time()} \x1b[93m${res.statusCode}\x1b[0m: ${req.url}`);
+        logs & 1 && log(`${time()} \x1b[93m${res.statusCode}\x1b[0m: ${req.url}`);
       } else {
         res.statusCode = 404;
 
-        res.end(
-          `<div style="color: #b10000; font-family: tahoma;">status code ${res.statusCode}: ${req.url}</div>`
-        );
+        res.end(`<div style="color: #b10000; font-family: tahoma;">status code ${res.statusCode}: ${req.url}</div>`);
 
-        logs & 1 &&
-          log(`${time()} \x1b[31m${res.statusCode}\x1b[0m: ${req.url}`);
+        logs & 1 && log(`${time()} \x1b[31m${res.statusCode}\x1b[0m: ${req.url}`);
       }
     }
   });

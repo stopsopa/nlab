@@ -58,13 +58,7 @@ const defKeys = Object.keys(def);
 module.exports = function (url, opt = {}) {
   Object.keys(opt || {}).forEach((key) => {
     if (!defKeys.includes(key)) {
-      throw new Error(
-        emsg(
-          `key '${key}' is not on the list of allowed parameters ${defKeys.join(
-            ", "
-          )}`
-        )
-      );
+      throw new Error(emsg(`key '${key}' is not on the list of allowed parameters ${defKeys.join(", ")}`));
     }
   });
 
@@ -107,9 +101,7 @@ module.exports = function (url, opt = {}) {
 
       const lib = uri.protocol === "https:" ? https : http;
 
-      const uriParamsAsRegularObject = Array.from(
-        uri.searchParams.keys()
-      ).reduce((acc, key) => {
+      const uriParamsAsRegularObject = Array.from(uri.searchParams.keys()).reduce((acc, key) => {
         acc[key] = uri.searchParams.getAll(key);
         return acc;
       }, {});
@@ -126,11 +118,7 @@ module.exports = function (url, opt = {}) {
       let rawBody = body;
 
       if (body !== undefined && method === "GET") {
-        throw new Error(
-          emsg(
-            `since you have specified the body for request probably method shouldn't be GET`
-          )
-        );
+        throw new Error(emsg(`since you have specified the body for request probably method shouldn't be GET`));
       }
 
       // body is not a string, so probably it need to be sent as a json
@@ -166,10 +154,7 @@ module.exports = function (url, opt = {}) {
       }
 
       if (debugRequest.includes("req")) {
-        console.log(
-          `${name} request ${uniq}:`,
-          JSON.stringify(rq, null, jsonSpace)
-        );
+        console.log(`${name} request ${uniq}:`, JSON.stringify(rq, null, jsonSpace));
       }
 
       let error;
@@ -188,9 +173,7 @@ module.exports = function (url, opt = {}) {
             if (
               decodeJson === true ||
               (decodeJson === "header" &&
-                (res.headers["Content-type"] || "")
-                  .toLowerCase()
-                  .includes("application/json"))
+                (res.headers["Content-type"] || "").toLowerCase().includes("application/json"))
             ) {
               try {
                 body = JSON.parse(body);
@@ -198,9 +181,7 @@ module.exports = function (url, opt = {}) {
                 e.message = emsg(`JSON.parse(response body) error: ${e}`);
 
                 if (debugRequest.includes("res")) {
-                  console.log(
-                    `${name} response ${uniq} raw response: >>>${body}<<<:`
-                  );
+                  console.log(`${name} response ${uniq} raw response: >>>${body}<<<:`);
                 }
 
                 return reject(e);
@@ -232,10 +213,7 @@ module.exports = function (url, opt = {}) {
             }
 
             if (debugRequest.includes("res")) {
-              console.log(
-                `${name} response ${uniq}:`,
-                JSON.stringify(rs, null, jsonSpace)
-              );
+              console.log(`${name} response ${uniq}:`, JSON.stringify(rs, null, jsonSpace));
             }
 
             resolve(payload);

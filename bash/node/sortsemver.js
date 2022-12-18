@@ -129,9 +129,7 @@ function sort(data) {
     return d;
   });
 
-  data.sort((a, b) =>
-    compare(`${a[2]}.${a[3]}.${a[4]}`, `${b[2]}.${b[3]}.${b[4]}`)
-  );
+  data.sort((a, b) => compare(`${a[2]}.${a[3]}.${a[4]}`, `${b[2]}.${b[3]}.${b[4]}`));
 
   data = data.map((d) => `${d[1]}${d[2]}.${d[3]}.${d[4]}${d[5]}`);
 

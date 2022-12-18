@@ -28,11 +28,8 @@ module.exports = (cmd, opt) => {
     if (!Array.isArray(cmd)) {
       throw th(`cmd is not an array`);
     }
-
-  }
-  catch (e) {
-
-    throw new Error(`array???? ${e}`)
+  } catch (e) {
+    throw new Error(`array???? ${e}`);
   }
 
   if (!cmd.length) {

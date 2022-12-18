@@ -66,21 +66,17 @@ it(`trim(4)`, () => {
   });
 });
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}abc${i}', '${i}')`, () => {
-      expect(trim(`${i}abc${i}`, i)).toEqual("abc");
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}abc${i}', '${i}')`, () => {
+    expect(trim(`${i}abc${i}`, i)).toEqual("abc");
   });
+});
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}${i}abc${i}${i}', '${i}')`, () => {
-      expect(trim(`${i}${i}abc${i}${i}`, i)).toEqual("abc");
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}${i}abc${i}${i}', '${i}')`, () => {
+    expect(trim(`${i}${i}abc${i}${i}`, i)).toEqual("abc");
   });
+});
 
 ".?*+^$[\\]\\\\(){}|-mnoprs".split("").forEach((i) => {
   it(`trim('${i}${i}abc${i}${i}', '${i}', 'r')`, () => {
@@ -94,21 +90,17 @@ it(`trim(4)`, () => {
   });
 });
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}abc${i}', '${i}', 'r')`, () => {
-      expect(trim(`${i}abc${i}`, i, "r")).toEqual(`${i}abc`);
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}abc${i}', '${i}', 'r')`, () => {
+    expect(trim(`${i}abc${i}`, i, "r")).toEqual(`${i}abc`);
   });
+});
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}${i}abc${i}${i}', '${i}', 'r')`, () => {
-      expect(trim(`${i}${i}abc${i}${i}`, i, "r")).toEqual(`${i}${i}abc`);
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}${i}abc${i}${i}', '${i}', 'r')`, () => {
+    expect(trim(`${i}${i}abc${i}${i}`, i, "r")).toEqual(`${i}${i}abc`);
   });
+});
 
 ".?*+^$[\\]\\\\(){}|-mnoprs".split("").forEach((i) => {
   it(`trim('${i}${i}abc${i}${i}', '${i}', 'l')`, () => {
@@ -122,21 +114,17 @@ it(`trim(4)`, () => {
   });
 });
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}abc${i}', '${i}', 'l')`, () => {
-      expect(trim(`${i}abc${i}`, i, "l")).toEqual(`abc${i}`);
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}abc${i}', '${i}', 'l')`, () => {
+    expect(trim(`${i}abc${i}`, i, "l")).toEqual(`abc${i}`);
   });
+});
 
-".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs"
-  .match(/.{1,2}/g)
-  .forEach((i) => {
-    it(`trim('${i}${i}abc${i}${i}', '${i}', 'l')`, () => {
-      expect(trim(`${i}${i}abc${i}${i}`, i, "l")).toEqual(`abc${i}${i}`);
-    });
+".?*+^$[\\]\\\\(){}|-.?*+^$[\\]\\\\(){}|-mnoprs".match(/.{1,2}/g).forEach((i) => {
+  it(`trim('${i}${i}abc${i}${i}', '${i}', 'l')`, () => {
+    expect(trim(`${i}${i}abc${i}${i}`, i, "l")).toEqual(`abc${i}${i}`);
   });
+});
 
 it(`pregQuote`, (done) => {
   expect(pregQuote()).toBeFalsy();

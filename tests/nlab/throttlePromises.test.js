@@ -16,12 +16,7 @@ const cache = throttlePromises({
 it("throttlePromises() - simple", (done) => {
   (async function () {
     try {
-      const mainPromise = cache(
-        {},
-        () => new Promise((res) => setTimeout(res, 10, "testdata")),
-        10000,
-        false
-      );
+      const mainPromise = cache({}, () => new Promise((res) => setTimeout(res, 10, "testdata")), 10000, false);
 
       const data = await mainPromise;
 

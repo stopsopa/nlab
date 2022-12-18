@@ -6,9 +6,7 @@ it("negotiatePort - no protocol", (done) => {
   try {
     np();
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: negotiatePort error: protocol 'undefined' is not a string"
-    );
+    expect(String(e)).toEqual("Error: negotiatePort error: protocol 'undefined' is not a string");
 
     done();
   }
@@ -18,9 +16,7 @@ it("negotiatePort - wrong protocol", (done) => {
   try {
     np("httpss");
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: negotiatePort error: protocol 'httpss' don't match /^https?$/"
-    );
+    expect(String(e)).toEqual("Error: negotiatePort error: protocol 'httpss' don't match /^https?$/");
 
     done();
   }
@@ -38,9 +34,7 @@ it("negotiatePort - port - not a number", (done) => {
   try {
     np("https", "56x");
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: negotiatePort error: port '56x' is not a number"
-    );
+    expect(String(e)).toEqual("Error: negotiatePort error: port '56x' is not a number");
 
     done();
   }
@@ -128,24 +122,7 @@ it("negotiatePort - demo", (done) => {
 
   // console.log(JSON.stringify(list, null, 4));
 
-  expect(list).toEqual([
-    "",
-    "",
-    "",
-    "",
-    "81",
-    ":81",
-    "80",
-    ":80",
-    "",
-    "445",
-    "",
-    "",
-    "445",
-    "",
-    "",
-    ":44",
-  ]);
+  expect(list).toEqual(["", "", "", "", "81", ":81", "80", ":80", "", "445", "", "", "445", "", "", ":44"]);
 
   done();
 });

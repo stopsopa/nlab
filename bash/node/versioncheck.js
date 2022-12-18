@@ -26,16 +26,8 @@ function trim(string, charlist, direction) {
   direction = direction || "rl";
   charlist = pregQuote(charlist || "");
   charlist = charlist || " \\n";
-  direction.indexOf("r") + 1 &&
-    (string = string.replace(
-      new RegExp("^(.*?)[" + charlist + "]*$", "gm"),
-      "$1"
-    ));
-  direction.indexOf("l") + 1 &&
-    (string = string.replace(
-      new RegExp("^[" + charlist + "]*(.*)$", "gm"),
-      "$1"
-    ));
+  direction.indexOf("r") + 1 && (string = string.replace(new RegExp("^(.*?)[" + charlist + "]*$", "gm"), "$1"));
+  direction.indexOf("l") + 1 && (string = string.replace(new RegExp("^[" + charlist + "]*(.*)$", "gm"), "$1"));
   return string;
 }
 
@@ -87,9 +79,7 @@ const reg = /^(v?\d+\.\d+)(\.\d+)?$/;
 const parts = toCheck.match(reg);
 
 if (!Array.isArray(parts) || parts.length !== 3) {
-  throw new Error(
-    `extracting minor version ${reg} from given version to compare '${toCheck}' didn't worked`
-  );
+  throw new Error(`extracting minor version ${reg} from given version to compare '${toCheck}' didn't worked`);
 }
 
 if (process.argv.indexOf("--exact") === -1) {
@@ -103,11 +93,7 @@ if (process.argv.indexOf("--exact") === -1) {
 }
 
 if (ver !== toCheck) {
-  throw new Error(
-    `${__dirname} error: Version of node should be '${toCheck}' but it is '${ver}'`
-  );
+  throw new Error(`${__dirname} error: Version of node should be '${toCheck}' but it is '${ver}'`);
 }
 
-console.log(
-  `Version of node is ${ver} and it should be ${toCheck} - so it's valid`
-);
+console.log(`Version of node is ${ver} and it should be ${toCheck} - so it's valid`);

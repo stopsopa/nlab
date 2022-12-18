@@ -23,9 +23,7 @@ const del = function (source, key) {
 
   key.forEach((k) => {
     if (typeof k !== "string") {
-      throw new Error(
-        "nlab/del error: one of the keys in the array is not a string"
-      );
+      throw new Error("nlab/del error: one of the keys in the array is not a string");
     }
   });
 

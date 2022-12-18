@@ -11,10 +11,7 @@ it("CachePromise - simple", (done) => {
     try {
       const cachePromise = new CachePromise();
 
-      const mainPromise = cachePromise.get(
-        { a: "b1" },
-        () => new Promise((res) => setTimeout(res, 10, "abc"))
-      );
+      const mainPromise = cachePromise.get({ a: "b1" }, () => new Promise((res) => setTimeout(res, 10, "abc")));
 
       const data = await mainPromise;
 
@@ -38,19 +35,13 @@ it("CachePromise - double cached", (done) => {
     try {
       const cachePromise = new CachePromise();
 
-      let mainPromise = cachePromise.get(
-        { a: "b2" },
-        () => new Promise((res) => setTimeout(res, 10, "abc"))
-      );
+      let mainPromise = cachePromise.get({ a: "b2" }, () => new Promise((res) => setTimeout(res, 10, "abc")));
 
       let data = await mainPromise;
 
       expect(data).toEqual("abc");
 
-      mainPromise = cachePromise.get(
-        { a: "b2" },
-        () => new Promise((res) => setTimeout(res, 10, "abcd"))
-      );
+      mainPromise = cachePromise.get({ a: "b2" }, () => new Promise((res) => setTimeout(res, 10, "abcd")));
 
       data = await mainPromise;
 
@@ -76,10 +67,7 @@ it("CachePromise - double refreshed", (done) => {
         ttlms: 5,
       });
 
-      let mainPromise = cachePromise.get(
-        { a: "b3" },
-        () => new Promise((res) => setTimeout(res, 5, "abc"))
-      );
+      let mainPromise = cachePromise.get({ a: "b3" }, () => new Promise((res) => setTimeout(res, 5, "abc")));
 
       let data = await mainPromise;
 
@@ -87,10 +75,7 @@ it("CachePromise - double refreshed", (done) => {
 
       await delay(15);
 
-      mainPromise = cachePromise.get(
-        { a: "b3" },
-        () => new Promise((res) => setTimeout(res, 5, "abcd"))
-      );
+      mainPromise = cachePromise.get({ a: "b3" }, () => new Promise((res) => setTimeout(res, 5, "abcd")));
 
       data = await mainPromise;
 
@@ -250,9 +235,7 @@ it(`CachePromise - can't serialise`, (done) => {
 
       done(`Shouldn't resolve`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: CachePromise error: ttlms can't be smaller than 1"
-      );
+      expect(String(e)).toEqual("Error: CachePromise error: ttlms can't be smaller than 1");
 
       done();
     }
@@ -268,9 +251,7 @@ it(`CachePromise - ttlms < 1`, (done) => {
 
       done(`Shouldn't resolve`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: CachePromise error: ttlms can't be smaller than 1"
-      );
+      expect(String(e)).toEqual("Error: CachePromise error: ttlms can't be smaller than 1");
 
       done();
     }
@@ -286,9 +267,7 @@ it(`CachePromise - undefined instead of string`, (done) => {
 
       done(`Shouldn't resolve`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: CachePromise error: key after being serialised is not a string"
-      );
+      expect(String(e)).toEqual("Error: CachePromise error: key after being serialised is not a string");
 
       done();
     }
@@ -304,9 +283,7 @@ it(`CachePromise - not integer`, (done) => {
 
       done(`Shouldn't resolve`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: CachePromise error: ttlms is not an integer"
-      );
+      expect(String(e)).toEqual("Error: CachePromise error: ttlms is not an integer");
 
       done();
     }
@@ -322,9 +299,7 @@ it(`CachePromise - not a function`, (done) => {
 
       done(`Shouldn't resolve`);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: CachePromise error: getPromise is not a function"
-      );
+      expect(String(e)).toEqual("Error: CachePromise error: getPromise is not a function");
 
       done();
     }

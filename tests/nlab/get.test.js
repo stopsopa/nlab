@@ -26,15 +26,11 @@ it("get() - json []", () => {
 });
 
 it("get() - json undefined 1", () => {
-  expect(JSON.stringify(get(undefined, "one.two", "test"))).toBe(
-    JSON.stringify("test")
-  );
+  expect(JSON.stringify(get(undefined, "one.two", "test"))).toBe(JSON.stringify("test"));
 });
 
 it("get() - json undefined 2", () => {
-  expect(JSON.stringify(get(undefined, "two", "test"))).toBe(
-    JSON.stringify("test")
-  );
+  expect(JSON.stringify(get(undefined, "two", "test"))).toBe(JSON.stringify("test"));
 });
 
 it("get() - json {}", () => {

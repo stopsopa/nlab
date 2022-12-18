@@ -56,11 +56,7 @@ global.__line = (function () {
     }
 
     return (
-      new Date().toISOString().substring(0, 19).replace("T", " ") +
-      " " +
-      file +
-      ":" +
-      rpad(__stack[n].getLineNumber())
+      new Date().toISOString().substring(0, 19).replace("T", " ") + " " + file + ":" + rpad(__stack[n].getLineNumber())
     );
   };
 

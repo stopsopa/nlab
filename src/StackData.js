@@ -68,16 +68,15 @@ module.exports = function (opt) {
   let nset = 0;
   let gctime = now();
 
-  const { expireAfterSec, triggerClearAfterNMapSet, prefix, debug } =
-    Object.assign(
-      {
-        expireAfterSec: undefined,
-        triggerClearAfterNMapSet: 300,
-        prefix: "__stack_data__",
-        debug: false,
-      },
-      opt
-    );
+  const { expireAfterSec, triggerClearAfterNMapSet, prefix, debug } = Object.assign(
+    {
+      expireAfterSec: undefined,
+      triggerClearAfterNMapSet: 300,
+      prefix: "__stack_data__",
+      debug: false,
+    },
+    opt
+  );
 
   if (created) {
     throw `Only one instance of 'new Stack()' possible to create`;

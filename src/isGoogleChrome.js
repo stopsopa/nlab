@@ -11,9 +11,5 @@ const getUserAgent = require("./getUserAgent");
 module.exports = function (ua) {
   const { u, l } = getUserAgent(ua);
 
-  return (
-    l.indexOf("chrome") > -1 &&
-    l.indexOf("chromium") === -1 &&
-    l.indexOf("opr") === -1
-  );
+  return l.indexOf("chrome") > -1 && l.indexOf("chromium") === -1 && l.indexOf("opr") === -1;
 };

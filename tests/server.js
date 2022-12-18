@@ -29,9 +29,7 @@ if (typeof host !== "string" || !host.trim()) {
 }
 
 if (!/^\d+$/.test(port)) {
-  throw new Error(
-    `can't find port in env vars specified in first argument (${process.argv[2]})`
-  );
+  throw new Error(`can't find port in env vars specified in first argument (${process.argv[2]})`);
 }
 
 const app = express();

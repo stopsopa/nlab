@@ -100,9 +100,7 @@ const tool = (key) => {
         }
 
         if (o.refreshinterval < 10) {
-          throw th(
-            `o.refreshinterval is number but it is < than 10, it is '${o.refreshinterval}'`
-          );
+          throw th(`o.refreshinterval is number but it is < than 10, it is '${o.refreshinterval}'`);
         }
       }
 

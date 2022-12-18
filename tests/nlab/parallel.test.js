@@ -9,9 +9,7 @@ it("no setup exception", (done) => {
 
       p(function () {});
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: parallel.js error: opt.numberOfThreads is undefined, first use setup() method"
-      );
+      expect(String(e)).toEqual("Error: parallel.js error: opt.numberOfThreads is undefined, first use setup() method");
 
       done();
     }

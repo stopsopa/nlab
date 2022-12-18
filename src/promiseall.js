@@ -20,10 +20,7 @@ var promiseall = (list) => {
   var err = false;
 
   for (var i = 0, l = list.length, t; i < l; i += 1) {
-    if (
-      typeof list[i] === "function" &&
-      list[i].constructor.name === "AsyncFunction"
-    ) {
+    if (typeof list[i] === "function" && list[i].constructor.name === "AsyncFunction") {
       list[i] = Promise.resolve(list[i]());
     }
 

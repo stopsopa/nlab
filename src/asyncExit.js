@@ -15,29 +15,12 @@ module.exports = async (promise, options) => {
 
   used = true;
 
-  let {
-    resume,
-    exitCodeNormal,
-    exitCodeTimeout,
-    promiseTimeoutMsec,
-    verbose,
-    bindTo,
-    overrideExit,
-  } = Object.assign(
+  let { resume, exitCodeNormal, exitCodeTimeout, promiseTimeoutMsec, verbose, bindTo, overrideExit } = Object.assign(
     {},
     {
       resume: true,
       // https://nodejs.org/api/process.html#process_signal_events
-      bindTo: [
-        "exit",
-        "SIGINT",
-        "SIGTERM",
-        "SIGHUP",
-        "SIGBREAK",
-        "SIGUSR1",
-        "SIGUSR2",
-        "uncaughtException",
-      ],
+      bindTo: ["exit", "SIGINT", "SIGTERM", "SIGHUP", "SIGBREAK", "SIGUSR1", "SIGUSR2", "uncaughtException"],
 
       exitCodeNormal: 0,
       exitCodeTimeout: 1,
@@ -64,10 +47,7 @@ module.exports = async (promise, options) => {
 
     if (Number.isInteger(promiseTimeoutMsec)) {
       timeoutHandler = setTimeout(() => {
-        errors &&
-          console.error(
-            `${__filename} ${now()} promiseTimeoutMsec(${promiseTimeoutMsec})`
-          );
+        errors && console.error(`${__filename} ${now()} promiseTimeoutMsec(${promiseTimeoutMsec})`);
 
         exit(exitCodeTimeout);
       }, promiseTimeoutMsec);

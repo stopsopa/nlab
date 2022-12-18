@@ -2,9 +2,7 @@ const alphaid = require("../../alphaid");
 
 it("alphaid basic", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
     expect(t.encode(0)).toEqual("a");
     expect(t.encode(1)).toEqual("b");
@@ -29,9 +27,7 @@ it("alphaid basic", (done) => {
 
 it("alphaid basic changed", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0132456789"
-    );
+    const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0132456789");
 
     expect(t.encode(0)).toEqual("a");
     expect(t.encode(1)).toEqual("b");
@@ -55,9 +51,7 @@ it("alphaid basic changed", (done) => {
 });
 it("alphaid decode", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
     expect(t.decode(t.encode(5))).toEqual(5);
     expect(t.decode(t.encode(50))).toEqual(50);
@@ -75,9 +69,7 @@ it("alphaid decode", (done) => {
 
 it("alphaid decode 0", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
     expect(t.decode("")).toEqual(0);
 
@@ -89,9 +81,7 @@ it("alphaid decode 0", (done) => {
 
 it("alphaid decode a", (done) => {
   try {
-    const t = alphaid(
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    );
+    const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
     expect(t.decode("a")).toEqual(0);
 
@@ -153,9 +143,7 @@ it("alphaid basic ab rev", (done) => {
 
 it("alphaid basic", (done) => {
   try {
-    const t = alphaid(
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
-    );
+    const t = alphaid("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_");
 
     expect(t.encode(0)).toEqual("A");
     expect(t.encode(1)).toEqual("B");
@@ -183,9 +171,7 @@ it("alphaid basic", (done) => {
     expect(t.encode(64 * 64 * 64 * 64 * 64 - 1)).toEqual("_____");
     expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual("______");
     expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual("_______");
-    expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual(
-      "________"
-    );
+    expect(t.encode(64 * 64 * 64 * 64 * 64 * 64 * 64 * 64 - 1)).toEqual("________");
 
     done();
   } catch (e) {

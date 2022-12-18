@@ -188,23 +188,13 @@ const promiseany = require("nlab/promiseany");
 
 import promiseany from "nlab/promiseany";
 
-promiseany([Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)]).then(
-  console.log
-); // 1
+promiseany([Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)]).then(console.log); // 1
 
-promiseany([
-  new Promise((r) => setTimeout(() => r(1), 100)),
-  Promise.resolve(2),
-  Promise.resolve(3),
-]).then(console.log); // 2
+promiseany([new Promise((r) => setTimeout(() => r(1), 100)), Promise.resolve(2), Promise.resolve(3)]).then(console.log); // 2
 
-promiseany([Promise.reject(1), Promise.resolve(2), Promise.resolve(3)]).then(
-  console.log
-); // 2
+promiseany([Promise.reject(1), Promise.resolve(2), Promise.resolve(3)]).then(console.log); // 2
 
-promiseany([Promise.reject(1), Promise.reject(2), Promise.reject(3)]).catch(
-  console.log
-); // [ 1, 2, 3 ]
+promiseany([Promise.reject(1), Promise.reject(2), Promise.reject(3)]).catch(console.log); // [ 1, 2, 3 ]
 ```
 
 # parallel
@@ -260,10 +250,7 @@ async (done) => {
       ttlms: 5,
     });
 
-    let mainPromise = cachePromise.get(
-      { a: "b3" },
-      () => new Promise((res) => setTimeout(res, 5, "abc"))
-    );
+    let mainPromise = cachePromise.get({ a: "b3" }, () => new Promise((res) => setTimeout(res, 5, "abc")));
 
     let data = await mainPromise;
 
@@ -271,10 +258,7 @@ async (done) => {
 
     await delay(15);
 
-    mainPromise = cachePromise.get(
-      { a: "b3" },
-      () => new Promise((res) => setTimeout(res, 5, "abcd"))
-    );
+    mainPromise = cachePromise.get({ a: "b3" }, () => new Promise((res) => setTimeout(res, 5, "abcd")));
 
     data = await mainPromise;
 
@@ -427,9 +411,7 @@ import alphaid from "nlab/alphaid";
 // or
 // const alphaid = require('nlab/alphaid');
 
-const t = alphaid(
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-);
+const t = alphaid("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
 expect(t.encode(1)).toEqual("b");
 expect(t.encode(2)).toEqual("c");

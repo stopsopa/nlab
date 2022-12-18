@@ -39,10 +39,7 @@ async function demoNew() {
    ;
 
  */
-const delay = (time, data) =>
-  new Promise((resolve) =>
-    time ? setTimeout(resolve, time, data) : resolve(data)
-  );
+const delay = (time, data) => new Promise((resolve) => (time ? setTimeout(resolve, time, data) : resolve(data)));
 /**
  * import delay from 'nlab/delay'
  * or
@@ -55,10 +52,7 @@ const delay = (time, data) =>
         )
 
  */
-const reject = (time, data) =>
-  new Promise((resolve, reject) =>
-    time ? setTimeout(reject, time, data) : reject(data)
-  );
+const reject = (time, data) => new Promise((resolve, reject) => (time ? setTimeout(reject, time, data) : reject(data)));
 /**
  * import { then } from 'nlab/delay'
  *     or
@@ -75,10 +69,7 @@ const reject = (time, data) =>
  * @param time
  */
 
-const then = (time) => [
-  (data) => delay(time, data),
-  (data) => delay.reject(time, data),
-];
+const then = (time) => [(data) => delay(time, data), (data) => delay.reject(time, data)];
 
 delay.reject = reject;
 

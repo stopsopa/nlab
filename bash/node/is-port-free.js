@@ -70,9 +70,7 @@ app
       // https://nodejs.org/api/net.html#net_server_listen
 
       if (v) {
-        console.log(
-          `node ${__filename} error: port ${host}:${port} is not free: ${s}`
-        );
+        console.log(`node ${__filename} error: port ${host}:${port} is not free: ${s}`);
 
         process.exit(1);
       } else {
@@ -81,9 +79,7 @@ app
         process.exit(0);
       }
     } else {
-      console.log(
-        `node ${__filename} error: port ${host}:${port} is not free due to unknown reason:`
-      );
+      console.log(`node ${__filename} error: port ${host}:${port} is not free due to unknown reason:`);
 
       throw e;
     }

@@ -1,10 +1,9 @@
-
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
 
-require('dotenv').config();
+require("dotenv").config();
 
 // const th = (msg) => new Error(`playwright-async.config.js error: ${msg}`);
 //
@@ -26,7 +25,7 @@ require('dotenv').config();
 //   throw th(`process.env.BASE_URL don't match ${protocolRegex}`);
 // }
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 /**
  * Collect any params you need here, sync or async way
@@ -34,7 +33,6 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
  * to assemble playwright.config.js normal synchronous way.
  */
 (async function () {
-
   const data = {
     start: true,
   };
@@ -44,4 +42,4 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
   data.end = true;
 
   console.log(JSON.stringify(data));
-}());
+})();

@@ -8,8 +8,7 @@ const fs = require("fs");
 
 const shfile = path.resolve(__dirname, "yarn-install-one-by-one-separately.js");
 
-const th = (msg) =>
-  new Error(`yarn-install-one-by-one-separately.js error: ${msg}`);
+const th = (msg) => new Error(`yarn-install-one-by-one-separately.js error: ${msg}`);
 
 if (!fs.existsSync(shfile)) {
   throw th(`file '${shfile}' doesn't exist`);
@@ -47,9 +46,7 @@ try {
     ...packageJson.dependencies,
   };
 } catch (e) {
-  throw th(
-    `extracting devDependencies and dependencies from file ${packageJsonPath} failed: ${e}`
-  );
+  throw th(`extracting devDependencies and dependencies from file ${packageJsonPath} failed: ${e}`);
 }
 
 const libraries = Object.keys(list).reduce((acc, key) => {

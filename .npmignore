@@ -24,3 +24,4 @@ jest.config.js
 /.idea/
 /.vscode/
 /.github/
+prettier.config.mjs

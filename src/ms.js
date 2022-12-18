@@ -74,13 +74,7 @@ function raw(time, unit) {
   }
 
   if (!dividers[unit]) {
-    throw th(
-      "unit '" +
-        unit +
-        "' is string but it is not on the list: '" +
-        keys.join(", ") +
-        "'"
-    );
+    throw th("unit '" + unit + "' is string but it is not on the list: '" + keys.join(", ") + "'");
   }
 
   var ret = {
@@ -117,9 +111,7 @@ function generate(opt, unit) {
   }
 
   if (!dividers[unit]) {
-    throw th(
-      `generate: unknown unit (${unit}), valid units are: '${keys.join(", ")}'`
-    );
+    throw th(`generate: unknown unit (${unit}), valid units are: '${keys.join(", ")}'`);
   }
 
   var t = 0;

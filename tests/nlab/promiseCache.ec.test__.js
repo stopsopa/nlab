@@ -51,9 +51,10 @@ it("prepareToStamp ... 2", async (done) => {
 });
 
 it("prepareToStamp ... 3", async (done) => {
-  expect(
-    prepareToStamp({ a: ["a", undefined, () => {}, "b"], b: undefined })
-  ).toEqual({ a: ["a", undefined, "() => {}", "b"], b: "undefined" });
+  expect(prepareToStamp({ a: ["a", undefined, () => {}, "b"], b: undefined })).toEqual({
+    a: ["a", undefined, "() => {}", "b"],
+    b: "undefined",
+  });
 
   done();
 });
@@ -111,11 +112,7 @@ it("prepareToStamp ... 4", async (done) => {
 });
 
 it("prepareToStamp ... 5", async (done) => {
-  expect(prepareToStamp(["a", new Date(1552036174656), "b"])).toEqual([
-    "a",
-    "2019-03-08T09:09:34.656Z",
-    "b",
-  ]);
+  expect(prepareToStamp(["a", new Date(1552036174656), "b"])).toEqual(["a", "2019-03-08T09:09:34.656Z", "b"]);
 
   done();
 });

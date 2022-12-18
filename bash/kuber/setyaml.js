@@ -95,17 +95,13 @@ const file = path.resolve(process.cwd(), process.argv[2]);
 const block = args.get("block", false);
 
 if (typeof block !== "string") {
-  throw new Error(
-    `${__filename} error: block is not a string, use --block argument`
-  );
+  throw new Error(`${__filename} error: block is not a string, use --block argument`);
 }
 
 const key = args.get("key", false);
 
 if (typeof key !== "string") {
-  throw new Error(
-    `${__filename} error: key is not a string, use --key argument`
-  );
+  throw new Error(`${__filename} error: key is not a string, use --key argument`);
 }
 
 let value = undefined;
@@ -185,9 +181,7 @@ switch (true) {
 }
 
 if (value === undefined) {
-  throw new Error(
-    `${__filename} value is undefined, use one of parameters --json, --yaml, --plain`
-  );
+  throw new Error(`${__filename} value is undefined, use one of parameters --json, --yaml, --plain`);
 }
 
 if (!fs.existsSync(file)) {
@@ -331,9 +325,7 @@ function parse(yml) {
 
         if (isObject(dic[label])) {
           if (typeof dic[label].v === "string") {
-            dic[label].e = new Error(
-              `${__filename} error: there are more than one sections with label '${label}'`
-            );
+            dic[label].e = new Error(`${__filename} error: there are more than one sections with label '${label}'`);
           }
         } else {
           dic[label] = ind[i];
@@ -375,9 +367,7 @@ let yml = fs.readFileSync(file, "utf8").toString();
 const data = parse(yml);
 
 if (!isObject(data.dic[block])) {
-  throw new Error(
-    `${__filename} error: block targeted by string '${block}' is not defined in file '${file}'`
-  );
+  throw new Error(`${__filename} error: block targeted by string '${block}' is not defined in file '${file}'`);
 }
 
 if (!/^\d+$/.test(block) && data.dic[block].e instanceof Error) {

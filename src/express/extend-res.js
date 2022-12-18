@@ -83,10 +83,7 @@ module.exports = function (req, res, next) {
          }
          */
 
-    res.constructor.prototype.basicAuth = function (
-      realm = "Sign in",
-      body = "Access denied"
-    ) {
+    res.constructor.prototype.basicAuth = function (realm = "Sign in", body = "Access denied") {
       this.status(401);
 
       this.setHeader("WWW-Authenticate", `Basic realm="${realm}"`);

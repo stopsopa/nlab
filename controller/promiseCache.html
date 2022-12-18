@@ -58,29 +58,25 @@
         });
 
         const pre = document.querySelector("pre");
-        document
-          .querySelector(".inspec")
-          .addEventListener("click", function () {
-            fetch("/inspect")
-              .then((r) => r.json())
-              .then((json) => {
-                pre.innerHTML = JSON.stringify(json, null, 4);
-              });
-          });
+        document.querySelector(".inspec").addEventListener("click", function () {
+          fetch("/inspect")
+            .then((r) => r.json())
+            .then((json) => {
+              pre.innerHTML = JSON.stringify(json, null, 4);
+            });
+        });
         document.querySelector(".clear").addEventListener("click", function () {
           fetch("/clear");
           // .then(r => r.json()).then(json => {
           // pre.innerHTML = JSON.stringify(json, null, 4);
           // });
         });
-        document
-          .querySelector(".trigger")
-          .addEventListener("click", function () {
-            fetch("/trigger");
-            //     .then(r => r.json()).then(json => {
-            //     pre.innerHTML = JSON.stringify(json, null, 4);
-            // });
-          });
+        document.querySelector(".trigger").addEventListener("click", function () {
+          fetch("/trigger");
+          //     .then(r => r.json()).then(json => {
+          //     pre.innerHTML = JSON.stringify(json, null, 4);
+          // });
+        });
 
         socket.on("connect", function () {
           log("connected...");

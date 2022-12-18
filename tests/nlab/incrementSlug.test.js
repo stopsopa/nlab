@@ -16,9 +16,7 @@ it("incrementSlug() - empty string", (done) => {
   try {
     is("");
   } catch (e) {
-    expect(e + "").toEqual(
-      "Error: nlab: incrementSlug: slug is an empty string"
-    );
+    expect(e + "").toEqual("Error: nlab: incrementSlug: slug is an empty string");
 
     done();
   }
@@ -28,9 +26,7 @@ it("incrementSlug() - delimiter is not a string", (done) => {
   try {
     is("test", false);
   } catch (e) {
-    expect(e + "").toEqual(
-      "Error: nlab: incrementSlug: delimiter is not a string"
-    );
+    expect(e + "").toEqual("Error: nlab: incrementSlug: delimiter is not a string");
 
     done();
   }
@@ -40,9 +36,7 @@ it("incrementSlug() - delimiter is an empty string", (done) => {
   try {
     is("test", "");
   } catch (e) {
-    expect(e + "").toEqual(
-      "Error: nlab: incrementSlug: delimiter should containe only one character it contains: ''"
-    );
+    expect(e + "").toEqual("Error: nlab: incrementSlug: delimiter should containe only one character it contains: ''");
 
     done();
   }

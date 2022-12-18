@@ -21,11 +21,7 @@ function CachePromise(opt) {
   this.cache = {};
 }
 
-CachePromise.prototype.get = async function (
-  key,
-  getPromise,
-  event = () => {}
-) {
+CachePromise.prototype.get = async function (key, getPromise, event = () => {}) {
   let buff;
 
   try {

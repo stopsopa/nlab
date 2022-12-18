@@ -29,17 +29,11 @@ const tool = function (opt) {
   }
 
   if (!Number.isInteger(requests) || requests < 1) {
-    throw new Error(
-      `promiseThrottle(): requests should be positive integer, it is: ` +
-        JSON.stringify(requests)
-    );
+    throw new Error(`promiseThrottle(): requests should be positive integer, it is: ` + JSON.stringify(requests));
   }
 
   if (!Number.isInteger(perTimeMsec) || perTimeMsec < 1) {
-    throw new Error(
-      `promiseThrottle(): perTimeMsec should be positive integer, it is: ` +
-        JSON.stringify(perTimeMsec)
-    );
+    throw new Error(`promiseThrottle(): perTimeMsec should be positive integer, it is: ` + JSON.stringify(perTimeMsec));
   }
 
   let t,
@@ -145,8 +139,7 @@ const tool = function (opt) {
           const set = schedule.shift();
 
           if (set) {
-            const { keepInCacheForMsec, key, createPromise, resolve, reject } =
-              set;
+            const { keepInCacheForMsec, key, createPromise, resolve, reject } = set;
 
             let promise;
 
@@ -182,12 +175,7 @@ const tool = function (opt) {
     }, nextTrigger);
   }
 
-  const tool = function (
-    forKey,
-    createPromise,
-    keepInCacheForMsec,
-    forceLive = false
-  ) {
+  const tool = function (forKey, createPromise, keepInCacheForMsec, forceLive = false) {
     if (!Number.isInteger(keepInCacheForMsec) || keepInCacheForMsec < 1) {
       throw new Error(
         `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec should be positive integer, it is: ` +

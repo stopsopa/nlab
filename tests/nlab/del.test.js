@@ -146,9 +146,7 @@ it("get() - key is not a string", (done) => {
   try {
     del(cp, true);
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: nlab/del error: key is not a string nor array"
-    );
+    expect(String(e)).toEqual("Error: nlab/del error: key is not a string nor array");
 
     done();
   }
@@ -174,9 +172,7 @@ it("get() - key as array - not string", (done) => {
   try {
     del(cp, ["test", "one", true]);
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: nlab/del error: one of the keys in the array is not a string"
-    );
+    expect(String(e)).toEqual("Error: nlab/del error: one of the keys in the array is not a string");
 
     done();
   }

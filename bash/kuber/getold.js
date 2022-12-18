@@ -129,9 +129,7 @@ function parse(yml) {
 
         if (isObject(dic[label])) {
           if (typeof dic[label].v === "string") {
-            dic[label].e = new Error(
-              `There are more than one sections with label '${label}'`
-            );
+            dic[label].e = new Error(`There are more than one sections with label '${label}'`);
           }
         } else {
           dic[label] = ind[i];
@@ -161,9 +159,7 @@ let yml = fs.readFileSync(file, "utf8").toString();
 const data = parse(yml);
 
 if (!isObject(data.dic[block])) {
-  throw new Error(
-    `Block targeted by string '${block}' is not defined in file '${file}'`
-  );
+  throw new Error(`Block targeted by string '${block}' is not defined in file '${file}'`);
 }
 
 if (!/^\d+$/.test(block) && data.dic[block].e instanceof Error) {

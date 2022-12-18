@@ -10,9 +10,7 @@ it("promiseany no args", (done) => {
     try {
       await promiseany();
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: promiseany error: list is not an array"
-      );
+      expect(String(e)).toEqual("Error: promiseany error: list is not an array");
 
       done();
     }
@@ -24,9 +22,7 @@ it("promiseany wrong arg", (done) => {
     try {
       await promiseany(true);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: promiseany error: list is not an array"
-      );
+      expect(String(e)).toEqual("Error: promiseany error: list is not an array");
 
       done();
     }
@@ -48,15 +44,9 @@ it("promiseany empty array", (done) => {
 it("promiseany one is not a promise", (done) => {
   (async function () {
     try {
-      await promiseany([
-        Promise.resolve("abc"),
-        () => {},
-        Promise.reject("zdd"),
-      ]);
+      await promiseany([Promise.resolve("abc"), () => {}, Promise.reject("zdd")]);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: promiseany error: list[1] is not a promise"
-      );
+      expect(String(e)).toEqual("Error: promiseany error: list[1] is not a promise");
 
       done();
     }
@@ -68,9 +58,7 @@ it("promiseany one is not a promise 2", (done) => {
     try {
       await promiseany([() => {}]);
     } catch (e) {
-      expect(String(e)).toEqual(
-        "Error: promiseany error: list[0] is not a promise"
-      );
+      expect(String(e)).toEqual("Error: promiseany error: list[0] is not a promise");
 
       done();
     }
@@ -79,11 +67,7 @@ it("promiseany one is not a promise 2", (done) => {
 
 it("promiseany 3 resolved", (done) => {
   (async function () {
-    const data = await promiseany([
-      Promise.resolve("abc"),
-      Promise.resolve("cde"),
-      Promise.resolve("efg"),
-    ]);
+    const data = await promiseany([Promise.resolve("abc"), Promise.resolve("cde"), Promise.resolve("efg")]);
 
     expect(data).toEqual("abc");
 

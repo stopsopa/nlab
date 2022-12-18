@@ -19,7 +19,9 @@ http://domain.com/path/endpoint"
 
 exports[`generateCurl all parts - no headers 1`] = `"curl x"`;
 
-exports[`generateCurl all parts - no multiline 1`] = `"curl -XPOST -H \\"Content-type: application/json; charset=utf-8\\" -H \\"X-custom: custom-value\\" -d '{\\"some\\":\\"data\\"}' http://domain.com/path/endpoint"`;
+exports[
+  `generateCurl all parts - no multiline 1`
+] = `"curl -XPOST -H \\"Content-type: application/json; charset=utf-8\\" -H \\"X-custom: custom-value\\" -d '{\\"some\\":\\"data\\"}' http://domain.com/path/endpoint"`;
 
 exports[`generateCurl all parts - slashParenthesis 1`] = `
 "curl \\\\

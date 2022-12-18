@@ -424,15 +424,9 @@ it("ms.generate 2d 7y - ms", (done) => {
       y: 7,
     });
 
-    expect(v).toEqual(
-      1000 * 60 * 60 * 24 * 365 * 2 +
-        1000 * 60 * 60 * 24 * 5 +
-        1000 * 60 * 60 * 24 * 365 * 7
-    );
+    expect(v).toEqual(1000 * 60 * 60 * 24 * 365 * 2 + 1000 * 60 * 60 * 24 * 5 + 1000 * 60 * 60 * 24 * 365 * 7);
 
-    expect(v).toEqual(
-      generate({ y: 2 }) + generate({ d: 5 }) + generate({ y: 7 })
-    );
+    expect(v).toEqual(generate({ y: 2 }) + generate({ d: 5 }) + generate({ y: 7 }));
 
     done();
   } catch (e) {
@@ -610,9 +604,7 @@ it("ms.generate unit y", (done) => {
     try {
       const h = raw(generate(i));
 
-      expect(discard(h)).toEqual(
-        discard({ d: 4, h: 1, m: 54, ms: 456, s: 43, y: 9 })
-      );
+      expect(discard(h)).toEqual(discard({ d: 4, h: 1, m: 54, ms: 456, s: 43, y: 9 }));
 
       done();
     } catch (e) {
@@ -648,9 +640,7 @@ it("raw - first arg not a number", (done) => {
 
     done(`should throw error`);
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: nlab/ms library error: time is not a number"
-    );
+    expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
 
     done();
   }
@@ -662,9 +652,7 @@ it("ms - time undefined", (done) => {
 
     done(`should throw error`);
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: nlab/ms library error: time is not a number"
-    );
+    expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
 
     done();
   }
@@ -676,9 +664,7 @@ it("ms - time string", (done) => {
 
     done(`should throw error`);
   } catch (e) {
-    expect(String(e)).toEqual(
-      "Error: nlab/ms library error: time is not a number"
-    );
+    expect(String(e)).toEqual("Error: nlab/ms library error: time is not a number");
 
     done();
   }
