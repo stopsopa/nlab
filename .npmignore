@@ -3,10 +3,7 @@ Makefile
 *.tgz
 /docs/
 /tests/
-/update.sh
-/update-badge.js
 /test.sh
-/update-badge.sh
 /package.travis.json
 /server.js
 /yarn.lock

@@ -1,6 +1,6 @@
-[![Build Status](https://app.travis-ci.com/stopsopa/nlab.svg?branch=v0.0.122)](https://app.travis-ci.com/stopsopa/nlab)
+[![Tests](https://github.com/stopsopa/nlab/actions/workflows/tests.yml/badge.svg)](https://github.com/stopsopa/nlab/actions/workflows/tests.yml)
 [![npm version](https://badge.fury.io/js/nlab.svg)](https://badge.fury.io/js/nlab)
-[![codecov](https://codecov.io/gh/stopsopa/nlab/branch/v0.0.122/graph/badge.svg?token=guaYpL4vYL)](https://codecov.io/gh/stopsopa/nlab/tree/v0.0.122)
+[![npm version](https://shields.io/npm/v/nlab)](https://shields.io/npm/v/nlab)
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 
 # Table of Contents
@@ -305,7 +305,6 @@ import isObject from "nlab/isObject";
 To se more details about what is considired an object and what is not see test cases coverage for this file:
 
 - [tests](https://github.com/stopsopa/nlab/blob/master/test/nlab/isObject.test.js)
-- [coverage](https://codecov.io/gh/stopsopa/nlab/src/v0.0.29/src/isObject.js)
 
 # isArray()
 
