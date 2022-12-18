@@ -22,3 +22,5 @@ jest.config.js
 /.vscode/
 /.github/
 prettier.config.mjs
+.prettierignore
+.nvmrc
