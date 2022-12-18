@@ -3,8 +3,7 @@ Makefile
 *.tgz
 /docs/
 /tests/
-/test.sh
-/package.travis.json
+/jest.sh
 /server.js
 /yarn.lock
 node_modules
@@ -12,12 +11,12 @@ node_modules
 /tests/public/
 /trash/
 /bash/
-swappackagejson.sh
 .env
 release.config.js
 commitlint.config.js
 jest.config.js
 /.husky/
+playwright.sh
 /.idea/
 /.vscode/
 /.github/
