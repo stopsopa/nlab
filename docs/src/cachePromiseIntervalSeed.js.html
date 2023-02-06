@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">12.65% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/79</span>
+                <span class='fraction'>10/79</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">13.15% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/76</span>
+                <span class='fraction'>10/76</span>
             </div>
         
             
@@ -322,25 +322,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -522,7 +522,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// import cachePromiseIntervalSeed from 'nlab/cachePromiseIntervalSeed';
 //
 // import { generate } from 'nlab/ms';
@@ -552,23 +552,23 @@
 //             refreshinterval: generate({h: 1}) // 1 minute cache
 //         });
 &nbsp;
-const log = <span class="cstat-no" title="statement not covered" >require("inspc");</span>
+const log = require("inspc");
 &nbsp;
-const crypto = <span class="cstat-no" title="statement not covered" >require("crypto");</span>
+const crypto = require("crypto");
 &nbsp;
-const ms = <span class="cstat-no" title="statement not covered" >require("../ms");</span>
+const ms = require("../ms");
 &nbsp;
-const isObject = <span class="cstat-no" title="statement not covered" >require("../isObject");</span>
+const isObject = require("../isObject");
 &nbsp;
-const msg = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >`cachePromiseIntervalSeed error: ${m}`;</span></span>
+const msg = <span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >`cachePromiseIntervalSeed error: ${m}`;</span>
 &nbsp;
-const th = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >new Error(msg(m));</span></span>
+const th = <span class="fstat-no" title="function not covered" >(m</span>) =&gt; <span class="cstat-no" title="statement not covered" >new Error(msg(m));</span>
 &nbsp;
-const now = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >new Date().getTime();</span></span>
+const now = <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >new Date().getTime();</span>
 &nbsp;
-const cache = <span class="cstat-no" title="statement not covered" >{};</span>
+const cache = {};
 &nbsp;
-const tool = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(k</span>ey) =&gt; {</span>
+const tool = <span class="fstat-no" title="function not covered" >(k</span>ey) =&gt; {
 <span class="cstat-no" title="statement not covered" >  if (typeof key !== "string") {</span>
 <span class="cstat-no" title="statement not covered" >    throw th(`key is not a string`);</span>
   }
@@ -752,7 +752,7 @@ const tool = <span class="cstat-no" title="statement not covered" ><span class="
   };
 };
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = tool;</span>
+module.exports = tool;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -760,7 +760,7 @@ const tool = <span class="cstat-no" title="statement not covered" ><span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-06T17:21:10.206Z
+                at 2023-02-06T17:27:48.691Z
             </div>
         <script src="../prettify.js"></script>
         <script>

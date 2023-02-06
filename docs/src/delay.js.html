@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -182,7 +182,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,7 +195,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,13 +212,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 &nbsp;
 /**
@@ -260,7 +260,7 @@ async function demoNew() {
    ;
 &nbsp;
  */
-const delay = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ime, data) =&gt; <span class="cstat-no" title="statement not covered" >new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve) =&gt; (<span class="cstat-no" title="statement not covered" >time ? setTimeout(resolve, time, data) : resolve(data))</span>);</span></span>
+const delay = (time, data) =&gt; new Promise((resolve) =&gt; (time ? setTimeout(resolve, time, data) : resolve(data)));
 /**
  * import delay from 'nlab/delay'
  * or
@@ -273,7 +273,7 @@ const delay = <span class="cstat-no" title="statement not covered" ><span class=
         )
 &nbsp;
  */
-const reject = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ime, data) =&gt; <span class="cstat-no" title="statement not covered" >new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; (<span class="cstat-no" title="statement not covered" >time ? setTimeout(reject, time, data) : reject(data))</span>);</span></span>
+const reject = (time, data) =&gt; new Promise((resolve, reject) =&gt; (time ? setTimeout(reject, time, data) : reject(data)));
 /**
  * import { then } from 'nlab/delay'
  *     or
@@ -290,13 +290,13 @@ const reject = <span class="cstat-no" title="statement not covered" ><span class
  * @param time
  */
 &nbsp;
-const then = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(t</span>ime) =&gt; <span class="cstat-no" title="statement not covered" >[<span class="fstat-no" title="function not covered" >(d</span>ata) =&gt; <span class="cstat-no" title="statement not covered" >delay(time, data),</span> <span class="fstat-no" title="function not covered" >(d</span>ata) =&gt; <span class="cstat-no" title="statement not covered" >delay.reject(time, data)]</span>;</span></span>
+const then = (time) =&gt; [(data) =&gt; delay(time, data), (data) =&gt; delay.reject(time, data)];
 &nbsp;
-<span class="cstat-no" title="statement not covered" >delay.reject = reject;</span>
+delay.reject = reject;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >delay.then = then;</span>
+delay.then = then;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >module.exports = delay;</span>
+module.exports = delay;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -304,7 +304,7 @@ const then = <span class="cstat-no" title="statement not covered" ><span class="
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-02-06T17:21:10.206Z
+                at 2023-02-06T17:27:48.691Z
             </div>
         <script src="../prettify.js"></script>
         <script>
