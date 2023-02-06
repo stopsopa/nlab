@@ -4,6 +4,7 @@ delete Array.isArray;
 
 //  ✓isArray - []                                                  -> true
 //  ✓isArray - {}                                                  -> false
+//  ✓isArray - Object.create(null)                                 -> false
 //  ✓isArray - using with object that have implemented toString()  -> false
 //  ✓isArray - extended object                                     -> false
 //  ✓isArray - new function () {}                                  -> false
@@ -19,6 +20,10 @@ delete Array.isArray;
 //  ✓isArray - string                                              -> false
 //  ✓isArray - Symbol('test')                                      -> false
 //  ✓isArray - new Date()                                          -> false
+//  ✓isArray - new Date()                                          -> false
+//  ✓isArray - new Map()                                           -> false
+//  ✓isArray - new Set()                                           -> false
+//  ✓isArray - new Error()                                         -> false
 
 const isArray = require("../../isArray");
 
@@ -46,6 +51,14 @@ it("isArray - {} -> false", (done) => {
   (async function () {
     expect(isArray({})).toBeFalsy();
     expect(Array.isArray({})).toBeFalsy();
+
+    done();
+  })();
+});
+it("Plain object -> false", (done) => {
+  (async function () {
+    expect(isArray(Object.create(null))).toBeFalsy();
+    expect(Array.isArray(Object.create(null))).toBeFalsy();
 
     done();
   })();
@@ -163,6 +176,24 @@ it(`isArray - Symbol('test') -> false`, (done) => {
   (async function () {
     expect(isArray(Symbol("test"))).toBeFalsy();
     expect(Array.isArray(Symbol("test"))).toBeFalsy();
+
+    done();
+  })();
+});
+
+it("isArray - new Map() -> false", (done) => {
+  (async function () {
+    expect(isArray(new Map())).toBeFalsy();
+    expect(Array.isArray(new Map())).toBeFalsy();
+
+    done();
+  })();
+});
+
+it("isArray - new Set() -> false", (done) => {
+  (async function () {
+    expect(isArray(new Set())).toBeFalsy();
+    expect(Array.isArray(new Set())).toBeFalsy();
 
     done();
   })();

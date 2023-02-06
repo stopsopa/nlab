@@ -23,3 +23,5 @@ playwright.sh
 prettier.config.mjs
 .prettierignore
 .nvmrc
+/coverage/
+/docs/

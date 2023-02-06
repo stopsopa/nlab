@@ -1,20 +1,29 @@
 // @doc https://github.com/stopsopa/nlab#isarray
 
-//  ✓isObject - []                                                  -> true
-//  ✓isObject - {}                                                  -> false
-//  ✓isObject - using with object that have implemented toString()  -> false
-//  ✓isObject - extended object                                     -> false
-//  ✓isObject - new function () {}                                  -> false
-//  ✓isObject - function () {}                                      -> false
-//  ✓isObject - () => {}                                            -> false
-//  ✓isObject - true                                                -> false
-//  ✓isObject - false                                               -> false
-//  ✓isObject - NaN                                                 -> false
-//  ✓isObject - undefined                                           -> false
-//  ✓isObject - no arg                                              -> false
-//  ✓isObject - 4                                                   -> false
-//  ✓isObject - string                                              -> false
-//  ✓isObject - Symbol('test')                                      -> false
+//  ✓isArray - []                                                  -> true
+//  ✓isArray - {}                                                  -> false
+//  ✓isArray - Object.create(null)                                 -> false
+//  ✓isArray - using with object that have implemented toString()  -> false
+//  ✓isArray - extended object                                     -> false
+//  ✓isArray - new function () {}                                  -> false
+//  ✓isArray - function () {}                                      -> false
+//  ✓isArray - () => {}                                            -> false
+//  ✓isArray - null                                                -> false
+//  ✓isArray - true                                                -> false
+//  ✓isArray - false                                               -> false
+//  ✓isArray - NaN                                                 -> false
+//  ✓isArray - undefined                                           -> false
+//  ✓isArray - no arg                                              -> false
+//  ✓isArray - 4                                                   -> false
+//  ✓isArray - string                                              -> false
+//  ✓isArray - Symbol('test')                                      -> false
+//  ✓isArray - new Date()                                          -> false
+//  ✓isArray - new Date()                                          -> false
+//  ✓isArray - new Map()                                           -> false
+//  ✓isArray - new Set()                                           -> false
+//  ✓isArray - new Error()                                         -> false
+
+
 
 function isArray(o) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray#Polyfill

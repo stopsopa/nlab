@@ -1,6 +1,7 @@
 "use strict";
 
 //  ✓isObject - {}                                                  -> true
+//  ✓isObject - Object.create(null)                                 -> true
 //  ✓isObject - using with object that have implemented toString()  -> true
 //  ✓isObject - extended object                                     -> true
 //  ✓isObject - new function () {}                                  -> true
@@ -16,6 +17,9 @@
 //  ✓isObject - string                                              -> false
 //  ✓isObject - Symbol('test')                                      -> false
 //  ✓isObject - new Date()                                          -> false
+//  ✓isObject - new Map()                                           -> false
+//  ✓isObject - new Set()                                           -> false
+//  ✓isObject - new Error()                                         -> false
 
 const isObject = require("../../isObject");
 
@@ -24,6 +28,13 @@ jest.setTimeout(100);
 it("isObject - {} -> true", (done) => {
   (async function () {
     expect(isObject({})).toBeTruthy();
+
+    done();
+  })();
+});
+it("Plain object -> true", (done) => {
+  (async function () {
+    expect(isObject(Object.create(null))).toBeTruthy();
 
     done();
   })();
@@ -177,6 +188,31 @@ it(`isObject - Symbol('test') -> false`, (done) => {
 it("isObject - new Date() -> false", (done) => {
   (async function () {
     expect(isObject(new Date())).toBeFalsy();
+
+    done();
+  })();
+});
+
+it("isObject - new Map() -> false", (done) => {
+  (async function () {
+    expect(isObject(new Map())).toBeFalsy();
+
+    done();
+  })();
+});
+
+it("isObject - new Set() -> false", (done) => {
+  (async function () {
+    expect(isObject(new Set())).toBeFalsy();
+
+    done();
+  })();
+});
+
+
+it("isObject - new Error() -> false", (done) => {
+  (async function () {
+    expect(isObject(new Error())).toBeFalsy();
 
     done();
   })();

@@ -4,3 +4,5 @@ node_modules
 yarn-error*
 /local.txt
 /trash/
+/coverage/
+/docs/
