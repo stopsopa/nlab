@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,69 +96,69 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const crypto = require("crypto");
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const crypto = <span class="cstat-no" title="statement not covered" >require("crypto");</span>
 &nbsp;
-const md5 = require("md5");
+const md5 = <span class="cstat-no" title="statement not covered" >require("md5");</span>
 &nbsp;
-const IV_LENGTH = 16; // For AES, this is always 16
+const IV_LENGTH = <span class="cstat-no" title="statement not covered" >16;</span> // For AES, this is always 16
 &nbsp;
 /**
  * https://gist.github.com/vlucas/2bd40f62d20c1d49237a109d491974eb
  *
  * @doc https://github.com/stopsopa/nlab#aes256
  */
-module.exports = (pass) =&gt; {
-  const md5buff = Buffer.from(md5(pass));
+<span class="cstat-no" title="statement not covered" >module.exports = <span class="fstat-no" title="function not covered" >(p</span>ass) =&gt; {</span>
+  const md5buff = <span class="cstat-no" title="statement not covered" >Buffer.from(md5(pass));</span>
 &nbsp;
-  return {
-    encrypt: function (text) {
-      let iv = crypto.randomBytes(IV_LENGTH);
-      let cipher = crypto.createCipheriv("aes-256-cbc", md5buff, iv);
-      let encrypted = cipher.update(text);
-      encrypted = Buffer.concat([encrypted, cipher.final()]);
-      return iv.toString("hex") + ":" + encrypted.toString("hex");
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    encrypt: <span class="fstat-no" title="function not covered" >fu</span>nction (text) {
+      let iv = <span class="cstat-no" title="statement not covered" >crypto.randomBytes(IV_LENGTH);</span>
+      let cipher = <span class="cstat-no" title="statement not covered" >crypto.createCipheriv("aes-256-cbc", md5buff, iv);</span>
+      let encrypted = <span class="cstat-no" title="statement not covered" >cipher.update(text);</span>
+<span class="cstat-no" title="statement not covered" >      encrypted = Buffer.concat([encrypted, cipher.final()]);</span>
+<span class="cstat-no" title="statement not covered" >      return iv.toString("hex") + ":" + encrypted.toString("hex");</span>
     },
-    decrypt: function (text) {
-      let textParts = text.split(":");
-      let iv = Buffer.from(textParts.shift(), "hex");
-      let encryptedText = Buffer.from(textParts.join(":"), "hex");
-      let decipher = crypto.createDecipheriv("aes-256-cbc", md5buff, iv);
-      let decrypted = decipher.update(encryptedText);
-      decrypted = Buffer.concat([decrypted, decipher.final()]);
-      return decrypted.toString();
+    decrypt: <span class="fstat-no" title="function not covered" >fu</span>nction (text) {
+      let textParts = <span class="cstat-no" title="statement not covered" >text.split(":");</span>
+      let iv = <span class="cstat-no" title="statement not covered" >Buffer.from(textParts.shift(), "hex");</span>
+      let encryptedText = <span class="cstat-no" title="statement not covered" >Buffer.from(textParts.join(":"), "hex");</span>
+      let decipher = <span class="cstat-no" title="statement not covered" >crypto.createDecipheriv("aes-256-cbc", md5buff, iv);</span>
+      let decrypted = <span class="cstat-no" title="statement not covered" >decipher.update(encryptedText);</span>
+<span class="cstat-no" title="statement not covered" >      decrypted = Buffer.concat([decrypted, decipher.final()]);</span>
+<span class="cstat-no" title="statement not covered" >      return decrypted.toString();</span>
     },
   };
 };
@@ -169,7 +169,7 @@ module.exports = (pass) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-18T01:45:34.594Z
+                at 2023-02-06T17:21:10.206Z
             </div>
         <script src="../prettify.js"></script>
         <script>

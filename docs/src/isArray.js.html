@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>3/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,7 +93,16 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,39 +122,57 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">281x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">69x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">69x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">36x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">281x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// @doc https://github.com/stopsopa/nlab#isarray
 &nbsp;
-//  ✓isObject - []                                                  -&gt; true
-//  ✓isObject - {}                                                  -&gt; false
-//  ✓isObject - using with object that have implemented toString()  -&gt; false
-//  ✓isObject - extended object                                     -&gt; false
-//  ✓isObject - new function () {}                                  -&gt; false
-//  ✓isObject - function () {}                                      -&gt; false
-//  ✓isObject - () =&gt; {}                                            -&gt; false
-//  ✓isObject - true                                                -&gt; false
-//  ✓isObject - false                                               -&gt; false
-//  ✓isObject - NaN                                                 -&gt; false
-//  ✓isObject - undefined                                           -&gt; false
-//  ✓isObject - no arg                                              -&gt; false
-//  ✓isObject - 4                                                   -&gt; false
-//  ✓isObject - string                                              -&gt; false
-//  ✓isObject - Symbol('test')                                      -&gt; false
+//  ✓isArray - []                                                  -&gt; true
+//  ✓isArray - {}                                                  -&gt; false
+//  ✓isArray - Object.create(null)                                 -&gt; false
+//  ✓isArray - using with object that have implemented toString()  -&gt; false
+//  ✓isArray - extended object                                     -&gt; false
+//  ✓isArray - new function () {}                                  -&gt; false
+//  ✓isArray - function () {}                                      -&gt; false
+//  ✓isArray - () =&gt; {}                                            -&gt; false
+//  ✓isArray - null                                                -&gt; false
+//  ✓isArray - true                                                -&gt; false
+//  ✓isArray - false                                               -&gt; false
+//  ✓isArray - NaN                                                 -&gt; false
+//  ✓isArray - undefined                                           -&gt; false
+//  ✓isArray - no arg                                              -&gt; false
+//  ✓isArray - 4                                                   -&gt; false
+//  ✓isArray - string                                              -&gt; false
+//  ✓isArray - Symbol('test')                                      -&gt; false
+//  ✓isArray - new Date()                                          -&gt; false
+//  ✓isArray - new Date()                                          -&gt; false
+//  ✓isArray - new Map()                                           -&gt; false
+//  ✓isArray - new Set()                                           -&gt; false
+//  ✓isArray - new Error()                                         -&gt; false
+&nbsp;
+&nbsp;
 &nbsp;
 function isArray(o) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray#Polyfill
-  if (!Array.isArray) {
-    Array.isArray = function (arg) {
-      return Object.prototype.toString.call(arg) === "[object Array]";
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!Array.isArray) {
+<span class="cstat-no" title="statement not covered" >    Array.isArray = <span class="fstat-no" title="function not covered" >fu</span>nction (arg) {</span>
+<span class="cstat-no" title="statement not covered" >      return Object.prototype.toString.call(arg) === "[object Array]";</span>
     };
   }
 &nbsp;
@@ -160,7 +187,7 @@ module.exports = isArray;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-18T01:45:34.594Z
+                at 2023-02-06T17:21:10.206Z
             </div>
         <script src="../prettify.js"></script>
         <script>

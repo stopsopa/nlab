@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/6</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,62 +91,62 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var generateSalt = (function () {
-  let crypto = require("crypto");
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var generateSalt = <span class="cstat-no" title="statement not covered" >(<span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
+  let crypto = <span class="cstat-no" title="statement not covered" >require("crypto");</span>
 &nbsp;
-  function th(msg) {
-    return new Error("generateSalt error: " + String(msg));
+  function <span class="fstat-no" title="function not covered" >th(</span>msg) {
+<span class="cstat-no" title="statement not covered" >    return new Error("generateSalt error: " + String(msg));</span>
   }
 &nbsp;
-  return (characters) =&gt; {
-    if (typeof characters === "undefined") {
-      characters = 12;
+<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >(c</span>haracters) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (typeof characters === "undefined") {</span>
+<span class="cstat-no" title="statement not covered" >      characters = 12;</span>
     }
 &nbsp;
-    if (!Number.isInteger(characters)) {
-      throw th(`characters is not an integer`);
+<span class="cstat-no" title="statement not covered" >    if (!Number.isInteger(characters)) {</span>
+<span class="cstat-no" title="statement not covered" >      throw th(`characters is not an integer`);</span>
     }
 &nbsp;
-    if (characters &lt; 1) {
-      throw th(`characters &lt; 1`);
+<span class="cstat-no" title="statement not covered" >    if (characters &lt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >      throw th(`characters &lt; 1`);</span>
     }
 &nbsp;
-    return crypto
+<span class="cstat-no" title="statement not covered" >    return crypto</span>
       .randomBytes(Math.ceil(characters / 2))
       .toString("hex")
       .slice(0, characters);
   };
 })();
 &nbsp;
-module.exports = generateSalt;
+<span class="cstat-no" title="statement not covered" >module.exports = generateSalt;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -154,7 +154,7 @@ module.exports = generateSalt;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-18T01:45:34.618Z
+                at 2023-02-06T17:21:10.277Z
             </div>
         <script src="../prettify.js"></script>
         <script>

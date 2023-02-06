@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/15</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/6</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/15</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,26 +94,14 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -122,30 +110,42 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const node = require("../isNode");
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const node = <span class="cstat-no" title="statement not covered" >require("../isNode");</span>
 &nbsp;
-const sjcl = require("sjcl");
+const sjcl = <span class="cstat-no" title="statement not covered" >require("sjcl");</span>
 &nbsp;
 let tool;
 &nbsp;
-if (node) {
-  const crypto = eval("require")("crypto");
+<span class="cstat-no" title="statement not covered" >if (node) {</span>
+  const crypto = <span class="cstat-no" title="statement not covered" >eval("require")("crypto");</span>
 &nbsp;
-  tool = (str) =&gt; {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof str !== "string") {
+<span class="cstat-no" title="statement not covered" >  tool = <span class="fstat-no" title="function not covered" >(s</span>tr) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (typeof str !== "string") {</span>
 <span class="cstat-no" title="statement not covered" >      throw "nlab:sha256 node: given value is not a string";</span>
     }
 &nbsp;
-    const hash = crypto.createHash("sha256");
+    const hash = <span class="cstat-no" title="statement not covered" >crypto.createHash("sha256");</span>
 &nbsp;
-    hash.update(str);
+<span class="cstat-no" title="statement not covered" >    hash.update(str);</span>
 &nbsp;
-    return hash.digest("hex");
+<span class="cstat-no" title="statement not covered" >    return hash.digest("hex");</span>
   };
-} else <span class="missing-if-branch" title="else path not taken" >E</span>{
+} else {
 <span class="cstat-no" title="statement not covered" >  tool = <span class="fstat-no" title="function not covered" >(s</span>tr) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    if (typeof str !== "string") {</span>
 <span class="cstat-no" title="statement not covered" >      throw "nlab:sha256 browser: given value is not a string";</span>
@@ -155,7 +155,7 @@ if (node) {
   };
 }
 &nbsp;
-module.exports = tool;
+<span class="cstat-no" title="statement not covered" >module.exports = tool;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -163,7 +163,7 @@ module.exports = tool;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-18T01:45:34.618Z
+                at 2023-02-06T17:21:10.277Z
             </div>
         <script src="../prettify.js"></script>
         <script>
