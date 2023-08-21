@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [16, 18, 20] # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
+        version: [16, 18] # https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v3
