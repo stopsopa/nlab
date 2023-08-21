@@ -38,6 +38,8 @@ it("curry not a fn", (done) => {
 
     done(`should't succeed`);
   } catch (e) {
+
+    expect(String(e)).toEqual(`Error: curry.js error: fn is not a function`);
     done();
   }
 });

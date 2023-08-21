@@ -24,12 +24,8 @@ module.exports = (cmd, opt) => {
     cmd = cmd.split(/\s+/);
   }
 
-  try {
-    if (!Array.isArray(cmd)) {
-      throw th(`cmd is not an array`);
-    }
-  } catch (e) {
-    throw new Error(`array???? ${e}`);
+  if (!Array.isArray(cmd)) {
+    throw th(`cmd is not an array`);
   }
 
   if (!cmd.length) {

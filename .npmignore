@@ -12,6 +12,11 @@ node_modules
 /trash/
 /bash/
 .env
+prettier*
+package.dev.json
+playwright*
+jest*
+/jasmine
 release.config.js
 commitlint.config.js
 jest.config.js

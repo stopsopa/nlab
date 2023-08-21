@@ -1,6 +1,8 @@
 const parallel = require("../../parallel");
 
+try {
 jest.setTimeout(10000);
+} catch (e) {}
 
 it("no setup exception", (done) => {
   (async function () {

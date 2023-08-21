@@ -5,11 +5,11 @@ require("dotenv-up")(3, true, "test/nlab/lightFetch.js");
 const se = require("../../se");
 
 function fetch(url, opt) {
-  return lightFetch(`http://${process.env.HOST}:${process.env.PORT}${url}`, opt);
+  return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.NODE_API_PORT}${url}`, opt);
 }
 
 function fetchCrush(url, opt) {
-  return lightFetch(`http://${process.env.HOST}:${process.env.CRASH_PORT}${url}`, opt);
+  return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.CRASH_PORT}${url}`, opt);
 }
 
 function cleanHeaders(req) {

@@ -20,7 +20,9 @@
 
 const isAsyncFunction = require("../../isAsyncFunction");
 
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 it("isAsyncFunction - null -> false", (done) => {
   (async function () {

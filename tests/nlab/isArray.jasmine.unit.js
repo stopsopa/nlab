@@ -27,7 +27,9 @@ delete Array.isArray;
 
 const isArray = require("../../isArray");
 
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 it("isArray - null -> false", (done) => {
   (async function () {

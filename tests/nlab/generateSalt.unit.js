@@ -1,6 +1,8 @@
 const generateSalt = require("../../generateSalt");
 
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 it(`generateSalt - len`, (done) => {
   (async function () {

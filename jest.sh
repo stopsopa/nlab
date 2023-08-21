@@ -18,18 +18,18 @@ if [ ! -f "${_ENV}" ]; then
     exit 1
 fi
 
-source "${_ENV}"
+eval "$(/bin/bash bash/exportsource.sh "${_ENV}")"
 
-if [ "${HOST}" = "" ]; then
+if [ "${NODE_API_HOST}" = "" ]; then
 
-  echo "${0} error: HOST is not defined"
+  echo "${0} error: NODE_API_HOST is not defined"
 
   exit 1;
 fi
 
-if [ "${PORT}" = "" ]; then
+if [ "${NODE_API_PORT}" = "" ]; then
 
-  echo "${0} error: PORT is not defined"
+  echo "${0} error: NODE_API_PORT is not defined"
 
   exit 1;
 fi
@@ -58,13 +58,12 @@ fi
 
 set -e
 
-
-
-
-node "bash/node/is-port-free.js" "${HOST}:${PORT}" --verbose
-node "bash/node/is-port-free.js" "${HOST}:${CRASH_PORT}" --verbose
+node "bash/node/is-port-free.js" "${NODE_API_HOST}:${NODE_API_PORT}" --verbose
+node "bash/node/is-port-free.js" "${NODE_API_HOST}:${CRASH_PORT}" --verbose
 
 function cleanup {
+
+    set +x
 
     echo cleaning ...
 
@@ -77,7 +76,7 @@ function cleanup {
 
 trap cleanup EXIT;
 
-node tests/server.js PORT &
+node tests/server.js NODE_API_PORT &
 
 PID1="${!}"
 
@@ -91,13 +90,10 @@ echo "PID2: ${PID2}"
 
 sleep 2
 
-
-
-
 echo ""
 
 set -e
-set -x
+# set -x
 
 # --bail \
 # --silent=false \
@@ -125,17 +121,15 @@ $TEST
 
 STATUS=$?
 
+echo ""
+echo ""
 if [ "$STATUS" = "0" ]; then
 
-    echo ""
-    echo ""
     { green "\n    Tests passed\n"; } 2>&3
     echo ""
     echo ""
 else
 
-    echo ""
-    echo ""
     { red "\n    Tests crashed\n"; } 2>&3
     echo ""
     echo ""

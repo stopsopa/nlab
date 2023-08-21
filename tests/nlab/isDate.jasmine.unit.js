@@ -20,7 +20,9 @@
 
 const isDate = require("../../isDate");
 
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 it("isDate - new Date() -> true", (done) => {
   (async function () {

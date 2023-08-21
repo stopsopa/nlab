@@ -14,7 +14,9 @@ it("generateCurl all parts - no multiline", (done) => {
       },
     });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl -XPOST -H "Content-type: application/json; charset=utf-8" -H "X-custom: custom-value" -d '{"some":"data"}' http://domain.com/path/endpoint`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -37,7 +39,16 @@ it("generateCurl all parts - multiline", (done) => {
       multiline: true,
     });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl \\
+-XPOST \\
+-H "Content-type: application/json; charset=utf-8" \\
+-H "X-custom: custom-value" \\
+-d '{
+    "some": "data"
+}' \\
+http://domain.com/path/endpoint`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -59,7 +70,15 @@ it("generateCurl all parts - slashParenthesis", (done) => {
       multiline: true,
     });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl \\
+-H "Content-type: application/json; charset=utf-8" \\
+-H "X-custom: custom-\\"value" \\
+-d '{
+    "some": "data"
+}' \\
+http://domain.com/path/endpoint`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -83,7 +102,9 @@ it("generateCurl all parts - no headers", (done) => {
   try {
     const result = generateCurl({ url: "x" });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl x`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -111,7 +132,9 @@ it("generateCurl all parts - headers empty object", (done) => {
   try {
     const result = generateCurl({ url: "x", headers: {} });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl x`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -125,7 +148,9 @@ it("generateCurl all parts - headers value not string", (done) => {
   try {
     const result = generateCurl({ url: "x", headers: { "X-test": true } });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl x`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {
@@ -139,7 +164,9 @@ it("generateCurl all parts - body as a string", (done) => {
   try {
     const result = generateCurl({ url: "x", body: '{"key":"value"}' });
 
-    expect(result).toMatchSnapshot();
+    const expected = `curl -d '{"key":"value"}' x`
+
+    expect(result).toEqual(expected);
 
     done();
   } catch (e) {

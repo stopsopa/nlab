@@ -55,6 +55,50 @@ function quote {
   echo "$1" | sed -E 's/\"/\\"/g'
 }
 
+function extractVersion() {
+
+# extracting dependencies.playwright from package.json
+PLAYWRIGHT_VER="$(cat <<EOF | node
+const fs = require("fs");
+
+const file = "./package.json";
+
+if (!fs.existsSync(file)) {
+  throw new Error("playwright.sh error: file " + file + " doesn't exist");
+}
+
+if (!fs.lstatSync(file).isFile()) {
+  throw new Error("playwright.sh error: path " + file + " is not a file");
+}
+
+const package = require(file);
+
+const dependencies = {
+  ...package.dependencies,
+  ...package.devDependencies,
+};
+
+const ver = dependencies.playwright || dependencies['@playwright/test'];
+
+const parts = ver.match(/\d+\.\d+\.\d+/);
+
+if (!parts || parts.length !== 1) {
+  throw new Error("playwright.sh error: " + file + " playwright dependency is not defined");
+}
+
+process.stdout.write(parts[0]);
+
+EOF
+)";
+
+  if [ "${?}" != "0" ]; then
+
+      echo "${0} error: extracting dependencies.playwright from package.json failed";
+
+      exit 1
+  fi
+}
+
 _TARGET="local";
 _HELP="0";
 _HEADLESS="--headed"
@@ -63,6 +107,12 @@ _PROJECT="--project=chromium"
 _TESTAGAINSTHOST="1"
 _DOCKERDEFAULTS="./playwright-docker-defaults.sh"
 _GENDOCKERDEFAULTS="0"
+_GETPLAYWRIGHTVERSION="0"
+ENVFILE=".env"
+
+#if [ "${CI}" != "" ]; then
+#  _ALLOWONLY="--forbid-only"
+#fi
 
 PARAMS=""
 _EVAL=""
@@ -74,6 +124,10 @@ while (( "$#" )); do
       ;;
     --generate-playwright-docker-defaults)
       _GENDOCKERDEFAULTS="1";
+      shift;
+      ;;
+    --version)
+      _GETPLAYWRIGHTVERSION="1";
       shift;
       ;;
     --headless)
@@ -96,6 +150,18 @@ while (( "$#" )); do
       _DOCKERDEFAULTS="$2";
       shift 2;
       ;;
+    -e|--env)
+      if [ "$2" = "" ]; then
+        echo "$0 error: -e|--env value can't be empty" >&2 
+        exit 1;                                          
+      fi                 
+      if [ ! -f "${ENVFILE}" ]; then
+        echo "$0 error: -e|--env file '${ENVFILE}' doesn't exist" >&2 
+        exit 1;                                          
+      fi        
+      ENVFILE="$2";
+      shift 2;
+      ;;
     --allow-only)
       _ALLOWONLY="";
       shift;
@@ -105,7 +171,7 @@ while (( "$#" )); do
         _PROJECT="";
       else                                
         _PROJECT="--project=$2";                                          
-      fi     
+      fi        
       shift 2;
       ;;
     -t|--target)
@@ -157,6 +223,19 @@ while (( "$#" )); do
   esac
 done
 
+if [ "${_GETPLAYWRIGHTVERSION}" = "1" ]; then
+  set -e
+
+  extractVersion
+
+  printf "${PLAYWRIGHT_VER}"
+
+  exit 0;
+fi
+
+export ENVFILE
+# export it for playwright.config.js to read for -t local mode
+
 if [ "${_GENDOCKERDEFAULTS}" = "1" ]; then
 
   if [ -f "${_DOCKERDEFAULTS}" ]; then
@@ -170,11 +249,25 @@ cat <<EEE > "${_DOCKERDEFAULTS}"
 
 S="\\\\"
 
+PLAYWRIGHT_TEST_MATCH_DEFAULT=""
+if [ "\${PLAYWRIGHT_TEST_MATCH}" != "" ]; then
+    PLAYWRIGHT_TEST_MATCH_DEFAULT="--env PLAYWRIGHT_TEST_MATCH"
+fi   
+
+NODE_API_PORT_DEFAULT=""
+if [ "\${NODE_API_PORT}" != "" ]; then
+    NODE_API_PORT_DEFAULT="--env NODE_API_PORT"
+fi  
+
 cat <<EOF
 -w "/code" \$S
+\${NODE_API_PORT_DEFAULT} \$S
+\${PLAYWRIGHT_TEST_MATCH_DEFAULT} \$S
 -v "\\\$(pwd)/tests:/code/tests" \$S
 -v "\\\$(pwd)/node_modules:/code/node_modules" \$S
--v "\\\$(pwd)/playwright.config.js:/code/playwright.config.js"
+-v "\\\$(pwd)/playwright.config.js:/code/playwright.config.js" \$S
+-v "\\\$(pwd)/playwright-async.config.js:/code/playwright-async.config.js"
+
 EOF
 
 EEE
@@ -199,7 +292,7 @@ Purpose of this script is to provide the same way to launch test natively on you
 
 First you might need to generate file with default parameters for "docker run" internal command (optional: only if you will use "-t docker" mode):
 ${YELLOW}/bin/bash playwright.sh ${BOLD}--generate-playwright-docker-defaults${RESET}
-    # to generate ./playwright-docker-defaults.sh
+    # to generate config file ./playwright-docker-defaults.sh
 
     # you might also specify different path for target 
 ${YELLOW}/bin/bash playwright.sh --generate-playwright-docker-defaults ${BOLD}--docker-defaults ./playwright-docker-defaults2.sh${RESET}
@@ -211,7 +304,9 @@ ${YELLOW}/bin/bash playwright.sh --generate-playwright-docker-defaults ${BOLD}--
     # ${GREEN}NOTICE${RESET}: you might also reset injecting any default params by passing /dev/null and then defining everything manually using double -- delimiters
         ${YELLOW}/bin/bash playwright.sh -t docker --docker-defaults /dev/null -- [params for "docker run"] -- [params for internal execution of playwright]
 
-        
+${YELLOW}/bin/bash playwright.sh ${BOLD}--env .env_test_against_cra${RESET}${YELLOW} -- --debug tests/e2e/sandbox/img.spec.js${RESET}
+    # by default playwright.sh script reads file .env in search for env vars but you might change it providing -e|--env param
+    # using this option will work for local and docker mode too
 
 ${YELLOW}/bin/bash playwright.sh ${BOLD}--target local${RESET}${YELLOW} -- ... optionally other native params for playwright${RESET}  
     # ${BOLD}--target local${RESET} is actually by default, so you don't really need to specify --target to launch on "local"
@@ -221,11 +316,13 @@ ${YELLOW}/bin/bash playwright.sh ${BOLD}--target docker${RESET}${YELLOW} -- ... 
 
 ${YELLOW}/bin/bash playwright.sh ${BOLD}--headless${RESET}${YELLOW} -- ... optionally other native params for playwright${RESET}
     # it's here because ${BOLD}--headed${RESET} is added by default (by default in "--target local" but not in "--target docker")
-    # WARNING: be aware that this is params only handled/consumed by this script only 
+    # WARNING: be aware that this params is handled/consumed by this script only 
 
 ${YELLOW}/bin/bash playwright.sh ${BOLD}--allow-only${RESET}${YELLOW} -- ... optionally other native params for playwright${RESET}
-    # it's here because ${BOLD}--forbid-only${RESET} is added by default
-    # WARNING: be aware that this is params only handled/consumed by this script only 
+    # it's here because native playwright cli option ${BOLD}--forbid-only${RESET} is added by default in this script
+    # but not natively, natively in playwright it.only() is allowed by default
+    # this this flag --allow-only is consumed by this bash script in order to bring back default behavior of playwright cli
+    # WARNING: be aware that this params is handled/consumed by this script only  
 
 ${YELLOW}/bin/bash playwright.sh -- ${BOLD}--workers=5${RESET}
     # this will override hardcoded ${BOLD}--workers=1${RESET} (which is added by default)
@@ -239,10 +336,10 @@ ${YELLOW}/bin/bash playwright.sh ${BOLD}--project all${RESET}${YELLOW} -- ... op
     #               ${BOLD}--project=firefox${RESET}
     # it's here because ${BOLD}--project chromium${RESET} is added by default
     # ${BOLD}--project firefox${RESET}   - this will change browser to firefox
-    # ${BOLD}--project all${RESET}       - this will launch against all registered browsers 
-    #       (this will internally force to not pass --project arg to playwright - this way test will be executed against all registered browsers)
+    # ${BOLD}--project all${RESET}       - this will launch against all registered browsers (registered in playwright.config.js)
+    #       (this will internally in this bash script force to not pass --project arg to playwright - this way test will be executed against all registered browsers)
 
-    # WARNING: be aware that this is params only handled/consumed by this script only 
+    # WARNING: be aware that this params is handled/consumed by this script only  
         # there is one edge case
             /bin/bash playwright.sh ${BOLD}--project all${RESET} -- ${BOLD}--project=firefox${RESET} ... optionally other native params for playwright
                 this is the same as 
@@ -252,18 +349,18 @@ ${YELLOW}/bin/bash playwright.sh ${BOLD}--project all${RESET}${YELLOW} -- ... op
 ${GREEN}ALL PARAMS BELOW ARE USED ONLY IF playwright.sh IS SWITCHED TO ${BOLD}--target docker${RESET}${GREEN} mode:${RESET}
 
 ${YELLOW}/bin/bash playwright.sh -t docker ${BOLD}--nohost${RESET} ${YELLOW} -- ... optionally other native params for playwright${RESET}
-    # WARNING: be aware that this is params only handled/consumed by this script only 
+    # WARNING: be aware that this params is handled/consumed by this script only  
     # it is here to explicitly NOT add to "docker run" parameters:
     # --net host
     #   or
-    # --env HOST=host.docker.internal
+    # --env NODE_API_HOST=host.docker.internal
     # depends what OS will be detected
 
-Up to this point you've probably noticed that we are using delimiter ${RED}--${RESET} to separater parameters for playwright.sh script and parameters for playwright itself.
+Up to this point you've probably noticed that we are using delimiter ${RED}--${RESET} to separate parameters for playwright.sh script and parameters for playwright itself.
 But in "-t docker" mode we can use TWO pairs of ${RED}--${RESET} delimiter, this way we will have more control over not only playwright but also we will be able to inject some extra parameters to "docker run" itself.
 Example:
     ${YELLOW}/bin/bash playwright.sh -t docker --nohost ${RED}--${YELLOW} -v "\$(pwd)/.env_docker:/code/.env" ${RED}--${RESET}
-        # this way by using --nohost we will not inject --env HOST=host.docker.internal (in MAC case) and we can provide different .env_docker with HOST env var and mount it inside container as /code/.env
+        # this way by using --nohost we will not inject --env NODE_API_HOST=host.docker.internal (in MAC case) and we can provide different .env_docker with NODE_API_HOST env var and mount it inside container as /code/.env
         #    (this might be useful for launching docker tests against external domain - not against server on host/dev machine)
 
         # ${RED}WARNING${RESET}: important part here is that at the end we have second ${RED}--${RESET}, this way we are clearly indicating that parameter
@@ -293,7 +390,7 @@ Example:
         # and this is done deliberately to have more flexibility in injecting different .env files for different purposes without need to manipulate playwright-docker-defaults.sh.
 
         # Yet another way of thinking is treating playwright-docker-defaults.sh as reversed .gitignore to define what from our project SHOULD be mounted into our container for testing.
-        # By "reversed" .gitignore I meain the fact that .gitignore specifies what should be OMITTED not included, where playwright-docker-defaults.sh describes what should be MOUNTED into container.
+        # By "reversed" .gitignore I meain the fact that .gitignore specifies what should be OMITTED (not included), where playwright-docker-defaults.sh describes what should be MOUNTED into container.
 
         # So at this point you can see that playwright-docker-defaults.sh and double -- works independently mainly to mount any .env without need to manipulate playwright-docker-defaults.sh
         # In other words: by design developer is encouraged to use more often double -- delimters to switch different .env files over changing playwright-docker-defaults.sh files - this should be more rare.
@@ -320,6 +417,12 @@ if [ "${_TARGET}" = "local" ]; then
     exit 1
   fi
 
+  cat <<EEE
+
+  node node_modules/.bin/playwright test ${_HEADLESS} ${_ALLOWONLY} ${_PROJECT} --workers=1 $@
+
+EEE
+
   node node_modules/.bin/playwright test ${_HEADLESS} ${_ALLOWONLY} ${_PROJECT} --workers=1 $@
 
   exit 0
@@ -331,7 +434,7 @@ if [ "${_TARGET}" = "docker" ]; then
 
   if [ "${_TESTAGAINSTHOST}" = "1" ]; then
       if [[ "$OSTYPE" == "darwin"* ]]; then
-          _HOSTHANDLER="--env HOST=host.docker.internal"
+          _HOSTHANDLER="--env NODE_API_HOST=host.docker.internal"
       else
           _HOSTHANDLER="--net host"
       fi
@@ -346,7 +449,7 @@ if [ "${_TARGET}" = "docker" ]; then
     fi
   done
 
-  DOCKER_PARAMS_NOT_QUOTED="-v \"$(pwd)/.env:/code/.env\""
+  DOCKER_PARAMS_NOT_QUOTED="-v \"$(pwd)/${ENVFILE}:/code/.env\""
   PARAMS=""
   _EVAL=""
   DOCKER_PARAMS=""
@@ -416,54 +519,30 @@ if [ "${_TARGET}" = "docker" ]; then
       exit 1
   fi
 
-# extracting dependencies.playwright from package.json
-PLAYWRIGHT_VER="$(cat <<EOF | node
-const fs = require("fs");
+extractVersion
 
-const file = "./package.json";
-
-if (!fs.existsSync(file)) {
-  throw new Error("playwright.sh error: file " + file + " doesn't exist");
-}
-
-if (!fs.lstatSync(file).isFile()) {
-  throw new Error("playwright.sh error: path " + file + " is not a file");
-}
-
-const package = require(file);
-
-const dependencies = {
-  ...package.dependencies,
-  ...package.devDependencies,
-};
-
-const ver = dependencies.playwright;
-
-const parts = ver.match(/\d+\.\d+\.\d+/);
-
-if (!parts || parts.length !== 1) {
-  throw new Error("playwright.sh error: " + file + " playwright dependency is not defined");
-}
-
-process.stdout.write(parts[0]);
-
-EOF
-)";
-
-  if [ "${?}" != "0" ]; then
-
-      echo "${0} error: extracting dependencies.playwright from package.json failed";
-
-      exit 1
-  fi
+# testing how to run multiline bash script
+# cat <<EEE | docker run --rm -i --entrypoint="" \
+# mcr.microsoft.com/playwright:v1.27.1-focal \
+# bash
+# ls -la
+# pwd
+# date
+# EEE  
 
 CMD="$(cat <<EOF
-docker run -i --rm --ipc host --cap-add SYS_ADMIN $S
+cat <<EEE | docker run -i --rm --ipc host --cap-add SYS_ADMIN --entrypoint="" $S
 ${DOCKERDEFAULTS} $S
 ${DOCKER_PARAMS_NOT_QUOTED} $S
 ${_HOSTHANDLER} $S
 mcr.microsoft.com/playwright:v${PLAYWRIGHT_VER}-focal $S
-node /ms-playwright-agent/node_modules/.bin/playwright test ${_ALLOWONLY} ${_PROJECT} --workers=1 $@
+bash
+  set -e
+  echo ===========printenv===========
+  printenv
+  echo ===========printenv===========
+  /ms-playwright-agent/node_modules/.bin/playwright test ${_ALLOWONLY} ${_PROJECT} --workers=1 $@
+EEE
 EOF
 )"
 
@@ -471,7 +550,7 @@ EOF
 
   CMD="${CMD//\\$'\n'/}"
 
-  eval $CMD
+  eval "$CMD"
     
   exit 0
 fi # end of    if [ "${_TARGET}" = "docker" ]; then    condition

@@ -23,7 +23,9 @@
 
 const isObject = require("../../isObject");
 
+try {
 jest.setTimeout(100);
+} catch (e) {}
 
 it("isObject - {} -> true", (done) => {
   (async function () {

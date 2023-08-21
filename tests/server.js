@@ -16,7 +16,7 @@ if (typeof process.argv[2] !== "string") {
   throw new Error(`port not specified - specify it as a first argument`);
 }
 
-const host = process.env.HOST;
+const host = process.env.NODE_API_HOST;
 
 const port = process.env[process.argv[2]];
 
@@ -108,7 +108,7 @@ app.listen(port, host, () => {
   console.log(`\n 🌎  Server is running ` + `http://${host}:${port}\n`);
 });
 
-const char = process.argv[2] === "PORT" ? "x" : "+";
+const char = process.argv[2] === "NODE_API_PORT" ? "x" : "+";
 
 setInterval(() => {
   process.stdout.write(char);

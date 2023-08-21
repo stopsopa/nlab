@@ -2,9 +2,9 @@ const aes256 = require("../../aes256");
 
 const unique = require("../../unique");
 
-const path = require("path");
-
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 it(`aes256 - simple`, (done) => {
   const c = aes256(`password`);

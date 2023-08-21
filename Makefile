@@ -2,7 +2,7 @@ h: j# show any help that is available
 	@echo more info: https://github.com/stopsopa/nlab
 
 c: # run local server to browse coverage
-	@node server.js --log 15 --dir docs
+	@node server.js --log 15 --dir coverage
 
 cc: # run local server for general testing
 	@nodemon -e js,html server.js --log 15

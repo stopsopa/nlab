@@ -2,7 +2,9 @@ const promiseall = require("../../promiseall");
 
 const delay = require("../../delay");
 
+try {
 jest.setTimeout(20000);
+} catch (e) {}
 // jest.setTimeout(500);
 
 it("promiseall no args", (done) => {

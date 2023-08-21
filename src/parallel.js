@@ -1,8 +1,7 @@
-const path = require("path");
 
 const isObject = require("./isObject");
 
-const th = (msg) => new Error(`${path.basename(__filename)} error: ${msg}`);
+const th = (msg) => new Error(`parallel.js error: ${msg}`);
 
 module.exports = function () {
   if (arguments.length > 0) {

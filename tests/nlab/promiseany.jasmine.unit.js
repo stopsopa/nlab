@@ -1,8 +1,13 @@
+/**
+ * /bin/bash jasmine/test.sh --env .env --stay --test tests/nlab/promiseany.jasmine.unit.js
+ */
 const promiseany = require("../../promiseany");
 
 const delay = require("../../delay");
 
+try {
 jest.setTimeout(20000);
+} catch (e) {}
 // jest.setTimeout(500);
 
 it("promiseany no args", (done) => {

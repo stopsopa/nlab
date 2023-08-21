@@ -26,18 +26,18 @@ function envcheck(name, ret) {
 if (envcheck("BASE_URL", true)) {
   console.log(`existing BASE_URL: >${process.env.BASE_URL}<`);
 } else {
-  envcheck("SCHEMA");
+  envcheck("NODE_API_PROTOCOL");
 
-  envcheck("HOST");
+  envcheck("NODE_API_HOST");
 
-  if (!["http", "https"].includes(process.env.SCHEMA)) {
-    throw th(`process.env.SCHEMA should be http or https`);
+  if (!["http", "https"].includes(process.env.NODE_API_PROTOCOL)) {
+    throw th(`process.env.NODE_API_PROTOCOL should be http or https`);
   }
 
-  process.env.BASE_URL = `${process.env.SCHEMA}://${process.env.HOST}`;
+  process.env.BASE_URL = `${process.env.NODE_API_PROTOCOL}://${process.env.NODE_API_HOST}`;
 
-  if (envcheck("PORT", true)) {
-    process.env.BASE_URL += `:${process.env.PORT}`;
+  if (envcheck("NODE_API_PORT", true)) {
+    process.env.BASE_URL += `:${process.env.NODE_API_PORT}`;
   }
 
   console.log(`generated BASE_URL: >${process.env.BASE_URL}<`);
@@ -56,7 +56,12 @@ if (!protocolRegex.test(process.env.BASE_URL)) {
  * Read more: https://playwright.dev/docs/api/class-testconfig
  */
 const config = {
-  testDir: "./tests",
+  // testDir: "./tests",
+  testDir: __dirname,
+  testMatch: process.env.PLAYWRIGHT_TEST_MATCH || "**/*.test.js", // https://playwright.dev/docs/test-configuration#testing-options
+  // testIgnore: [ // https://playwright.dev/docs/api/class-testconfig#test-config-test-ignore
+  //   /macro-tests/
+  // ],
   snapshotDir: "./var/snapshotDir",
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,

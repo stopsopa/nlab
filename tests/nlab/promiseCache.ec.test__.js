@@ -6,7 +6,9 @@ const log = require("inspc");
 
 const { prepareToStamp, throttle, nowHR, now, Bag } = promiseCache;
 
+try {
 jest.setTimeout(300);
+} catch (e) {}
 
 it("prepareToStamp test", async (done) => {
   expect(prepareToStamp("test")).toEqual("test");

@@ -6,7 +6,9 @@ const then = delay.then;
 
 const { start, diff } = require("./timer");
 
-jest.setTimeout(100);
+try {
+  jest.setTimeout(100);
+} catch (e) {}
 
 /**
  * Resolve:
