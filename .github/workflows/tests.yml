@@ -53,7 +53,7 @@ jobs:
 
       - name: pulling playwright docker image
         run: |
-          /bin/bash pull-docker-image.sh            
+          /bin/bash .github/pull-docker-image.sh            
 
       - name: UNIT TESTS
         run: |

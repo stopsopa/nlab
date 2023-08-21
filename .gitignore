@@ -7,4 +7,4 @@ yarn-error*
 /coverage/
 *.jasmine-esbuild.js
 /playwright-report/
-
+.DS_Store
