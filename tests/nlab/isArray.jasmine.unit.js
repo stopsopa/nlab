@@ -1,7 +1,5 @@
 "use strict";
 
-delete Array.isArray;
-
 //  ✓isArray - []                                                  -> true
 //  ✓isArray - {}                                                  -> false
 //  ✓isArray - Object.create(null)                                 -> false
