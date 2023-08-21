@@ -57,6 +57,7 @@ jobs:
           set -o pipefail
           VERSION="$(/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- /bin/bash playwright.sh --version)"
           /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- docker pull "mcr.microsoft.com/playwright:v${VERSION}-focal"      
+        shell: bash
 
       - name: UNIT TESTS
         run: |
