@@ -30,3 +30,4 @@ prettier.config.mjs
 .nvmrc
 /coverage/
 /docs/
+pull-docker-image.sh
