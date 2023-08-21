@@ -546,6 +546,12 @@ EEE
 EOF
 )"
 
+# you might to swap this to 
+# /ms-playwright-agent/node_modules/.bin/playwright test ${_ALLOWONLY} ${_PROJECT} --workers=1 $@
+# to find out run
+# docker run -it mcr.microsoft.com/playwright:v1.37.1-focal bash
+# not sure yet about this though, I've reverted to previous version to don't deal with it now
+
   printf "\n$CMD\n\n"
 
   CMD="${CMD//\\$'\n'/}"
