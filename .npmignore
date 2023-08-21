@@ -14,6 +14,7 @@ node_modules
 .env
 prettier*
 package.dev.json
+testall.sh
 playwright*
 jest*
 /jasmine
