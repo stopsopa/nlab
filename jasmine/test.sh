@@ -91,10 +91,6 @@ function ec {
     echo "[${0}]: ${1}"
 }
 
-function quote {
-  echo "$1" | sed -E 's/\"/\\"/g'
-}
-
 STAY="0"
 
 ENVFILE=""
@@ -103,6 +99,9 @@ FILTER=""
 FIND='-name "*.jasmine.js" -o -name "*.jasmine.unit.js"'
 TEST=""
 _EVAL=""
+function quote {
+  echo "$1" | sed -E 's/\"/\\"/g'
+}
 function collect {
   if [ "$1" = "&&" ]; then
     PARAMS="$PARAMS \&\&"
@@ -239,6 +238,15 @@ if [ "${?}" != "0" ]; then
   exit 1
 fi
 
+node node_modules/.bin/esbuild --help 1> /dev/null 2> /dev/null
+
+if [ "${?}" != "0" ]; then
+
+  ec "error: node_modules/.bin/esbuild not present"
+
+  exit 1
+fi
+
 if [ ! -d "${_DIR}/var" ]; then
 
   mkdir "${_DIR}/var"
@@ -293,7 +301,7 @@ set -e
 
 function es {
   # "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --sourcemap --target=chrome80 --outfile="${2}"
-  "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --target=chrome80 --outfile="${2}"
+  node "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --target=chrome80 --outfile="${2}"
 }
 
 # https://esbuild.github.io/getting-started/#install-esbuild
