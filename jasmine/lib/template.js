@@ -1,15 +1,19 @@
 function getGlobal() {
   try {
     if (typeof window !== "undefined") {
-      return window
+      return window;
     }
-  } catch (e) {e}
+  } catch (e) {
+    e;
+  }
   try {
     if (typeof global !== "undefined") {
-      return global
+      return global;
     }
-  } catch (e) {e}
-  throw new Error(`getGlobal error: can't find global`)
+  } catch (e) {
+    e;
+  }
+  throw new Error(`getGlobal error: can't find global`);
 }
 
 var template = (function (t, delimiters) {

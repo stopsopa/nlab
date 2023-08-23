@@ -345,7 +345,7 @@ EEE
 else
   COUNT="$(echo "${LIST}" | wc -l)"
   COUNT="$(trim "${COUNT}")"
-  I="0"
+  I="1"
   while read -r TESTFILE
   do
 

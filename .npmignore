@@ -32,3 +32,5 @@ prettier.config.mjs
 /coverage/
 /docs/
 pull-docker-image.sh
+clean_before_artifact.sh
+index.html

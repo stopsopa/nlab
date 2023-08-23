@@ -24,7 +24,7 @@ describe("template.js", () => {
 
     // console.log(`>${generated}<`)
 
-const expected = `
+    const expected = `
 <body>    
     <script src="../jasmine/bundles/jasmine.js"></script>
   
@@ -35,7 +35,7 @@ const expected = `
     <script src="../jasmine/bundles/node_modules/jasmine-core/lib/jasmine-core/boot1.js"></script>
 </body>
 </html>
-`    
+`;
 
     expect(generated).toEqual(expected);
     // expect(generated).toMatchSnapshot(expected);

@@ -61,7 +61,15 @@ jobs:
 
       - name: JASMINE TESTS
         run: |
-          NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker          
+          NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker  
+
+      - name: Clean before artifact
+        run: /bin/bash clean_before_artifact.sh
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .        
 
   release:
     needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs

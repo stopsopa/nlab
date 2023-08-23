@@ -63,7 +63,9 @@ const args = (function (obj, tmp) {
 
       try {
         obj[tmp].push(a);
-      } catch (e) {}
+      } catch (e) {
+        //
+      }
     }
   });
 
@@ -148,8 +150,8 @@ log(
       tests_list_paths,
     },
     null,
-    4
-  )
+    4,
+  ),
 );
 
 dotenv.config({
@@ -172,11 +174,17 @@ const app = new Koa();
 
 const templateFile = path.resolve(__dirname, "jasmine.playwright.html");
 
+const staticFile = path.resolve(__dirname, 'index.html');
+
 app.use(async (ctx, next) => {
   if (ctx.url === "/" || ctx.url.startsWith("/?")) {
     log(`ctx.url (template mode) >${ctx.url}<`);
 
-    ctx.body = template(readFile(templateFile))({ tests_list_paths });
+    const html = template(readFile(templateFile))({ tests_list_paths });
+
+    ctx.body = html;
+
+    fs.writeFileSync(staticFile, html);
   } else {
     log(`ctx.url >${ctx.url}<`);
   }
@@ -195,11 +203,11 @@ app.use(async (ctx, next) => {
 app.use(
   serve(web, {
     index: false,
-  })
+  }),
 );
 
 app.listen(port, async () => {
   log(
-    `\n 🌎 ${new Date().toISOString().substring(0, 19).replace("T", " ")} Koa server is running http://${host}:${port}`
+    `\n 🌎 ${new Date().toISOString().substring(0, 19).replace("T", " ")} Koa server is running http://${host}:${port}`,
   );
 });
