@@ -6,6 +6,13 @@ on:
   pull_request:
     branches:
       - "**"
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write # https://github.com/semantic-release/semantic-release/issues/2469#issuecomment-1158013884
+  pages: write
+  id-token: write
+
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically by github itself https://docs.github.com/en/actions/security-guides/automatic-token-authentication
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # search in keepassx
@@ -22,6 +29,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.version }}
+  
+      - name: Debug github.event
+        run: echo '${{ toJson(github.event) }}'
+      - name: Debug github
+        run: echo '${{ toJson(github) }}'   
 
       - name: test before bringing cache
         run: |
@@ -64,14 +76,28 @@ jobs:
           NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker  
 
       - name: Clean before artifact
-        run: /bin/bash clean_before_artifact.sh
+        if: matrix.version == 18
+        run: /bin/bash .github/clean_before_github_pages.sh
 
       - name: Upload artifact
+        if: matrix.version == 18
         uses: actions/upload-pages-artifact@v1
         with:
-          path: .        
+          path: .    
 
-  release:
+  # Deployment job
+  github-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    needs: test
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2    
+
+  npm:
     needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-22.04 # https://github.com/actions/runner-images#available-images

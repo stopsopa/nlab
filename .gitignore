@@ -8,3 +8,5 @@ yarn-error*
 *.jasmine-esbuild.js
 /playwright-report/
 .DS_Store
+
+*.tgz

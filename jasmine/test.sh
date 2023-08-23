@@ -284,12 +284,12 @@ sleep 0.2
 # set -x
 set -e
 
-(
-    cd "${_DIR}" 
-    unlink bundles/node_modules 2>/dev/null || true
-    mkdir -p bundles
-    ln -s ../../node_modules/ bundles/node_modules
-)
+# (
+#     cd "${_DIR}" 
+#     unlink bundles/node_modules 2>/dev/null || true
+#     mkdir -p bundles
+#     ln -s ../../node_modules/ bundles/node_modules
+# )
 
 function es {
   # "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --sourcemap --target=chrome80 --outfile="${2}"
@@ -297,7 +297,8 @@ function es {
 }
 
 # https://esbuild.github.io/getting-started/#install-esbuild
-es "${_DIR}/jasmine.js" "${_DIR}/bundles/jasmine.js"
+# es "${_DIR}/jasmine.js" "${_DIR}/bundles/jasmine.js"
+# no need for above now, since we are not importing anything then we can use raw file - no need to bundle
 
 function build {
 

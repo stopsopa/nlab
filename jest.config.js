@@ -73,7 +73,7 @@ module.exports = async () => {
     coverageDirectory: 'coverage',
     bail: true,
     testRegex,
-    coverageReporters: ["html", "lcov", "text"],
+    coverageReporters: ["html", "text"],
     collectCoverageFrom: ["src/**/*.{js,jsx}"],
     snapshotResolver: "./jest.snapshotResolver.js",
     watchPathIgnorePatterns: [".snap.js$"],
