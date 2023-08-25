@@ -17,6 +17,7 @@ function getGlobal() {
 }
 
 var template = (function (t, delimiters) {
+  // implementation from Underscore.js 1.8.3
   var escapeMap = {
     "&": "&amp;",
     "<": "&lt;",
@@ -33,6 +34,7 @@ var template = (function (t, delimiters) {
     "\u2028": "u2028",
     "\u2029": "u2029",
   };
+  var noMatch = /(.)^/;
   var escaper = /\\|'|\r|\n|\u2028|\u2029/g;
   var createEscaper = function (map) {
     var escaper = function (match) {
@@ -85,7 +87,7 @@ var template = (function (t, delimiters) {
         (settings.interpolate || noMatch).source,
         (settings.evaluate || noMatch).source,
       ].join("|") + "|$",
-      "g"
+      "g",
     );
 
     // Compile the template source, escaping string literals appropriately.
@@ -135,13 +137,13 @@ var template = (function (t, delimiters) {
     return template;
   };
 })(getGlobal(), {
-  //            evaluate    : /<%([\s\S]+?)%>/g,
-  //            interpolate : /<%=([\s\S]+?)%>/g,
-  //            escape      : /<%-([\s\S]+?)%>/g
-  evaluate: /<#([\s\S]+?)#>/g,
-  interpolate: /<#=([\s\S]+?)#>/g,
-  escape: /<#-([\s\S]+?)#>/g,
+  evaluate: /<%([\s\S]+?)%>/g,
+  interpolate: /<%=([\s\S]+?)%>/g,
+  escape: /<%-([\s\S]+?)%>/g,
+  // evaluate: /<#([\s\S]+?)#>/g,
+  // interpolate: /<#=([\s\S]+?)#>/g,
+  // escape: /<#-([\s\S]+?)#>/g,
 });
 
-// export default template;
+//export default template;
 module.exports = template;
