@@ -45,11 +45,12 @@ if [ "$1" = "--help" ]; then
 
 cat << EOF
 
-    /bin/bash $0 --help
-    /bin/bash $0 --watch                        ## this will run only changed test
-    /bin/bash $0 --watchAll                     ## this will run all test on every change
-    /bin/bash $0 [--watch|--watchAll] tests/... ## will run one test file or dir with tests 
-    /bin/bash $0 -t 'filter test'               ## this will run only tests matching the provided string
+    /bin/bash ${0} --help
+    /bin/bash ${0} --watch                        ## this will run only changed test
+    /bin/bash ${0} --watchAll                     ## this will run all test on every change
+    /bin/bash ${0} [--watch|--watchAll] tests/... ## will run one test file or dir with tests 
+    /bin/bash ${0} -t 'filter test'               ## this will run only tests matching the provided string
+    JEST_JUST_TESTS=true /bin/bash ${0}
 
 EOF
 
@@ -58,8 +59,10 @@ fi
 
 set -e
 
-node "bash/node/is-port-free.js" "${NODE_API_HOST}:${NODE_API_PORT}" --verbose
-node "bash/node/is-port-free.js" "${NODE_API_HOST}:${CRASH_PORT}" --verbose
+if [ "${JEST_JUST_TESTS}" = "" ]; then
+    node "bash/node/is-port-free.js" "${NODE_API_HOST}:${NODE_API_PORT}" --verbose
+    node "bash/node/is-port-free.js" "${NODE_API_HOST}:${CRASH_PORT}" --verbose
+fi
 
 function cleanup {
 
@@ -67,28 +70,30 @@ function cleanup {
 
     echo cleaning ...
 
-    kill "${PID1}" -9 1> /dev/null 2> /dev/null || :
+    if [ "${JEST_JUST_TESTS}" = "" ]; then
+        kill "${PID1}" -9 1> /dev/null 2> /dev/null || :
 
-    kill "${PID2}" -9 1> /dev/null 2> /dev/null || :
+        kill "${PID2}" -9 1> /dev/null 2> /dev/null || :
+    fi
 
     sleep 0.3
 }
 
 trap cleanup EXIT;
 
-node tests/server.js NODE_API_PORT &
+if [ "${JEST_JUST_TESTS}" = "" ]; then
+    node tests/server.js NODE_API_PORT &
+    PID1="${!}"
+    echo "PID1: ${PID1}"
+fi
 
-PID1="${!}"
+if [ "${JEST_JUST_TESTS}" = "" ]; then
+    node tests/server.js CRASH_PORT &
+    PID2="${!}"
+    echo "PID2: ${PID2}"
+    sleep 2
+fi
 
-echo "PID1: ${PID1}"
-
-node tests/server.js CRASH_PORT &
-
-PID2="${!}"
-
-echo "PID2: ${PID2}"
-
-sleep 2
 
 echo ""
 

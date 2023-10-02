@@ -1,73 +1,77 @@
-"use strict";
+//                                                                      nlab/isObject    lodash/isObject
+// ✓ lodash.isObject - {}                                                    -> true  -> true (3 ms)
+// ✓ lodash.isObject - Plain object                                          -> true  -> true (1 ms)
+// ✓ lodash.isObject - new function () {}                                    -> true  -> true
+// ✓ lodash.isObject - using with object that have implemented toString()    -> true  -> true (1 ms)
+// ✓ lodash.isObject - extended object                                       -> true  -> true (1 ms)
+// ✓ lodash.isObject - []                                                    -> false -> true
+// ✓ lodash.isObject - null                                                  -> false -> false
+// ✓ lodash.isObject - function () {}                                        -> false -> true
+// ✓ lodash.isObject - async function () {}                                  -> false -> true (1 ms)
+// ✓ lodash.isObject - () => {}                                              -> false -> true
+// ✓ lodash.isObject - true                                                  -> false -> false
+// ✓ lodash.isObject - false                                                 -> false -> false (1 ms)
+// ✓ lodash.isObject - NaN                                                   -> false -> false
+// ✓ lodash.isObject - undefined                                             -> false -> false (1 ms)
+// ✓ lodash.isObject - no arg                                                -> false -> false
+// ✓ lodash.isObject - 4                                                     -> false -> false
+// ✓ lodash.isObject - string                                                -> false -> false
+// ✓ lodash.isObject - Symbol('test')                                        -> false -> false
+// ✓ lodash.isObject - new Date()                                            -> false -> true (1 ms)
+// ✓ lodash.isObject - new Map()                                             -> false -> true
+// ✓ lodash.isObject - new Set()                                             -> false -> true
+// ✓ lodash.isObject - new Error()                                           -> false -> true
 
-//  ✓isObject - {}                                                  -> true
-//  ✓isObject - Object.create(null)                                 -> true
-//  ✓isObject - using with object that have implemented toString()  -> true
-//  ✓isObject - extended object                                     -> true
-//  ✓isObject - new function () {}                                  -> true
-//  ✓isObject - []                                                  -> false
-//  ✓isObject - function () {}                                      -> false
-//  ✓isObject - () => {}                                            -> false
-//  ✓isObject - true                                                -> false
-//  ✓isObject - false                                               -> false
-//  ✓isObject - NaN                                                 -> false
-//  ✓isObject - undefined                                           -> false
-//  ✓isObject - no arg                                              -> false
-//  ✓isObject - 4                                                   -> false
-//  ✓isObject - string                                              -> false
-//  ✓isObject - Symbol('test')                                      -> false
-//  ✓isObject - new Date()                                          -> false
-//  ✓isObject - new Map()                                           -> false
-//  ✓isObject - new Set()                                           -> false
-//  ✓isObject - new Error()                                         -> false
+// Cu -> custom
+const isObjectCu = require("../../isObject");
 
-const isObject = require("../../isObject");
+const isObjectLo = () => {}
+function expelo() {
+  return {
+    toBeTruthy: () => {},
+    toBeFalsy: () => {},
+  }
+}
 
-try {
-jest.setTimeout(100);
-} catch (e) {}
+// const isObjectLo = require('lodash/isObject');
+// function expelo(data) {
+//   return expect(data);
+// }
 
-it("isObject - {} -> true", (done) => {
-  (async function () {
-    expect(isObject({})).toBeTruthy();
-
-    done();
-  })();
-});
-it("Plain object -> true", (done) => {
-  (async function () {
-    expect(isObject(Object.create(null))).toBeTruthy();
-
-    done();
-  })();
-});
-
-it("isObject - new function () {} -> true", (done) => {
-  (async function () {
-    expect(isObject(new (function () {})())).toBeTruthy();
-
-    done();
-  })();
+it('lodash.isObject - {}                                                    -> true  -> true', () => {
+  expect(isObjectCu({})).toBeTruthy();
+  expelo(isObjectLo({})).toBeTruthy();
 });
 
-it("isObject - using with object that have implemented toString() -> true", (done) => {
+it('lodash.isObject - Plain object                                          -> true  -> true', () => {
+  expect(isObjectCu(Object.create(null))).toBeTruthy();
+  expelo(isObjectLo(Object.create(null))).toBeTruthy();
+});
+
+it('lodash.isObject - new function () {}                                    -> true  -> true', () => {
+  expect(isObjectCu(new (function () {})())).toBeTruthy();
+  expelo(isObjectLo(new (function () {})())).toBeTruthy();
+});
+
+it('lodash.isObject - using with object that have implemented toString()    -> true  -> true', (done) => {
   (async function () {
     var k = function () {};
     k.prototype.toString = function () {
-      return "test...";
+      return 'test...';
     };
 
     var t = new k();
 
-    expect(t + "").toEqual("test...");
+    expect(t + '').toEqual('test...');
 
-    expect(isObject(t)).toBeTruthy();
+    expect(isObjectCu(t)).toBeTruthy();
+    expelo(isObjectLo(t)).toBeTruthy();
 
     done();
   })();
 });
 
-it("isObject - extended object -> true", (done) => {
+it('lodash.isObject - extended object                                       -> true  -> true', (done) => {
   (async function () {
     var a = function () {};
 
@@ -77,145 +81,94 @@ it("isObject - extended object -> true", (done) => {
 
     b.prototype.constructor = b;
 
-    expect(isObject(new b())).toBeTruthy();
+    expect(isObjectCu(new b())).toBeTruthy();
+    expelo(isObjectLo(new b())).toBeTruthy();
 
     done();
   })();
 });
 
-it("isObject - [] -> false", (done) => {
-  (async function () {
-    expect(isObject([])).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - []                                                    -> false -> true', () => {
+  expect(isObjectCu([])).toBeFalsy();
+  expelo(isObjectLo([])).toBeTruthy();
 });
 
-it("isObject - null -> false", (done) => {
-  (async function () {
-    expect(isObject(null)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - null                                                  -> false -> false', () => {
+  expect(isObjectCu(null)).toBeFalsy();
+  expelo(isObjectLo(null)).toBeFalsy();
 });
 
-it("isObject - function () {} -> false", (done) => {
-  (async function () {
-    expect(isObject(function () {})).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - function () {}                                        -> false -> true', () => {
+  expect(isObjectCu(function () {})).toBeFalsy();
+  expelo(isObjectLo(function () {})).toBeTruthy();
 });
 
-it("isObject - async function () {} -> false", (done) => {
-  (async function () {
-    expect(isObject(async function () {})).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - async function () {}                                  -> false -> true', () => {
+  expect(isObjectCu(async function () {})).toBeFalsy();
+  expelo(isObjectLo(async function () {})).toBeTruthy();
 });
 
-it("isObject - () => {} -> false", (done) => {
-  (async function () {
-    expect(isObject(() => {})).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - () => {}                                              -> false -> true', () => {
+  expect(isObjectCu(() => {})).toBeFalsy();
+  expelo(isObjectLo(() => {})).toBeTruthy();
 });
 
-it("isObject - true -> false", (done) => {
-  (async function () {
-    expect(isObject(true)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - true                                                  -> false -> false', () => {
+  expect(isObjectCu(true)).toBeFalsy();
+  expelo(isObjectLo(true)).toBeFalsy();
 });
 
-it("isObject - false -> false", (done) => {
-  (async function () {
-    expect(isObject(false)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - false                                                 -> false -> false', () => {
+  expect(isObjectCu(false)).toBeFalsy();
+  expelo(isObjectLo(false)).toBeFalsy();
 });
 
-it("isObject - NaN -> false", (done) => {
-  (async function () {
-    expect(isObject(NaN)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - NaN                                                   -> false -> false', () => {
+  expect(isObjectCu(NaN)).toBeFalsy();
+  expelo(isObjectLo(NaN)).toBeFalsy();
 });
 
-it("isObject - undefined -> false", (done) => {
-  (async function () {
-    expect(isObject(undefined)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - undefined                                             -> false -> false', () => {
+  expect(isObjectCu(undefined)).toBeFalsy();
+  expelo(isObjectLo(undefined)).toBeFalsy();
 });
 
-it("isObject - no arg -> false", (done) => {
-  (async function () {
-    expect(isObject()).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - no arg                                                -> false -> false', () => {
+  expect(isObjectCu()).toBeFalsy();
+  expelo(isObjectLo()).toBeFalsy();
 });
 
-it("isObject - 4 -> false", (done) => {
-  (async function () {
-    expect(isObject(4)).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - 4                                                     -> false -> false', () => {
+  expect(isObjectCu(4)).toBeFalsy();
+  expelo(isObjectLo(4)).toBeFalsy();
 });
 
-it("isObject - string -> false", (done) => {
-  (async function () {
-    expect(isObject("test")).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - string                                                -> false -> false', () => {
+  expect(isObjectCu('test')).toBeFalsy();
+  expelo(isObjectLo('test')).toBeFalsy();
 });
 
-it(`isObject - Symbol('test') -> false`, (done) => {
-  (async function () {
-    expect(isObject(Symbol("test"))).toBeFalsy();
-
-    done();
-  })();
+it("lodash.isObject - Symbol('test')                                        -> false -> false", () => {
+  expect(isObjectCu(Symbol('test'))).toBeFalsy();
+  expelo(isObjectLo(Symbol('test'))).toBeFalsy();
 });
 
-it("isObject - new Date() -> false", (done) => {
-  (async function () {
-    expect(isObject(new Date())).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - new Date()                                            -> false -> true', () => {
+  expect(isObjectCu(new Date())).toBeFalsy();
+  expelo(isObjectLo(new Date())).toBeTruthy();
 });
 
-it("isObject - new Map() -> false", (done) => {
-  (async function () {
-    expect(isObject(new Map())).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - new Map()                                             -> false -> true', () => {
+  expect(isObjectCu(new Map())).toBeFalsy();
+  expelo(isObjectLo(new Map())).toBeTruthy();
 });
 
-it("isObject - new Set() -> false", (done) => {
-  (async function () {
-    expect(isObject(new Set())).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - new Set()                                             -> false -> true', () => {
+  expect(isObjectCu(new Set())).toBeFalsy();
+  expelo(isObjectLo(new Set())).toBeTruthy();
 });
 
-
-it("isObject - new Error() -> false", (done) => {
-  (async function () {
-    expect(isObject(new Error())).toBeFalsy();
-
-    done();
-  })();
+it('lodash.isObject - new Error()                                           -> false -> true', () => {
+  expect(isObjectCu(new Error())).toBeFalsy();
+  expelo(isObjectLo(new Error())).toBeTruthy();
 });
