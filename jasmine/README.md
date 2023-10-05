@@ -33,4 +33,3 @@ to test if everything is setup correctly try:
 NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env --test jasmine/lib/template.jasmine.unit.js
 
 ```
-

@@ -17,6 +17,7 @@ package.dev.json
 testall.sh
 playwright*
 jest*
+xx.cjs
 /jasmine
 release.config.js
 commitlint.config.js

@@ -1,4 +1,3 @@
-
 const isObject = require("./isObject");
 
 const th = (msg) => new Error(`parallel.js error: ${msg}`);
@@ -47,7 +46,7 @@ module.exports = function () {
 
               trigger();
             },
-            extra_
+            extra_,
           );
 
           return;

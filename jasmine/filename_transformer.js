@@ -4,9 +4,9 @@
 
 // import { fileURLToPath } from "url";
 
-const path = require('path');
+const path = require("path");
 
-const fs = require('fs');
+const fs = require("fs");
 
 // const __filename = fileURLToPath(import.meta.url);
 

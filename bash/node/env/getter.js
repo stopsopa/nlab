@@ -60,7 +60,7 @@ require("dotenv-up")(
     envfile,
   },
   false,
-  "react/webpack.config.js"
+  "react/webpack.config.js",
 );
 
 if (process.argv.length < 3) {

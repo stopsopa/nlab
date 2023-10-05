@@ -266,7 +266,7 @@ it("ms.generate 56ms 5s 145m 19h 4d 6y", (done) => {
         d: 4,
         y: 6,
       },
-      "ms"
+      "ms",
     );
 
     expect(v).toEqual(56 + 345605000 + 68400000 + 189216000000 + 8700000);
@@ -334,7 +334,7 @@ it("ms.generate wrong unit", (done) => {
         y: 1,
         z: 0,
       },
-      "z"
+      "z",
     );
 
     expect(v).toEqual(1000 * 60 * 60 * 24 * 365);
@@ -342,7 +342,7 @@ it("ms.generate wrong unit", (done) => {
     done(`this test should crash`);
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'"
+      "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'",
     );
 
     done();
@@ -360,7 +360,7 @@ it("ms.generate 56ms 60s 145m 19h 4d 6y - m", (done) => {
         d: 4, // 5760
         y: 6, // 3153600
       },
-      "m"
+      "m",
     );
 
     expect(v).toEqual(1 + 145 + 1140 + 5760 + 3153600);
@@ -384,7 +384,7 @@ it("ms.generate 950400000ms 518400s 4320m 49h 4d 6y - d", (done) => {
         d: 4, // 4
         y: 6, // 2190
       },
-      "d"
+      "d",
     );
 
     expect(v).toEqual(11 + 6 + 3 + 2 + 4 + 2190);
@@ -404,7 +404,7 @@ it("ms.generate 2d 7y - y", (done) => {
         d: 365 * 2 + 5, // 2
         y: 7,
       },
-      "y"
+      "y",
     );
 
     expect(v).toEqual(2 + 7);
@@ -448,7 +448,7 @@ it("ms.generate unit y", (done) => {
         y: 1,
         z: 0,
       },
-      "y"
+      "y",
     );
 
     expect(v).toEqual(1);
@@ -456,7 +456,7 @@ it("ms.generate unit y", (done) => {
     done();
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'"
+      "Error: nlab/ms library error: generate: unknown unit (z), valid units are: 'ms, s, m, h, d, y'",
     );
 
     done(`this test shouldn't crash`);
@@ -627,7 +627,7 @@ it("raw - wrong opt", (done) => {
     done(`should throw error`);
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: nlab/ms library error: unit 'mss' is string but it is not on the list: 'ms, s, m, h, d, y'"
+      "Error: nlab/ms library error: unit 'mss' is string but it is not on the list: 'ms, s, m, h, d, y'",
     );
 
     done();
@@ -689,7 +689,7 @@ it("ms - wrong unit", (done) => {
     done(`should throw error`);
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: nlab/ms library error: unit 'wrong unit' is string but it is not on the list: 'ms, s, m, h, d, y'"
+      "Error: nlab/ms library error: unit 'wrong unit' is string but it is not on the list: 'ms, s, m, h, d, y'",
     );
 
     done();
@@ -706,7 +706,7 @@ it("ms - 2y 3d 4h 47m 46s 45ms", (done) => {
         h: 4,
         d: 3,
         y: 2,
-      })
+      }),
     );
 
     expect(t).toEqual("2y 3d 4h 47m 46s 45ms");
@@ -726,7 +726,7 @@ it("ms - 2y 3d 4h 47m 46s 45ms", (done) => {
         m: 47,
         d: 3,
         y: 2,
-      })
+      }),
     );
 
     expect(t).toEqual("2y 3d 47m 46s 45ms");
@@ -746,7 +746,7 @@ it("ms - 2y 368d 4h 47m 46s 45ms - day overclock", (done) => {
         m: 47,
         d: 368,
         y: 2,
-      })
+      }),
     );
 
     expect(t).toEqual("3y 3d 47m 46s 45ms");
@@ -767,7 +767,7 @@ it("ms - 2y 3d 4h 67m 46s 45ms - m overclock", (done) => {
         h: 4,
         d: 3,
         y: 2,
-      })
+      }),
     );
 
     expect(t).toEqual("2y 3d 5h 7m 46s 45ms");
@@ -788,7 +788,7 @@ it("ms - 2y 3d 4h 67m 46s 3045ms - ms overclock", (done) => {
         h: 4,
         d: 3,
         y: 2,
-      })
+      }),
     );
 
     expect(t).toEqual("2y 3d 5h 7m 49s 45ms");
@@ -811,9 +811,9 @@ it("ms - 2y 3d 4h 67m 46s 45ms - different base units", (done) => {
           d: 3,
           y: 2,
         },
-        "s"
+        "s",
       ),
-      "s"
+      "s",
     );
 
     expect(t).toEqual("2y 3d 5h 7m 46s");
@@ -836,7 +836,7 @@ it("ms - change output units", (done) => {
           d: 3,
           y: 2,
         },
-        "s"
+        "s",
       ),
       {
         unit: "s",
@@ -848,7 +848,7 @@ it("ms - change output units", (done) => {
           d: " dx",
           y: " yx",
         },
-      }
+      },
     );
 
     expect(t).toEqual("2 yx 3 dx 5 hx 7 mx 46 sx");

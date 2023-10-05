@@ -25,7 +25,7 @@ function promiseany(list) {
     } else {
       t.then(
         () => {},
-        () => {}
+        () => {},
       );
     }
   }

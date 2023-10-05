@@ -52,7 +52,7 @@ const buildCurl = (function () {
         join.push(`-d '${body}'`);
       } else {
         throw th(
-          `body if defined should be an object, array or string but it is >${Object.prototype.toString.call(headers)}<`
+          `body if defined should be an object, array or string but it is >${Object.prototype.toString.call(headers)}<`,
         );
       }
     }

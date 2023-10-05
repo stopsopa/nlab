@@ -82,4 +82,4 @@ const SimpleObserver = {
   },
 };
 
-module.exports = SimpleObserver
+module.exports = SimpleObserver;

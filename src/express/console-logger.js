@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
       req.method.toUpperCase().padEnd(4, " ") +
       ":" +
       req.url +
-      "\n"
+      "\n",
   );
 
   next();

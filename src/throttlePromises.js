@@ -21,7 +21,7 @@ const tool = function (opt) {
     {
       dump: false,
     },
-    opt
+    opt,
   );
 
   if (!(typeof dump === "function" || dump === false)) {
@@ -179,27 +179,27 @@ const tool = function (opt) {
     if (!Number.isInteger(keepInCacheForMsec) || keepInCacheForMsec < 1) {
       throw new Error(
         `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec should be positive integer, it is: ` +
-          JSON.stringify(keepInCacheForMsec)
+          JSON.stringify(keepInCacheForMsec),
       );
     }
 
     if (keepInCacheForMsec < perTimeMsec) {
       throw new Error(
-        `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec [${keepInCacheForMsec}] can't be smaller than perTimeMsec [${perTimeMsec}] given in main function throttlePromies(requests, perTimeMsec)`
+        `throttlePromies(forKey, createPromise, keepInCacheForMsec): keepInCacheForMsec [${keepInCacheForMsec}] can't be smaller than perTimeMsec [${perTimeMsec}] given in main function throttlePromies(requests, perTimeMsec)`,
       );
     }
 
     if (typeof createPromise !== "function") {
       throw new Error(
         `throttlePromies(forKey, createPromise, keepInCacheForMsec): createPromise is not a funciton, it is: ` +
-          JSON.stringify(createPromise)
+          JSON.stringify(createPromise),
       );
     }
 
     if (forKey === undefined) {
       throw new Error(
         `throttlePromies(forKey, createPromise, keepInCacheForMsec): forKey can't be undefined, it is: ` +
-          JSON.stringify(forKey)
+          JSON.stringify(forKey),
       );
     }
 

@@ -105,7 +105,7 @@ it(`lightFetch - json/invalid/with/header - decode`, (done) => {
       done(`test error: should reject`);
     } catch (e) {
       expect(String(e).includes("JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input")).toEqual(
-        true
+        true,
       );
 
       done();
@@ -198,7 +198,7 @@ it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
       done(`test error: should reject`);
     } catch (e) {
       expect(String(e).includes("lib.request end method error: Error: promiseResolvingStatusCodes throw")).toEqual(
-        true
+        true,
       );
 
       done();
@@ -344,7 +344,7 @@ it(`lightFetch - method GET but still body provided`, (done) => {
       done(`test error: should reject`);
     } catch (e) {
       expect(
-        String(e).includes(`since you have specified the body for request probably method shouldn't be GET`)
+        String(e).includes(`since you have specified the body for request probably method shouldn't be GET`),
       ).toEqual(true);
 
       done();

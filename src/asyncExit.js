@@ -29,7 +29,7 @@ module.exports = async (promise, options) => {
       errors: true,
       overrideExit: true,
     },
-    options
+    options,
   );
 
   let stop = false;

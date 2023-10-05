@@ -169,7 +169,7 @@ switch (true) {
             break;
           default:
             throw new Error(
-              `type have to be one of integer,int,float,float[5],double,boolean,bool but it is '${type}'`
+              `type have to be one of integer,int,float,float[5],double,boolean,bool but it is '${type}'`,
             );
         }
       }

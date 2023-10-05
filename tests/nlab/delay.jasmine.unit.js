@@ -39,7 +39,7 @@ it("delay - pass payload manually", (done) => {
     Promise.resolve("msg")
       .then(
         (dd) => delay(d, dd),
-        (dd) => delay.reject(d, dd)
+        (dd) => delay.reject(d, dd),
       )
       .then((dd) => {
         expect(dd).toEqual("msg");
@@ -60,7 +60,7 @@ it("delay - pass payload transparently", (done) => {
     Promise.resolve("msg")
       .then(
         (data) => delay(d, data),
-        (data) => delay.reject(d, data)
+        (data) => delay.reject(d, data),
       )
       .then((dd) => {
         expect(dd).toEqual("msg");
@@ -117,7 +117,7 @@ it("reject - pass payload manually", (done) => {
     Promise.reject("msg")
       .then(
         (data) => delay(d, data),
-        (data) => delay.reject(d, data)
+        (data) => delay.reject(d, data),
       )
       .catch((dd) => {
         expect(dd).toEqual("msg");
@@ -138,7 +138,7 @@ it("reject - pass payload transparently", (done) => {
     Promise.reject("msg")
       .then(
         (data) => delay(d, data),
-        (data) => delay.reject(d, data)
+        (data) => delay.reject(d, data),
       )
       .catch((dd) => {
         expect(dd).toEqual("msg");
@@ -157,7 +157,7 @@ it("reject - pass payload transparently - immediately", (done) => {
     Promise.reject("msg")
       .then(
         (data) => delay(undefined, data),
-        (data) => delay.reject(undefined, data)
+        (data) => delay.reject(undefined, data),
       )
       .catch((dd) => {
         expect(dd).toEqual("msg");

@@ -47,13 +47,13 @@ if (toCheck > -1) {
 
 if (typeof toCheck !== "string") {
   throw new Error(
-    `typeof toCheck !== 'string', provide as first argument like v14.4 or provide path to .nvmrc using --nvmrc [filepath] argument`
+    `typeof toCheck !== 'string', provide as first argument like v14.4 or provide path to .nvmrc using --nvmrc [filepath] argument`,
   );
 }
 
 if (!toCheck.trim()) {
   throw new Error(
-    `toCheck is an empty string, provide as first argument like v14.4 or provide path to .nvmrc using --nvmrc [filepath] argument`
+    `toCheck is an empty string, provide as first argument like v14.4 or provide path to .nvmrc using --nvmrc [filepath] argument`,
   );
 }
 

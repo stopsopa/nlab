@@ -47,7 +47,7 @@ it("incrementSlug() - delimiter - two characters", (done) => {
     is("test", "ab");
   } catch (e) {
     expect(e + "").toEqual(
-      "Error: nlab: incrementSlug: delimiter should containe only one character it contains: 'ab'"
+      "Error: nlab: incrementSlug: delimiter should containe only one character it contains: 'ab'",
     );
 
     done();
@@ -71,7 +71,7 @@ it("incrementSlug() - delimiter - two characters", (done) => {
     is("test-01");
   } catch (e) {
     expect(e + "").toEqual(
-      `Error: nlab: incrementSlug: found number sufix can't be incremented, the raw sufix is: '01'`
+      `Error: nlab: incrementSlug: found number sufix can't be incremented, the raw sufix is: '01'`,
     );
 
     done();

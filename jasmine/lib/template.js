@@ -145,4 +145,3 @@ var template = (function (t, delimiters) {
 
 // export default template;
 module.exports = template;
-

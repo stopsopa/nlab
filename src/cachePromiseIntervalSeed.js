@@ -136,7 +136,7 @@ const tool = (key) => {
                       e,
                       ...add,
                     },
-                    o.errordepth
+                    o.errordepth,
                   );
               }
 
@@ -187,7 +187,7 @@ const tool = (key) => {
                 firstcrach: cache[key][ckey].firstcrach,
                 ...add,
               },
-              o.errordepth
+              o.errordepth,
             );
 
           if (cache[key][ckey].firstcrach !== true && o.firstcrach) {
@@ -211,7 +211,7 @@ const tool = (key) => {
             e,
             ...add,
           },
-          o.errordepth
+          o.errordepth,
         );
 
       if (o.firstcrach) {

@@ -43,7 +43,7 @@ function ms(time, opt) {
     {
       unit: "ms",
     },
-    opt
+    opt,
   );
 
   tmp.dict = Object.assign({}, dict, tmp.dict || {});

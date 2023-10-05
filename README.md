@@ -58,11 +58,11 @@ const delay = require("nlab/delay");
 Promise.resolve("all good")
   .then(
     (data) => delay(3000, data),
-    (data) => delay.reject(3000, data)
+    (data) => delay.reject(3000, data),
   )
   .then(
     (ok) => console.log("ok:", ok),
-    (error) => console.log("catch:", error)
+    (error) => console.log("catch:", error),
   );
 // 'ok: all good' - after 3 sec
 ```
@@ -73,11 +73,11 @@ const delay = require("nlab/delay");
 Promise.reject("all wrong")
   .then(
     (data) => delay(3000, data),
-    (data) => delay.reject(3000, data)
+    (data) => delay.reject(3000, data),
   )
   .then(
     (ok) => console.log("ok:", ok),
-    (error) => console.log("catch:", error)
+    (error) => console.log("catch:", error),
   );
 // 'catch: all wrong' - after 3 sec
 ```
@@ -499,7 +499,7 @@ var l = () => {
 [k, l] = all([k, l], (data) =>
   console.log({
     callback: data,
-  })
+  }),
 );
 
 setTimeout(k, 1800);
@@ -866,7 +866,7 @@ let lastSlug = await this.queryColumn(
   `SELECT slug FROM :table: WHERE slug LIKE :slug ORDER BY slug desc limit 1`,
   {
     slug: prefix + "%",
-  }
+  },
 );
 
 if (lastSlug) {
@@ -944,7 +944,7 @@ console.log(
       d: " days",
       y: " years",
     },
-  })
+  }),
 );
 // 2 years 308 days 19 hours 46 min 29 sec
 
@@ -956,7 +956,7 @@ const k = generate(
     h: 4,
     d: 3,
     y: 2,
-  } /* unit: default 'ms' */
+  } /* unit: default 'ms' */,
 );
 
 console.log(k); // 63348466045

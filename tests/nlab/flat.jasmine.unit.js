@@ -36,7 +36,7 @@ it("flat() - excluding arrays", (done) => {
       c: "d",
       dd: ["one", "two", "three"],
     },
-    true
+    true,
   );
 
   expect(data).toEqual({
@@ -106,7 +106,7 @@ it("flat() - skipArray", (done) => {
       c: "d",
       dd: ["one", "two", "three"],
     },
-    true
+    true,
   );
 
   expect(data).toEqual({

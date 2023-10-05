@@ -21,5 +21,5 @@ console.log(
   JSON.stringify(stats, null, 4)
     .split("\n")
     .map((m) => m.trim())
-    .join("\n")
+    .join("\n"),
 );

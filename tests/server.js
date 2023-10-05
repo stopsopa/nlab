@@ -96,7 +96,7 @@ app.all("/json/valid/with/no/header", (req, res) => {
   res.end(
     JSON.stringify({
       no: "header",
-    })
+    }),
   );
 });
 

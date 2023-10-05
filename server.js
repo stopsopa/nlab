@@ -510,7 +510,7 @@ const controller = async ({
 controller.url = '${gc}';
 
 module.exports = controller;
-`
+`,
   );
 
   if (fs.existsSync(file)) {
@@ -560,9 +560,9 @@ const diff = function (a, b) {
   diff(
     Object.keys(args.all()),
     ("port dir noindex log help watch ignore inject debug config dump flag cache" + (staticServer ? " gc" : "")).split(
-      " "
-    )
-  )
+      " ",
+    ),
+  ),
 );
 
 function execArgs(args, str) {
@@ -723,7 +723,7 @@ if (watch) {
     {
       recursive: true,
     },
-    event
+    event,
   );
 } else {
   var port = parseInt(args.get("port", 8080), 10);
@@ -758,7 +758,7 @@ if (watch) {
       pdf: "application/pdf",
       svg: "image/svg+xml",
       ico: "image/x-icon",
-    })
+    }),
   );
 
   function time() {
@@ -777,7 +777,7 @@ if (watch) {
     res.end(
       `<div style="color: #92317B; font-family: tahoma;">${notype ? "" : isDir ? "directory" : "file"} ${
         req.url
-      } no access.</div>`
+      } no access.</div>`,
     );
   }
 
@@ -793,7 +793,7 @@ if (watch) {
     if (inject && ext === "html") {
       content = content.replace(
         /(<\s*\/\s*body\s*>)/i,
-        `<script>(function run(uniq){fetch('?watch='+uniq).then(res=>res.text()).then(hash=>run(hash),()=>(function test(){return fetch(location.href).then(()=>location.href=location.href,()=>setTimeout(test,500))}()))}('${uniq}'))</script>$1`
+        `<script>(function run(uniq){fetch('?watch='+uniq).then(res=>res.text()).then(hash=>run(hash),()=>(function test(){return fetch(location.href).then(()=>location.href=location.href,()=>setTimeout(test,500))}()))}('${uniq}'))</script>$1`,
       );
     }
 
@@ -835,7 +835,7 @@ if (watch) {
   // base64 online encoder: https://xaviesteve.com//pro/base64.php
   const favicon = Buffer.from(
     "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAFdQTFRF/////v7+7e3t4+Pj4uLi7u7urKysSEhINjY2SUlJtLS0GhoaMzMzysrK5OTkODg4S0tLHR0duLi4MjIySkpK5eXl7+/vHBwc8/PzbGxsNTU18fHx7u/vzVzHUQAAAAFiS0dEAIgFHUgAAAAJcEhZcwAAFiUAABYlAUlSJPAAAADdSURBVDjLnZPZEoMgDEWBQAVF0Nq9/f/vbBAXNnXa++KMOQPJMRIShi4h8XsGLlxQj5AUOFVyjKpJMaxqtKvrRrEiAFK3BsC0WsIG4Avz8x/g4AqhsElrsclO5FU3ca2k7nstu3Oh7JxQhsfjNYKWgKjRySks6GJ1AjKnCSAypwGAPZh2SAZePxxYnAJnsbGyX4DDK3yTl7nJySlNPaDTMbPTDKDCXDHmFojaBbITCiajpRHb27kxZgjcS6LWPJ4vuQuQN7ijh4Pt/KQms6Qms/WljHPuf+O8XvjtMV9rxg4RtlXOXgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0xMS0yN1QxMDowMzowMSswMDowMIg1+6IAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMTEtMjdUMTA6MDM6MDErMDA6MDD5aEMeAAAARnRFWHRzb2Z0d2FyZQBJbWFnZU1hZ2ljayA2LjcuOC05IDIwMTQtMDUtMTIgUTE2IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3Jn3IbtAAAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpoZWlnaHQAMTkyDwByhQAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAAxOTLTrCEIAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADE1NDMzMTI5ODEv0kVFAAAAD3RFWHRUaHVtYjo6U2l6ZQAwQkKUoj7sAAAAVnRFWHRUaHVtYjo6VVJJAGZpbGU6Ly8vbW50bG9nL2Zhdmljb25zLzIwMTgtMTEtMjcvNzMzODU0Y2FjM2I1MGI4NGE3NmIwODY1MmY4NDdjYjQuaWNvLnBuZwnzw3IAAAAASUVORK5CYII=",
-    "base64"
+    "base64",
   );
 
   server.on("request", function (req, res) {
@@ -962,7 +962,7 @@ if (watch) {
             `ETag`,
             etag(content, {
               weak: true,
-            })
+            }),
           ); // 60 * 60 * 24 * 365  = 31,536,000
 
           // Last-Modified: Mon, 30 Apr 2018 14:27:35 GMT
@@ -1013,7 +1013,7 @@ if (watch) {
                 controller: found.__file,
                 exceptionMessage: e.message,
                 exceptionMessageSplit: (e.message + "").split("\n"),
-              })
+              }),
             );
           }
         });

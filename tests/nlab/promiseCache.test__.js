@@ -11,7 +11,7 @@ const unique = require("../../src/unique");
 const { prepareToStamp, throttle, nowHR, now } = promiseCache;
 
 try {
-jest.setTimeout(1400);
+  jest.setTimeout(1400);
 } catch (e) {}
 
 it("throttle second from cache in withinTimeMS", async (done) => {

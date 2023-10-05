@@ -7,7 +7,7 @@ const log = require("inspc");
 const { prepareToStamp, throttle, nowHR, now, Bag } = promiseCache;
 
 try {
-jest.setTimeout(300);
+  jest.setTimeout(300);
 } catch (e) {}
 
 it("prepareToStamp test", async (done) => {
@@ -85,7 +85,7 @@ it("prepareToStamp ... 4", async (done) => {
       },
       j: (a, b) => a + b,
       k: async function () {},
-    })
+    }),
   ).toEqual({
     a: "() => {}",
     b: "async () => {}",
@@ -136,7 +136,7 @@ it("Bag throw wrong arg 1", async (done) => {
     new Bag(5);
   } catch (e) {
     expect(e.message).toEqual(
-      "cache.js:throttle(maxRequests, withinTimeMS): withinTimeMS should be positive integer, it is: undefined"
+      "cache.js:throttle(maxRequests, withinTimeMS): withinTimeMS should be positive integer, it is: undefined",
     );
 
     done();
@@ -148,7 +148,7 @@ it("Bag throw wrong arg 2", async (done) => {
     new Bag(5, "d");
   } catch (e) {
     expect(e.message).toEqual(
-      'cache.js:throttle(maxRequests, withinTimeMS): withinTimeMS should be positive integer, it is: "d"'
+      'cache.js:throttle(maxRequests, withinTimeMS): withinTimeMS should be positive integer, it is: "d"',
     );
 
     done();
@@ -160,7 +160,7 @@ it("Bag throw wrong arg 3", async (done) => {
     const b = new Bag();
   } catch (e) {
     expect(e.message).toEqual(
-      "cache.js:throttle(maxRequests, withinTimeMS): maxRequests should be positive integer, it is: undefined"
+      "cache.js:throttle(maxRequests, withinTimeMS): maxRequests should be positive integer, it is: undefined",
     );
 
     done();
@@ -172,7 +172,7 @@ it("Bag throw wrong arg 4", async (done) => {
     new Bag(5, 5, "d");
   } catch (e) {
     expect(e.message).toEqual(
-      'cache.js:throttle(maxRequests, withinTimeMS, checkInterval): checkInterval should be positive integer > 50, it is: "d"'
+      'cache.js:throttle(maxRequests, withinTimeMS, checkInterval): checkInterval should be positive integer > 50, it is: "d"',
     );
 
     done();

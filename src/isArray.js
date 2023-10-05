@@ -23,8 +23,6 @@
 //  ✓isArray - new Set()                                           -> false
 //  ✓isArray - new Error()                                         -> false
 
-
-
 function isArray(o) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray#Polyfill
   if (!Array.isArray) {

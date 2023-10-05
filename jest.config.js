@@ -70,7 +70,7 @@ module.exports = async () => {
   return {
     verbose: true,
     collectCoverage: true,
-    coverageDirectory: 'coverage',
+    coverageDirectory: "coverage",
     bail: true,
     testRegex,
     coverageReporters: ["html", "text"],

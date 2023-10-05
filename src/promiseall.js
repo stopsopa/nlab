@@ -31,7 +31,7 @@ var promiseall = (list) => {
     } else {
       t.then(
         () => {},
-        () => {}
+        () => {},
       );
     }
   }

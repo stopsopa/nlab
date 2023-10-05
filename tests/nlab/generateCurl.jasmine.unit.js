@@ -14,7 +14,7 @@ it("generateCurl all parts - no multiline", (done) => {
       },
     });
 
-    const expected = `curl -XPOST -H "Content-type: application/json; charset=utf-8" -H "X-custom: custom-value" -d '{"some":"data"}' http://domain.com/path/endpoint`
+    const expected = `curl -XPOST -H "Content-type: application/json; charset=utf-8" -H "X-custom: custom-value" -d '{"some":"data"}' http://domain.com/path/endpoint`;
 
     expect(result).toEqual(expected);
 
@@ -46,7 +46,7 @@ it("generateCurl all parts - multiline", (done) => {
 -d '{
     "some": "data"
 }' \\
-http://domain.com/path/endpoint`
+http://domain.com/path/endpoint`;
 
     expect(result).toEqual(expected);
 
@@ -76,7 +76,7 @@ it("generateCurl all parts - slashParenthesis", (done) => {
 -d '{
     "some": "data"
 }' \\
-http://domain.com/path/endpoint`
+http://domain.com/path/endpoint`;
 
     expect(result).toEqual(expected);
 
@@ -102,7 +102,7 @@ it("generateCurl all parts - no headers", (done) => {
   try {
     const result = generateCurl({ url: "x" });
 
-    const expected = `curl x`
+    const expected = `curl x`;
 
     expect(result).toEqual(expected);
 
@@ -121,7 +121,7 @@ it("generateCurl all parts - headers not an object", (done) => {
     done(`Shouldn't reach this point`);
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: buildCurl error: headers if defined should be an object, but it is >[object Null]<"
+      "Error: buildCurl error: headers if defined should be an object, but it is >[object Null]<",
     );
 
     done();
@@ -132,7 +132,7 @@ it("generateCurl all parts - headers empty object", (done) => {
   try {
     const result = generateCurl({ url: "x", headers: {} });
 
-    const expected = `curl x`
+    const expected = `curl x`;
 
     expect(result).toEqual(expected);
 
@@ -148,7 +148,7 @@ it("generateCurl all parts - headers value not string", (done) => {
   try {
     const result = generateCurl({ url: "x", headers: { "X-test": true } });
 
-    const expected = `curl x`
+    const expected = `curl x`;
 
     expect(result).toEqual(expected);
 
@@ -164,7 +164,7 @@ it("generateCurl all parts - body as a string", (done) => {
   try {
     const result = generateCurl({ url: "x", body: '{"key":"value"}' });
 
-    const expected = `curl -d '{"key":"value"}' x`
+    const expected = `curl -d '{"key":"value"}' x`;
 
     expect(result).toEqual(expected);
 
@@ -183,7 +183,7 @@ it("generateCurl all parts - body not object, array or string", (done) => {
     done(`Shouldn't reach this point`);
   } catch (e) {
     expect(String(e)).toEqual(
-      "Error: buildCurl error: body if defined should be an object, array or string but it is >[object Undefined]<"
+      "Error: buildCurl error: body if defined should be an object, array or string but it is >[object Undefined]<",
     );
 
     done();

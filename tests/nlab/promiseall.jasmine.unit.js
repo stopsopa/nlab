@@ -3,7 +3,7 @@ const promiseall = require("../../promiseall");
 const delay = require("../../delay");
 
 try {
-jest.setTimeout(20000);
+  jest.setTimeout(20000);
 } catch (e) {}
 // jest.setTimeout(500);
 

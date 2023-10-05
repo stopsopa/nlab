@@ -29,13 +29,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.version }}
-  
+
       # https://docs.github.com/en/webhooks-and-events/webhooks/webhook-events-and-payloads#push
       # https://docs.github.com/en/actions/learn-github-actions/contexts
       - name: Debug github.event
         run: echo '${{ toJson(github.event) }}'
       - name: Debug github
-        run: echo '${{ toJson(github) }}'   
+        run: echo '${{ toJson(github) }}'
 
       - name: test before bringing cache
         run: |
@@ -55,7 +55,7 @@ jobs:
           set -x
           pwd
           ls -la
-          ls -la node_modules || true          
+          ls -la node_modules || true
 
       - name: Yarn install
         run: make yarn
@@ -68,22 +68,22 @@ jobs:
       - name: pulling playwright docker image
         if: matrix.version == 18
         run: |
-          /bin/bash .github/pull-docker-image.sh            
+          /bin/bash .github/pull-docker-image.sh
 
       - name: UNIT TESTS
         run: |
           mkdir -p coverage
           /bin/bash jest.sh | tee coverage/for-coverage-badge.log
-          
+
       - name: JASMINE TESTS
-        if: matrix.version == 18      
+        if: matrix.version == 18
         run: |
-          NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker  
-          
+          NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker
+
       - name: generate coverage badge
-        if: matrix.version == 18     
+        if: matrix.version == 18
         run: |
-          cat coverage/for-coverage-badge.log | node bash/node/coverage-badge.js --output coverage/coverage-badge.svg          
+          cat coverage/for-coverage-badge.log | node bash/node/coverage-badge.js --output coverage/coverage-badge.svg
 
       - name: Clean before artifact
         if: matrix.version == 18
@@ -93,7 +93,7 @@ jobs:
         if: matrix.version == 18
         uses: actions/upload-pages-artifact@v1
         with:
-          path: .    
+          path: .
 
   # Deployment job
   github-pages:
@@ -105,7 +105,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2    
+        uses: actions/deploy-pages@v2
 
   npm:
     needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs

@@ -37,8 +37,8 @@ const controller = (req, res, query = {}, json = {}) => {
           inspect: cache.inspect(),
         },
         null,
-        4
-      )
+        4,
+      ),
     );
   });
 };

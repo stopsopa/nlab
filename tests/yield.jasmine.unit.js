@@ -91,8 +91,8 @@ it("yield lifecycle", (done) => {
     ["print5: ",{"done":true}]
     ["print6: ",{"done":true}]
     
-`
-    )
+`,
+    ),
   );
 
   done();
@@ -146,8 +146,8 @@ it("yield retrieves the optional value - more", (done) => {
     ["print5: ",{"done":true}]
     ["print6: ",{"done":true}]
     
-`
-    )
+`,
+    ),
   );
 
   done();
@@ -198,8 +198,8 @@ it("yield retrieves the optional value - less", (done) => {
     ["print5: ",{"done":true}]
     ["print6: ",{"done":true}]
     
-`
-    )
+`,
+    ),
   );
 
   done();
@@ -242,8 +242,8 @@ it("yield return", (done) => {
     ["print3: ",{"value":"end-z","done":true}]
     ["print4: ",{"done":true}]
     
-`
-    )
+`,
+    ),
   );
 
   done();
@@ -287,8 +287,8 @@ it("yield throw", (done) => {
     ["print2: ",{"value":"two-y","done":false}]
     ["error","Error: message..."]
     
-`
-      )
+`,
+      ),
     );
 
     done();
@@ -320,8 +320,8 @@ it("yield empty generater", (done) => {
   ["print3: ",{"done":true}]
   ["print4: ",{"done":true}]
     
-`
-    )
+`,
+    ),
   );
 
   done();

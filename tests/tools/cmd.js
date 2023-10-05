@@ -60,7 +60,7 @@ module.exports = (cmd, opt) => {
 
   if (json === null) {
     ret.cmdErrorMessage = `parsing stdout json from command >${cmd.join(
-      " "
+      " ",
     )}< still result in null. raw stdout >${stdout}<`;
 
     throw ret;

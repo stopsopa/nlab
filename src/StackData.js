@@ -75,7 +75,7 @@ module.exports = function (opt) {
       prefix: "__stack_data__",
       debug: false,
     },
-    opt
+    opt,
   );
 
   if (created) {
