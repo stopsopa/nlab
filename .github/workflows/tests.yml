@@ -58,7 +58,7 @@ jobs:
           ls -la node_modules || true
 
       - name: Yarn install
-        run: make yarn
+        run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
 
       - uses: actions/cache/save@v3 # https://github.com/actions/cache/blob/main/caching-strategies.md#reusing-primary-key-from-restore-cache-as-input-to-save-action
         with:
