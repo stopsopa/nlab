@@ -35,10 +35,15 @@ set -e
     },
     [`coverage server`]: {
       command: `
-set -e
-node server.js --log 15 --dir coverage
+JEST_COVERAGE_PORT="4288"
+cat <<EEE
+
+    http://localhost:\${JEST_COVERAGE_PORT}
+
+EEE
+read -p "\n      Press enter to continue\n"
+python -m http.server \${JEST_COVERAGE_PORT} --directory ./coverage
 `,
-      description: `coverage server`,
       confirm: false,
     },
     [`test server`]: {
