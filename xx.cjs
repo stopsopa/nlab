@@ -13,11 +13,16 @@ module.exports = (setup) => {
   return {
     help: {
       command: `
-source .git/.env
+source .env
         
 cat <<EEE
 
- more info: https://github.com/stopsopa/nlab
+  test server http://0.0.0.0:\${NODE_API_PORT}
+      # uncomment JEST_JUST_TESTS=true for testing without servers
+
+  coverage server http://0.0.0.0:\${JEST_COVERAGE_PORT}
+
+  more info: https://github.com/stopsopa/nlab
 
 EEE
 
@@ -33,9 +38,18 @@ set -e
       description: `coverage server`,
       confirm: false,
     },
+    [`jasmine tests`]: {
+      command: `
+set -e
+/bin/bash jasmine/test.sh --env .env
+`,
+      description: `coverage server`,
+      confirm: false,
+    },
     [`coverage server`]: {
       command: `
-JEST_COVERAGE_PORT="4288"
+set -e
+source .env
 cat <<EEE
 
     http://localhost:\${JEST_COVERAGE_PORT}
@@ -49,7 +63,12 @@ python -m http.server \${JEST_COVERAGE_PORT} --directory ./coverage
     [`test server`]: {
       command: `
 set -e
-nodemon -e js,html server.js --log 15
+source .env
+if [ "\${NODE_API_PORT}" = "" ]; then
+  echo NODE_API_PORT not defined
+  exit 1
+fi
+nodemon -e js,html server.js --log 15 --port "\${NODE_API_PORT}"
 `,
       description: `test server`,
       confirm: false,

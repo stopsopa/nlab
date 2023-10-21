@@ -85,9 +85,7 @@ if [ "${JEST_JUST_TESTS}" = "" ]; then
     node tests/server.js NODE_API_PORT &
     PID1="${!}"
     echo "PID1: ${PID1}"
-fi
 
-if [ "${JEST_JUST_TESTS}" = "" ]; then
     node tests/server.js CRASH_PORT &
     PID2="${!}"
     echo "PID2: ${PID2}"
@@ -97,7 +95,7 @@ fi
 
 echo ""
 
-set -e
+set +e
 # set -x
 
 # --bail \
@@ -111,20 +109,17 @@ $@ \
 --verbose \
 --runInBand \
 --modulePathIgnorePatterns \
-    tests/examples \
-    tests/jest \
-    tests/minefield \
-    tests/project \
-    tests/puppeteer \
-    karma_build
+    tests/jest
 END
 )";
 
 { green "\n\n    executing tests:\n        $TEST\n\n"; } 2>&3
 
+
+# exit 5
 $TEST
 
-STATUS=$?
+STATUS="${?}"
 
 echo ""
 echo ""
