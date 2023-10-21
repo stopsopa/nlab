@@ -1,4 +1,4 @@
-const formatHtmlLite = require("../../formatHtmlLite");
+const formatHtmlLite = require("../../../formatHtmlLite");
 
 const iterateDetailed = formatHtmlLite.iterateDetailed;
 
@@ -62,7 +62,7 @@ describe("formatHtmlLite - iterateDetailed", () => {
 
         iterateDetailed(html, (...args) => result.push(args));
 
-        console.log(JSON.stringify(result, null, 4));
+        // console.log(JSON.stringify(result, null, 4));
 
         expect(result).toEqual(expected);
 

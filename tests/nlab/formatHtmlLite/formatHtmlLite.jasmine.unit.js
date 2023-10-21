@@ -1,4 +1,4 @@
-const formatHtmlLite = require("../../formatHtmlLite");
+const formatHtmlLite = require("../../../formatHtmlLite");
 
 try {
   jest.setTimeout(100);
@@ -50,16 +50,12 @@ describe("formatHtmlLite", () => {
         test
     </div>
     <script>
-        
         scriptdata
-        
-        
-        
     </script>
     
 </div>`;
 
-        const result = formatHtmlLite(html);
+        const result = formatHtmlLite(html, {noTrimTags: []});
 
         // console.log(`>>${result}<<`);
 
@@ -101,8 +97,7 @@ describe("formatHtmlLite", () => {
         <span> <br /> </span>
         
         
-        
-    </script>
+        </script>
     
 </div>`;
 
@@ -119,7 +114,6 @@ describe("formatHtmlLite", () => {
     })();
   });
 
-
   it("004", (done) => {
     (async function () {
       try {
@@ -133,7 +127,52 @@ describe("formatHtmlLite", () => {
 
         const result = formatHtmlLite(html);
 
-        console.log(`>>${result}<<`);
+        // console.log(`>>${result}<<`);
+
+        expect(result).toEqual(expected);
+
+        done();
+      } catch (e) {
+        done({ general_error: e });
+      }
+    })();
+  });
+
+  it("005", (done) => {
+    (async function () {
+      try {
+        const html = `<body><div><script>
+        
+        scriptdata
+        
+        <span>before b
+        
+        <b> <br /> </span> </i>
+        
+        
+</script>
+        
+              </div></body>`;
+
+        const expected = `<body>
+    <div>
+        <script>
+        
+        scriptdata
+        
+        <span>before b
+        
+        <b> <br /> </span> </i>
+        
+        
+</script>
+        
+    </div>
+</body>`;
+
+        const result = formatHtmlLite(html);
+
+        // console.log(`>>${result}<<`);
 
         expect(result).toEqual(expected);
 

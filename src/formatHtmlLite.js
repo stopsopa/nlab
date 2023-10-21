@@ -107,8 +107,6 @@ function iterate(html, event) {
     }
 
     buff += t;
-
-    const tt = buff;
   }
 
   if (buff !== "") {
@@ -144,13 +142,7 @@ function iterateDetailed(html, event) {
 
         break;
       }
-      case types.closing: {
-        event(type, data, {
-          tag: trim(data, `<>/ \n\t`),
-        });
-
-        break;
-      }
+      case types.closing:
       case types.selfclosing: {
         event(type, data, {
           tag: trim(data, `<>/ \n\t`),
@@ -167,7 +159,7 @@ function iterateDetailed(html, event) {
   });
 }
 
-function iterateDetailedLevels(html, event) {
+function iterateDetailedLevels(html, event, noTrimTags) {
   const th = thFactory("iterateDetailedLevels");
 
   if (typeof html !== "string") {
@@ -178,11 +170,21 @@ function iterateDetailedLevels(html, event) {
     throw th(`event parameter is not a function`);
   }
 
+  if (!Array.isArray(noTrimTags)) {
+    noTrimTags = [];
+  }
+
   let stack = [];
 
   let add = false;
 
+  let ignoreUntilTag = false;
+
+  let buff = "";
+
   iterateDetailed(html, (type, data, meta) => {
+    let ignoreOnce = false;
+
     const { tag } = meta;
 
     if (add) {
@@ -192,15 +194,47 @@ function iterateDetailedLevels(html, event) {
     }
 
     if (type === types.opening) {
-      add = tag;
+      if (ignoreUntilTag) {
+        buff += data;
+
+        return;
+      } else {
+        add = tag;
+
+        if (noTrimTags.find((t) => tag === t)) {
+          ignoreUntilTag = tag;
+
+          ignoreOnce = true;
+        }
+      }
     }
 
     if (type === types.closing) {
-      const last = stack.pop();
+      if (ignoreUntilTag) {
+        if (tag === ignoreUntilTag) {
+          ignoreUntilTag = false;
 
-      if (last !== tag) {
-        throw th(`closing wrong tag should be >${last}< but closing >${tag}< - probably closing tag was missing`);
+          event(type, buff, {}, [...stack]);
+
+          stack.pop();
+        } else {
+          buff += data;
+
+          return;
+        }
+      } else {
+        const last = stack.pop();
+
+        if (last !== tag) {
+          throw th(`closing wrong tag should be >${last}< but closing >${tag}< - probably closing tag was missing`);
+        }
       }
+    }
+
+    if (!ignoreOnce && ignoreUntilTag) {
+      buff += data;
+
+      return;
     }
 
     event(type, data, meta, [...stack]);
@@ -232,18 +266,33 @@ const tool = function formatHtmlLite(html, opt) {
 
   const list = [];
 
-  iterateDetailedLevels(html, (type, data, meta, stack) => {
-    if (noTrimTags.filter((element) => stack.includes(element)).length > 0) {
-      // intersection of two arrays
-      list.push(data);
+  let dontProcessOneAfter = false;
 
-      return;
-    }
+  iterateDetailedLevels(
+    html,
+    (type, data, meta, stack) => {
+      if (dontProcessOneAfter) {
+        dontProcessOneAfter = false;
 
-    const prefix = (list.length === 0 ? "" : "\n") + space.repeat(stack.length);
+        list.push(data);
+        return;
+      }
 
-    list.push(prefix + trim(data));
-  });
+      if (noTrimTags.filter((tag) => stack.includes(tag)).length > 0) {
+        // intersection of two arrays
+        list.push(data);
+
+        dontProcessOneAfter = true;
+
+        return;
+      }
+
+      const prefix = (list.length === 0 ? "" : "\n") + space.repeat(stack.length);
+
+      list.push(prefix + trim(data));
+    },
+    noTrimTags,
+  );
 
   return list.join("");
 };

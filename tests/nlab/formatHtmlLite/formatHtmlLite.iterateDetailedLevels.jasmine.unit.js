@@ -1,4 +1,4 @@
-const formatHtmlLite = require("../../formatHtmlLite");
+const formatHtmlLite = require("../../../formatHtmlLite");
 
 const iterateDetailedLevels = formatHtmlLite.iterateDetailedLevels;
 
@@ -58,6 +58,81 @@ describe("formatHtmlLite - iterateDetailedLevels", () => {
         const result = [];
 
         iterateDetailedLevels(html, (...args) => result.push(args));
+
+        // console.log(JSON.stringify(result, null, 4));
+
+        expect(result).toEqual(expected);
+
+        done();
+      } catch (e) {
+        done({ general_error: e });
+      }
+    })();
+  });
+
+  it("002", (done) => {
+    (async function () {
+      try {
+        const html = `<div><div><script>test<span></script></div></div>`;
+
+        const expected = [
+          [
+            "opening",
+            "<div>",
+            {
+              tag: "div",
+              attr: [],
+            },
+            [],
+          ],
+          [
+            "opening",
+            "<div>",
+            {
+              tag: "div",
+              attr: [],
+            },
+            ["div"],
+          ],
+          [
+            "opening",
+            "<script>",
+            {
+              tag: "script",
+              attr: [],
+            },
+            ["div", "div"],
+          ],
+          ["closing", "test<span>", {}, ["div", "div", "script"]],
+          [
+            "closing",
+            "</script>",
+            {
+              tag: "script",
+            },
+            ["div", "div"],
+          ],
+          [
+            "closing",
+            "</div>",
+            {
+              tag: "div",
+            },
+            ["div"],
+          ],
+          [
+            "closing",
+            "</div>",
+            {
+              tag: "div",
+            },
+            [],
+          ],
+        ];
+
+        const result = [];
+
+        iterateDetailedLevels(html, (...args) => result.push(args), ["script"]);
 
         // console.log(JSON.stringify(result, null, 4));
 
