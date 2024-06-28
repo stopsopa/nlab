@@ -17,6 +17,8 @@ source .env
         
 cat <<EEE
 
+  🐙 GitHub: $(git ls-remote --get-url origin | awk '{\$1=\$1};1' | tr -d '\\n' | sed -E 's/git@github\\.com:([^/]+)\\/(.+)\\.git/https:\\/\\/github.com\\/\\1\\/\\2/g')
+
   test server http://0.0.0.0:\${NODE_API_PORT}
       # uncomment JEST_JUST_TESTS=true for testing without servers
 
