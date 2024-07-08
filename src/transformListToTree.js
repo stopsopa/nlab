@@ -22,6 +22,11 @@
 // it's better to have those errors in the form of the tree because
 // this way error informations can be more easily split and pass down to react children components
 
+// WARNING:
+// WARNING: if that should be ever used with lodash then usage of _.setWith is needed instead of _.set
+// WARNING: and replacing set(obj, key, value); with set(obj, String(key), value, Object);
+// WARNING: otherwise last test "object not array" will fail returning array instead of object
+// WARNING:
 const set = require("./set");
 
 const isObject = require("./isObject");
