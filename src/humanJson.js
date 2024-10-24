@@ -3,7 +3,7 @@
 /**
  * based on modified: https://github.com/douglascrockford/JSON-js/blob/master/json2.js
  */
-const compactToJson = (function () {
+const humanJson = (function () {
     "use strict";
   
     function isObject(a) {
@@ -258,4 +258,4 @@ const compactToJson = (function () {
     };
   })();
 
-  module.exports = compactToJson;
+  module.exports = humanJson;

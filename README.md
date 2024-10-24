@@ -4,6 +4,9 @@
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 ![jest coverage](https://stopsopa.github.io/nlab/coverage/coverage-badge.svg)
 
+# Go to
+Visit http://stopsopa.github.io/nlab/
+
 # Table of Contents
 
 <!-- toc -->
