@@ -4,7 +4,6 @@
   "author": "Szymon Działowski",
   "description": "",
   "license": "MIT",
-  "main": "src",
   "homepage": "https://github.com/stopsopa/nlab",
   "dependencies": {
     "inspc": "^0.0.19",
@@ -13,17 +12,9 @@
     "sjcl": "^1.0.8"
   },
   "exports": {
-    "./isObject.js": {
-      "types": "./src/isObject.d.ts",
-      "default": "./src/isObject.js"
-    },
-    "./unique.js": {
-      "types": "./src/unique.d.ts",
-      "default": "./src/unique.js"
-    },
-    "./set.js": {
-      "types": "./src/set.d.ts",
-      "default": "./src/set.js"
+    "./*.js": {
+      "types": "./src/*.d.ts",
+      "default": "./src/*.js"
     }
   },
   "scripts": {
