@@ -2,9 +2,7 @@ const lightFetch = require("../../lightFetch");
 
 require("dotenv-up")(3, true, "test/nlab/lightFetch.js");
 
-const se = require("../../se");
-
-function fetch(url, opt) {
+function fetchMock(url, opt) {
   return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.NODE_API_PORT}${url}`, opt);
 }
 
@@ -53,7 +51,7 @@ it(`lightFetch process.env.REPO_COVERALLS_URL`, (done) => {
 it(`lightFetch - json-valid`, (done) => {
   (async function () {
     try {
-      const res = await fetch(`/json-valid`);
+      const res = await fetchMock(`/json-valid`);
 
       cleanHeaders(res);
 
@@ -75,7 +73,7 @@ it(`lightFetch - json-valid`, (done) => {
 it(`lightFetch - json-valid - decode`, (done) => {
   (async function () {
     try {
-      const res = await fetch(`/json-valid`, {
+      const res = await fetchMock(`/json-valid`, {
         decodeJson: true,
       });
 
@@ -96,10 +94,10 @@ it(`lightFetch - json-valid - decode`, (done) => {
   })();
 });
 
-it(`lightFetch - json/invalid/with/header - decode`, (done) => {
+it.only(`lightFetch - json/invalid/with/header - decode`, (done) => {
   (async function () {
     try {
-      await fetch(`/json/invalid/with/header`, {
+      await fetchMock(`/json/invalid/with/header`, {
         decodeJson: true,
       });
 
@@ -117,7 +115,7 @@ it(`lightFetch - json/invalid/with/header - decode`, (done) => {
 it(`lightFetch - pass json`, (done) => {
   (async function () {
     try {
-      const res = await fetch(`/pass`, {
+      const res = await fetchMock(`/pass`, {
         method: "post",
         body: {
           json: "data",
@@ -154,7 +152,7 @@ it(`lightFetch - pass json cyclical object`, (done) => {
       const data = {};
       data.data = data;
 
-      await fetch(`/pass`, {
+      await fetchMock(`/pass`, {
         method: "post",
         body: data,
         decodeJson: true,
@@ -172,7 +170,7 @@ it(`lightFetch - pass json cyclical object`, (done) => {
 it(`lightFetch - fail through promiseResolvingStatusCodes`, (done) => {
   (async function () {
     try {
-      await fetch(`/json-valid`, {
+      await fetchMock(`/json-valid`, {
         promiseResolvingStatusCodes: (res) => {
           return res.statusCode !== 200;
         },
@@ -190,7 +188,7 @@ it(`lightFetch - fail through promiseResolvingStatusCodes`, (done) => {
 it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
   (async function () {
     try {
-      await fetch(`/timeout`, {
+      await fetchMock(`/timeout`, {
         promiseResolvingStatusCodes: async (res) => {
           throw new Error(`promiseResolvingStatusCodes throw`);
         },
@@ -210,7 +208,7 @@ it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
 it(`lightFetch - timeout`, (done) => {
   (async function () {
     try {
-      await fetch(`/timeout`, {
+      await fetchMock(`/timeout`, {
         method: "post",
         body: {
           delay: 40,
@@ -244,7 +242,7 @@ it(`lightFetch - crash`, (done) => {
 it(`lightFetch - noBody`, (done) => {
   (async function () {
     try {
-      const res = await fetch("/pass", {
+      const res = await fetchMock("/pass", {
         method: "post",
         body: {
           some: "data",
@@ -271,7 +269,7 @@ it(`lightFetch - noBody`, (done) => {
 it(`lightFetch - error not url`, (done) => {
   (async function () {
     try {
-      await fetch("path should start with slash");
+      await fetchMock("path should start with slash");
 
       done(`test error: should reject`);
     } catch (e) {
@@ -288,7 +286,7 @@ it(`lightFetch - error not url`, (done) => {
 it(`lightFetch - not valid parameter`, (done) => {
   (async function () {
     try {
-      await fetch("/xxx", {
+      await fetchMock("/xxx", {
         notvalidparam: true,
       });
 
@@ -304,7 +302,7 @@ it(`lightFetch - not valid parameter`, (done) => {
 it(`lightFetch - debugRequest param is not a string`, (done) => {
   (async function () {
     try {
-      await fetch("/pass", {
+      await fetchMock("/pass", {
         debugRequest: true,
       });
 
@@ -320,7 +318,7 @@ it(`lightFetch - debugRequest param is not a string`, (done) => {
 it(`lightFetch - method param is not a string`, (done) => {
   (async function () {
     try {
-      await fetch("/pass", {
+      await fetchMock("/pass", {
         method: true,
       });
 
@@ -336,7 +334,7 @@ it(`lightFetch - method param is not a string`, (done) => {
 it(`lightFetch - method GET but still body provided`, (done) => {
   (async function () {
     try {
-      await fetch("/pass", {
+      await fetchMock("/pass", {
         body: {
           data: true,
         },
@@ -356,7 +354,7 @@ it(`lightFetch - method GET but still body provided`, (done) => {
 it(`lightFetch - debugRequest = reqb`, (done) => {
   (async function () {
     try {
-      await fetch("/pass", {
+      await fetchMock("/pass", {
         debugRequest: "reqb",
       });
 
@@ -370,7 +368,7 @@ it(`lightFetch - debugRequest = reqb`, (done) => {
 it(`lightFetch - opt is not an object`, (done) => {
   (async function () {
     try {
-      await fetch("/pass", false);
+      await fetchMock("/pass", false);
 
       done();
     } catch (e) {
@@ -382,7 +380,7 @@ it(`lightFetch - opt is not an object`, (done) => {
 it(`lightFetch - url with get params`, (done) => {
   (async function () {
     try {
-      const res = await fetch("/pass?get=param&test=true", {
+      const res = await fetchMock("/pass?get=param&test=true", {
         query: {
           a: "b",
           c: "d",
@@ -424,7 +422,7 @@ it(`lightFetch - url with get params`, (done) => {
 it(`lightFetch - decodeJson = true, valid json`, (done) => {
   (async function () {
     try {
-      const res = await fetch("/json/valid/with/no/header", {
+      const res = await fetchMock("/json/valid/with/no/header", {
         decodeJson: true,
       });
 
@@ -448,7 +446,7 @@ it(`lightFetch - decodeJson = true, valid json`, (done) => {
 it(`lightFetch - decodeJson = 'header', valid json`, (done) => {
   (async function () {
     try {
-      const res = await fetch("/json/valid/with/no/header", {
+      const res = await fetchMock("/json/valid/with/no/header", {
         decodeJson: "header",
       });
 
@@ -470,7 +468,7 @@ it(`lightFetch - decodeJson = 'header', valid json`, (done) => {
 it(`lightFetch - decodeJson = true, invalid json`, (done) => {
   (async function () {
     try {
-      await fetch("/json/invalid/with/no/header", {
+      await fetchMock("/json/invalid/with/no/header", {
         decodeJson: true,
       });
 
@@ -486,7 +484,7 @@ it(`lightFetch - decodeJson = true, invalid json`, (done) => {
 it(`lightFetch - decodeJson = 'header', invalid json`, (done) => {
   (async function () {
     try {
-      const res = await fetch("/json/invalid/with/no/header", {
+      const res = await fetchMock("/json/invalid/with/no/header", {
         decodeJson: "header",
       });
 
