@@ -70,7 +70,7 @@ if [ "\${NODE_API_PORT}" = "" ]; then
   echo NODE_API_PORT not defined
   exit 1
 fi
-nodemon -e js,html server.js --log 15 --port "\${NODE_API_PORT}"
+node node_modules/.bin/nodemon -e js,html server.js --log 15 --port "\${NODE_API_PORT}"
 `,
       description: `test server`,
       confirm: false,

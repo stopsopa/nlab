@@ -18,6 +18,7 @@ function cleanHeaders(req) {
   delete req.headers.date;
   delete req.headers.connection;
   delete req.headers["content-length"];
+  delete req.headers["keep-alive"];
 }
 
 it(`REPO_COVERALLS_URL https url`, (done) => {
