@@ -78,7 +78,15 @@ nodemon -e js,html server.js --log 15 --port "\${NODE_API_PORT}"
     [`yarn`]: {
       command: `
 set -e
+cat <<EEE
+
 /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
+
+EEE
+read -n 1
+
+/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn
+npm run prepare
 `,
       description: `test server`,
       confirm: false,

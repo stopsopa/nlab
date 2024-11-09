@@ -9,3 +9,4 @@ yarn-error*
 /playwright-report/
 .DS_Store
 *.tgz
+yarn.lock

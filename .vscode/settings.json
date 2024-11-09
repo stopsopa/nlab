@@ -1,4 +1,7 @@
 {
+  "explorer.autoRevealExclude": {
+    "**/node_modules": false
+  },
   "search.exclude": {
     ".git/": true,
     ".vscode/": true,

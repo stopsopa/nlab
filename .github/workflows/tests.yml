@@ -122,6 +122,12 @@ jobs:
         run: /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn add semantic-release conventional-changelog-conventionalcommits
         # it has to be done here beacause otherwise it will crash for node@15 with error>>> error semantic-release@19.0.5: The engine "node" is incompatible with this module. Expected version ">=16 || ^14.17". Got "15.14.0"
 
+      - name: pull jsr
+        run: |
+          rm -rf *
+          /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- yarn dlx jsr add -D @stopsopa/tsdi-lite
+          ls -la node_modules/@stopsopa/tsdi-lite/
+
       - name: npm pack
         run: npm pack
       # https://github.com/semantic-release/semantic-release/blob/master/docs/recipes/ci-configurations/github-actions.md
