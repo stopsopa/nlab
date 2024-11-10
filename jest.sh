@@ -34,6 +34,13 @@ if [ "${NODE_API_PORT}" = "" ]; then
   exit 1;
 fi
 
+if [ "${CRASH_PORT}" = "" ]; then
+
+  echo "${0} error: CRASH_PORT is not defined"
+
+  exit 1;
+fi
+
 if [ "$1" = "--help" ]; then
 
 cat << EOF
@@ -54,6 +61,7 @@ set -e
 
 if [ "${JEST_JUST_TESTS}" = "" ]; then
     node "bash/node/is-port-free.js" "${NODE_API_HOST}:${NODE_API_PORT}" --verbose
+    node "bash/node/is-port-free.js" "${NODE_API_HOST}:${CRASH_PORT}" --verbose
 fi
 
 function cleanup {
@@ -64,6 +72,8 @@ function cleanup {
 
     if [ "${JEST_JUST_TESTS}" = "" ]; then
         kill "${PID1}" -9 1> /dev/null 2> /dev/null || :
+
+        kill "${PID2}" -9 1> /dev/null 2> /dev/null || :
     fi
 
     sleep 0.3
@@ -75,6 +85,10 @@ if [ "${JEST_JUST_TESTS}" = "" ]; then
     node tests/server.js NODE_API_PORT &
     PID1="${!}"
     echo "PID1: ${PID1}"
+
+    node tests/server.js CRASH_PORT &
+    PID2="${!}"
+    echo "PID2: ${PID2}"
     sleep 2
 fi
 

@@ -243,7 +243,9 @@ module.exports = function (url, opt = {}) {
         });
       });
 
-      req.on("error", (e) => reject(new Error(emsg(`on error: ${e}`))));
+      req.on("error", (e) => {
+        reject(new Error(emsg(`on error: ${e}`)))
+      });
 
       body && req.write(body);
 

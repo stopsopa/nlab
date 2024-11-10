@@ -79,6 +79,10 @@ app.all("/timeout", async (req, res) => {
   });
 });
 
+app.all("/crash", () => {
+  process.exit(1);
+});
+
 /**
  * fetch('/json/invalid/with/header').then(r => r.json()).then(d => console.log("d: ", d))
  */

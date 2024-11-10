@@ -19,6 +19,10 @@ function cleanHeaders(req) {
   delete req.headers["keep-alive"];
 }
 
+try {
+  jest.setTimeout(30000);
+} catch (e) {}
+
 it(`REPO_COVERALLS_URL https url`, (done) => {
   expect(typeof process.env.REPO_COVERALLS_URL === "string").toEqual(true);
 
@@ -29,476 +33,478 @@ it(`REPO_COVERALLS_URL https url`, (done) => {
   done();
 });
 
-it(`lightFetch process.env.REPO_COVERALLS_URL`, (done) => {
-  (async function () {
-    try {
-      const res = await lightFetch(process.env.REPO_COVERALLS_URL);
+describe(`lightFetch`, () => {
+  it.only(`lightFetch process.env.REPO_COVERALLS_URL`, (done) => {
+    (async function () {
+      try {
+        const res = await lightFetch(process.env.REPO_COVERALLS_URL);
 
-      // delete res.body;
-      // console.log(JSON.stringify(res, null, 4));
+        // delete res.body;
+        // console.log(JSON.stringify(res, null, 4));
 
-      expect(res.status).toEqual(200);
+        expect(res.status).toEqual(200);
 
-      expect(/text\/html/.test(res?.headers?.[`content-type`])).toEqual(true);
+        expect(/text\/html/.test(res?.headers?.[`content-type`])).toEqual(true);
 
-      done();
-    } catch (e) {
-      done(`shouldn't happen`);
-    }
-  })();
-});
+        done();
+      } catch (e) {
+        done(`shouldn't happen`);
+      }
+    })();
+  });
 
-it(`lightFetch - json-valid`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock(`/json-valid`);
+  it(`lightFetch - json-valid`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock(`/json-valid`);
 
-      cleanHeaders(res);
+        cleanHeaders(res);
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-        },
-        body: '{"ok":true}',
-      });
+        expect(res).toEqual({
+          status: 200,
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+          body: '{"ok":true}',
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: ${e}`);
-    }
-  })();
-});
+        done();
+      } catch (e) {
+        done(`test error: ${e}`);
+      }
+    })();
+  });
 
-it(`lightFetch - json-valid - decode`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock(`/json-valid`, {
-        decodeJson: true,
-      });
+  it(`lightFetch - json-valid - decode`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock(`/json-valid`, {
+          decodeJson: true,
+        });
 
-      cleanHeaders(res);
+        cleanHeaders(res);
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-        },
-        body: { ok: true },
-      });
+        expect(res).toEqual({
+          status: 200,
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+          body: { ok: true },
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: ${e}`);
-    }
-  })();
-});
+        done();
+      } catch (e) {
+        done(`test error: ${e}`);
+      }
+    })();
+  });
 
-it.only(`lightFetch - json/invalid/with/header - decode`, (done) => {
-  (async function () {
-    try {
-      await fetchMock(`/json/invalid/with/header`, {
-        decodeJson: true,
-      });
+  it(`lightFetch - json/invalid/with/header - decode`, (done) => {
+    (async function () {
+      try {
+        await fetchMock(`/json/invalid/with/header`, {
+          decodeJson: true,
+        });
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input")).toEqual(
-        true,
-      );
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(
+          String(e).includes("JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input"),
+        ).toEqual(true);
 
-      done();
-    }
-  })();
-});
+        done();
+      }
+    })();
+  });
 
-it(`lightFetch - pass json`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock(`/pass`, {
-        method: "post",
-        body: {
-          json: "data",
-        },
-        decodeJson: true,
-      });
-
-      cleanHeaders(res);
-
-      expect(res).toEqual({
-        status: 200,
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-        },
-        body: {
-          pass: true,
-          json: {
+  it(`lightFetch - pass json`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock(`/pass`, {
+          method: "post",
+          body: {
             json: "data",
           },
-          query: {},
-        },
-      });
+          decodeJson: true,
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: ${e}`);
-    }
-  })();
-});
+        cleanHeaders(res);
 
-it(`lightFetch - pass json cyclical object`, (done) => {
-  (async function () {
-    try {
-      const data = {};
-      data.data = data;
+        expect(res).toEqual({
+          status: 200,
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+          body: {
+            pass: true,
+            json: {
+              json: "data",
+            },
+            query: {},
+          },
+        });
 
-      await fetchMock(`/pass`, {
-        method: "post",
-        body: data,
-        decodeJson: true,
-      });
+        done();
+      } catch (e) {
+        done(`test error: ${e}`);
+      }
+    })();
+  });
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("Converting circular structure")).toEqual(true);
+  it(`lightFetch - pass json cyclical object`, (done) => {
+    (async function () {
+      try {
+        const data = {};
+        data.data = data;
 
-      done();
-    }
-  })();
-});
+        await fetchMock(`/pass`, {
+          method: "post",
+          body: data,
+          decodeJson: true,
+        });
 
-it(`lightFetch - fail through promiseResolvingStatusCodes`, (done) => {
-  (async function () {
-    try {
-      await fetchMock(`/json-valid`, {
-        promiseResolvingStatusCodes: (res) => {
-          return res.statusCode !== 200;
-        },
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("Converting circular structure")).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("Not resolving response status code")).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - fail through promiseResolvingStatusCodes`, (done) => {
+    (async function () {
+      try {
+        await fetchMock(`/json-valid`, {
+          promiseResolvingStatusCodes: (res) => {
+            return res.statusCode !== 200;
+          },
+        });
 
-it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
-  (async function () {
-    try {
-      await fetchMock(`/timeout`, {
-        promiseResolvingStatusCodes: async (res) => {
-          throw new Error(`promiseResolvingStatusCodes throw`);
-        },
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("Not resolving response status code")).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("lib.request end method error: Error: promiseResolvingStatusCodes throw")).toEqual(
-        true,
-      );
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - promiseResolvingStatusCodes throw`, (done) => {
+    (async function () {
+      try {
+        await fetchMock(`/timeout`, {
+          promiseResolvingStatusCodes: async (res) => {
+            throw new Error(`promiseResolvingStatusCodes throw`);
+          },
+        });
 
-it(`lightFetch - timeout`, (done) => {
-  (async function () {
-    try {
-      await fetchMock(`/timeout`, {
-        method: "post",
-        body: {
-          delay: 40,
-        },
-        timeout: 30,
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("lib.request end method error: Error: promiseResolvingStatusCodes throw")).toEqual(
+          true,
+        );
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("timeout (30ms)")).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - timeout`, (done) => {
+    (async function () {
+      try {
+        await fetchMock(`/timeout`, {
+          method: "post",
+          body: {
+            delay: 40,
+          },
+          timeout: 30,
+        });
 
-it(`lightFetch - crash`, (done) => {
-  (async function () {
-    try {
-      await fetchCrush(`/crash`);
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("timeout (30ms)")).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("socket hang up")).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - crash`, (done) => {
+    (async function () {
+      try {
+        await fetchCrush(`/crash`);
 
-it(`lightFetch - noBody`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock("/pass", {
-        method: "post",
-        body: {
-          some: "data",
-        },
-        noBody: true,
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("socket hang up")).toEqual(true);
 
-      cleanHeaders(res);
+        done();
+      }
+    })();
+  });
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-        },
-      });
+  it(`lightFetch - noBody`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock("/pass", {
+          method: "post",
+          body: {
+            some: "data",
+          },
+          noBody: true,
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        cleanHeaders(res);
 
-it(`lightFetch - error not url`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("path should start with slash");
+        expect(res).toEqual({
+          status: 200,
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+        });
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes("Invalid URL")).toEqual(true);
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - error not url`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("path should start with slash");
 
-/**
- * Some edge cases coverage tests
- */
-it(`lightFetch - not valid parameter`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/xxx", {
-        notvalidparam: true,
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes("Invalid URL")).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes(`key 'notvalidparam' is not on the list of allowed parameters method`)).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  /**
+   * Some edge cases coverage tests
+   */
+  it(`lightFetch - not valid parameter`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/xxx", {
+          notvalidparam: true,
+        });
 
-it(`lightFetch - debugRequest param is not a string`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/pass", {
-        debugRequest: true,
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes(`key 'notvalidparam' is not on the list of allowed parameters method`)).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes(`debugRequest is not a string`)).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - debugRequest param is not a string`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/pass", {
+          debugRequest: true,
+        });
 
-it(`lightFetch - method param is not a string`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/pass", {
-        method: true,
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes(`debugRequest is not a string`)).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes(`method is not a string`)).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - method param is not a string`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/pass", {
+          method: true,
+        });
 
-it(`lightFetch - method GET but still body provided`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/pass", {
-        body: {
-          data: true,
-        },
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes(`method is not a string`)).toEqual(true);
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(
-        String(e).includes(`since you have specified the body for request probably method shouldn't be GET`),
-      ).toEqual(true);
+        done();
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - method GET but still body provided`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/pass", {
+          body: {
+            data: true,
+          },
+        });
 
-it(`lightFetch - debugRequest = reqb`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/pass", {
-        debugRequest: "reqb",
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(
+          String(e).includes(`since you have specified the body for request probably method shouldn't be GET`),
+        ).toEqual(true);
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        done();
+      }
+    })();
+  });
 
-it(`lightFetch - opt is not an object`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/pass", false);
+  it(`lightFetch - debugRequest = reqb`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/pass", {
+          debugRequest: "reqb",
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-it(`lightFetch - url with get params`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock("/pass?get=param&test=true", {
-        query: {
-          a: "b",
-          c: "d",
-        },
-        qsOptions: {
-          encodeValuesOnly: true, // https://github.com/ljharb/qs#stringifying
-        },
-        debugRequest: "all",
-        decodeJson: true,
-        jsonSpace: 2,
-      });
+  it(`lightFetch - opt is not an object`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/pass", false);
 
-      cleanHeaders(res);
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {
-          "content-type": "application/json; charset=utf-8",
-        },
-        body: {
-          pass: true,
-          json: {},
+  it(`lightFetch - url with get params`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock("/pass?get=param&test=true", {
           query: {
             a: "b",
             c: "d",
-            get: ["param"],
-            test: ["true"],
           },
-        },
-      });
+          qsOptions: {
+            encodeValuesOnly: true, // https://github.com/ljharb/qs#stringifying
+          },
+          debugRequest: "all",
+          decodeJson: true,
+          jsonSpace: 2,
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        cleanHeaders(res);
 
-it(`lightFetch - decodeJson = true, valid json`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock("/json/valid/with/no/header", {
-        decodeJson: true,
-      });
+        expect(res).toEqual({
+          status: 200,
+          headers: {
+            "content-type": "application/json; charset=utf-8",
+          },
+          body: {
+            pass: true,
+            json: {},
+            query: {
+              a: "b",
+              c: "d",
+              get: ["param"],
+              test: ["true"],
+            },
+          },
+        });
 
-      cleanHeaders(res);
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {},
-        body: {
-          no: "header",
-        },
-      });
+  it(`lightFetch - decodeJson = true, valid json`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock("/json/valid/with/no/header", {
+          decodeJson: true,
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        cleanHeaders(res);
 
-it(`lightFetch - decodeJson = 'header', valid json`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock("/json/valid/with/no/header", {
-        decodeJson: "header",
-      });
+        expect(res).toEqual({
+          status: 200,
+          headers: {},
+          body: {
+            no: "header",
+          },
+        });
 
-      cleanHeaders(res);
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {},
-        body: '{"no":"header"}',
-      });
+  it(`lightFetch - decodeJson = 'header', valid json`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock("/json/valid/with/no/header", {
+          decodeJson: "header",
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
-});
+        cleanHeaders(res);
 
-it(`lightFetch - decodeJson = true, invalid json`, (done) => {
-  (async function () {
-    try {
-      await fetchMock("/json/invalid/with/no/header", {
-        decodeJson: true,
-      });
+        expect(res).toEqual({
+          status: 200,
+          headers: {},
+          body: '{"no":"header"}',
+        });
 
-      done(`test error: should reject`);
-    } catch (e) {
-      expect(String(e).includes(`SyntaxError: Unexpected end of JSON input`)).toEqual(true);
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 
-      done();
-    }
-  })();
-});
+  it(`lightFetch - decodeJson = true, invalid json`, (done) => {
+    (async function () {
+      try {
+        await fetchMock("/json/invalid/with/no/header", {
+          decodeJson: true,
+        });
 
-it(`lightFetch - decodeJson = 'header', invalid json`, (done) => {
-  (async function () {
-    try {
-      const res = await fetchMock("/json/invalid/with/no/header", {
-        decodeJson: "header",
-      });
+        done(`test error: should reject`);
+      } catch (e) {
+        expect(String(e).includes(`SyntaxError: Unexpected end of JSON input`)).toEqual(true);
 
-      cleanHeaders(res);
+        done();
+      }
+    })();
+  });
 
-      expect(res).toEqual({
-        status: 200,
-        headers: {},
-        body: '{"ok":true',
-      });
+  it(`lightFetch - decodeJson = 'header', invalid json`, (done) => {
+    (async function () {
+      try {
+        const res = await fetchMock("/json/invalid/with/no/header", {
+          decodeJson: "header",
+        });
 
-      done();
-    } catch (e) {
-      done(`test error: shouldn't reject: ${e}`);
-    }
-  })();
+        cleanHeaders(res);
+
+        expect(res).toEqual({
+          status: 200,
+          headers: {},
+          body: '{"ok":true',
+        });
+
+        done();
+      } catch (e) {
+        done(`test error: shouldn't reject: ${e}`);
+      }
+    })();
+  });
 });
