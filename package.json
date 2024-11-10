@@ -15,6 +15,10 @@
     "./*.js": {
       "types": "./src/*.d.ts",
       "default": "./src/*.js"
+    },
+    "./*": {
+      "types": "./src/*.d.ts",
+      "default": "./src/*.js"
     }
   },
   "scripts": {
