@@ -1,6 +1,6 @@
 "use strict";
 
-const get = require("../../get");
+const get = require("nlab/get.js");
 
 const data = {
   test: {

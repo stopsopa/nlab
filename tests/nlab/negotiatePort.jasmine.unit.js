@@ -1,6 +1,6 @@
 "use strict";
 
-const np = require("../../negotiatePort");
+const np = require("nlab/negotiatePort.js");
 
 it("negotiatePort - no protocol", (done) => {
   try {

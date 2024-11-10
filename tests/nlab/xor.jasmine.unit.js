@@ -1,6 +1,6 @@
 "use strict";
 
-const xor = require("../../xor");
+const xor = require("nlab/xor.js");
 
 it("xor() no key", (done) => {
   const data = "";

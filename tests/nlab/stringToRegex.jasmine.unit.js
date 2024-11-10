@@ -1,4 +1,4 @@
-const stringToRegex = require("../../stringToRegex");
+const stringToRegex = require("nlab/stringToRegex.js");
 
 function d(regex) {
   return {

@@ -1,4 +1,4 @@
-const transformTreeToList = require("../../transformTreeToList");
+const transformTreeToList = require("nlab/transformTreeToList.js");
 
 describe("Test transformTreeToList", () => {
   it("should transform a nested object into a flat list", () => {

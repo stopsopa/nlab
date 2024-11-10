@@ -1,6 +1,6 @@
-const { start, diff } = require("./timer");
+const { start, diff } = require("./timer.js");
 
-const promiseCache = require("../../promiseCache");
+const promiseCache = require("nlab/promiseCache.js");
 
 const log = require("inspc");
 

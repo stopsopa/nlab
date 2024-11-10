@@ -1,4 +1,4 @@
-const sortObjectNested = require('../../sortObjectNested')
+const sortObjectNested = require('nlab/sortObjectNested.js')
 
 describe('sortObjectNested', () => {
   it('simple object - no need for sorting', (done) => {

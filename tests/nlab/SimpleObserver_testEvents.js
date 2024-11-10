@@ -1,6 +1,6 @@
-const SimpleObserver = require("../../SimpleObserver");
+const SimpleObserver = require("nlab/SimpleObserver.js");
 
-const delay = require("../../delay");
+const delay = require("nlab/delay.js");
 
 module.exports = {
   first: async () => {

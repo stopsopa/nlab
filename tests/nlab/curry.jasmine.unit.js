@@ -1,4 +1,4 @@
-const curry = require("../../curry");
+const curry = require("nlab/curry.js");
 
 it("curry 2, 4, 8", (done) => {
   const fn = curry((a, b, c) => a + b + c);

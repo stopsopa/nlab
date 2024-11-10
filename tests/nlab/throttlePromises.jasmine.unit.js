@@ -1,6 +1,6 @@
 "use strict";
 
-const throttlePromises = require("../../throttlePromises");
+const throttlePromises = require("nlab/throttlePromises.js");
 
 const log = require("inspc");
 

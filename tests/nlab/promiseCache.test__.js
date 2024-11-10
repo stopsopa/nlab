@@ -1,12 +1,12 @@
-const { start, diff } = require("./timer");
+const { start, diff } = require("./timer.js");
 
-const promiseCache = require("../../promiseCache");
+const promiseCache = require("nlab/promiseCache.js");
 
 const log = require("inspc");
 
-const delay = require("../../src/delay");
+const delay = require("nlab/delay.js");
 
-const unique = require("../../src/unique");
+const unique = require("nlab/unique.js");
 
 const { prepareToStamp, throttle, nowHR, now } = promiseCache;
 

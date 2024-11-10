@@ -1,4 +1,4 @@
-const alphaid = require("../../alphaid");
+const alphaid = require("nlab/alphaid.js");
 
 it("alphaid basic", (done) => {
   try {

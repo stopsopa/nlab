@@ -1,4 +1,4 @@
-const sortObjectNested = require("../sortObjectNested");
+const sortObjectNested = require("nlab/sortObjectNested.js");
 
 const md5 = require("md5");
 

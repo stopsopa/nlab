@@ -1,6 +1,6 @@
 "use strict";
 
-const se = require("../../se");
+const se = require("nlab/serializeError.js");
 
 const log = require("inspc");
 

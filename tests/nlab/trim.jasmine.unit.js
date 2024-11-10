@@ -1,8 +1,8 @@
 "use strict";
 
-const trim = require("../../trim");
+const trim = require("nlab/trim.js");
 
-const pregQuote = require("../../pregQuote");
+const pregQuote = require("nlab/pregQuote.js");
 
 it(`trim('')`, () => {
   expect(trim("")).toBe("");

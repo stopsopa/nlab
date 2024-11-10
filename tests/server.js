@@ -2,7 +2,7 @@ const express = require("express");
 
 require("dotenv-up")(2, true, "server.js");
 
-const delay = require("../delay");
+const delay = require("nlab/delay.js");
 
 const log = (function () {
   try {

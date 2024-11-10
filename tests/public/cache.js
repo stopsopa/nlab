@@ -1,4 +1,4 @@
-const throttlePromises = require("../../src/throttlePromises");
+const throttlePromises = require("nlab/throttlePromises.js");
 
 // const {
 //     prepareToStamp,

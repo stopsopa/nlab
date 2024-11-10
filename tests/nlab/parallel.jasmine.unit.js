@@ -1,4 +1,4 @@
-const parallel = require("../../parallel");
+const parallel = require("nlab/parallel.js");
 
 try {
   jest.setTimeout(10000);

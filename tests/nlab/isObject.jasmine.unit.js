@@ -23,7 +23,7 @@
 // ✓ lodash.isObject - new Error()                                           -> false -> true
 
 // Cu -> custom
-const isObjectCu = require("../../isObject");
+const isObjectCu = require("nlab/isObject.js");
 
 const isObjectLo = () => {};
 function expelo() {

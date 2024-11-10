@@ -18,7 +18,7 @@
 //  ✓isAsyncFunction - Symbol('test')                                      -> false
 //  ✓isAsyncFunction - new Date()                                          -> false
 
-const isAsyncFunction = require("../../isAsyncFunction");
+const isAsyncFunction = require("nlab/isAsyncFunction.js");
 
 try {
   jest.setTimeout(100);

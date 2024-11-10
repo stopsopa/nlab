@@ -3,7 +3,7 @@
  * NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env --test jasmine/lib/template.jasmine.unit.js
  */
 
-const template = require("../../template");
+const template = require("nlab/template.js");
 
 const html = `
 <body>    

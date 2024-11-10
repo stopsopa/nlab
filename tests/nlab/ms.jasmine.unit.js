@@ -1,6 +1,6 @@
 "use strict";
 
-const ms = require("../../ms");
+const ms = require("nlab/ms.js");
 
 const generate = ms.generate;
 
@@ -8,7 +8,7 @@ const raw = ms.raw;
 
 const log = require("inspc");
 
-const trim = require("../../trim");
+const trim = require("nlab/trim.js");
 
 function f(o) {
   o = JSON.stringify(o);

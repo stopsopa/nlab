@@ -1,10 +1,10 @@
 // //'use strict';
 
-const CachePromise = require("../../CachePromise");
+const CachePromise = require("nlab/CachePromise.js");
 
 const log = require("inspc");
 
-const delay = require("../../delay");
+const delay = require("nlab/delay.js");
 
 it("CachePromise - simple", (done) => {
   (async function () {

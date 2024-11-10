@@ -23,7 +23,7 @@
 //  ✓isArray - new Set()                                           -> false
 //  ✓isArray - new Error()                                         -> false
 
-const isArray = require("../../isArray");
+const isArray = require("nlab/isArray.js");
 
 try {
   jest.setTimeout(100);

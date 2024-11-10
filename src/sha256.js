@@ -1,4 +1,4 @@
-const node = require("../isNode");
+const node = require("nlab/isNode.js");
 
 const sjcl = require("sjcl");
 

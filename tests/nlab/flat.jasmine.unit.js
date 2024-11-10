@@ -1,4 +1,4 @@
-const flat = require("../../flat");
+const flat = require("nlab/flat.js");
 
 it("flat() - including arrays", (done) => {
   const data = flat({

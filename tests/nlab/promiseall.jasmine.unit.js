@@ -1,6 +1,6 @@
-const promiseall = require("../../promiseall");
+const promiseall = require("nlab/promiseall.js");
 
-const delay = require("../../delay");
+const delay = require("nlab/delay.js");
 
 try {
   jest.setTimeout(20000);
@@ -11,6 +11,8 @@ it("promiseall no args", (done) => {
   (async function () {
     try {
       await promiseall();
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(String(e)).toEqual("Error: promiseall error: list is not an array");
 
@@ -23,6 +25,8 @@ it("promiseall wrong arg", (done) => {
   (async function () {
     try {
       await promiseall(true);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(String(e)).toEqual("Error: promiseall error: list is not an array");
 
@@ -33,11 +37,15 @@ it("promiseall wrong arg", (done) => {
 
 it("promiseall empty array", (done) => {
   (async function () {
-    const data = await promiseall([]);
+    try {
+      const data = await promiseall([]);
 
-    expect(data).toEqual([]);
+      expect(data).toEqual([]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
@@ -45,6 +53,8 @@ it("promiseall one is not a promise", (done) => {
   (async function () {
     try {
       await promiseall([Promise.resolve("abc"), () => {}, Promise.reject("zdd")]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(String(e)).toEqual("Error: promiseall error: list[1] is not a promise");
 
@@ -57,6 +67,8 @@ it("promiseall one is not a promise 2", (done) => {
   (async function () {
     try {
       await promiseall([() => {}]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(String(e)).toEqual("Error: promiseall error: list[0] is not a promise");
 
@@ -67,106 +79,130 @@ it("promiseall one is not a promise 2", (done) => {
 
 it("promiseall 3 resolved", (done) => {
   (async function () {
-    const data = await promiseall([Promise.resolve("abc"), Promise.resolve("cde"), Promise.resolve("efg")]);
+    try {
+      const data = await promiseall([Promise.resolve("abc"), Promise.resolve("cde"), Promise.resolve("efg")]);
 
-    expect(data).toEqual(["abc", "cde", "efg"]);
+      expect(data).toEqual(["abc", "cde", "efg"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall 3 resolved ver 2", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 50);
-      }),
-      Promise.resolve("cde"),
-      Promise.resolve("efg"),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 50);
+        }),
+        Promise.resolve("cde"),
+        Promise.resolve("efg"),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "efg"]);
+      expect(data).toEqual(["abc", "cde", "efg"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall 3 resolved ver 3", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("cde"), 50);
-      }),
-      Promise.resolve("efg"),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("cde"), 50);
+        }),
+        Promise.resolve("efg"),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "efg"]);
+      expect(data).toEqual(["abc", "cde", "efg"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall 3 resolved ver 4", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("cde"), 50);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("ddd"), 20);
-      }),
-      Promise.resolve("efg"),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("cde"), 50);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("ddd"), 20);
+        }),
+        Promise.resolve("efg"),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "ddd", "efg"]);
+      expect(data).toEqual(["abc", "cde", "ddd", "efg"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall 3 resolved ver 5", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("cde"), 50);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("ddd"), 20);
-      }),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("cde"), 50);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("ddd"), 20);
+        }),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "ddd"]);
+      expect(data).toEqual(["abc", "cde", "ddd"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall 3 resolved ver 6", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("cde"), 10);
-      }),
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("ddd"), 50);
-      }),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("cde"), 10);
+        }),
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("ddd"), 50);
+        }),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "ddd"]);
+      expect(data).toEqual(["abc", "cde", "ddd"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
@@ -184,6 +220,8 @@ it("promiseall 3 reject 1", (done) => {
           setTimeout(() => resolve("ddd"), 50);
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -219,6 +257,8 @@ it("promiseall 3 reject 2", (done) => {
           setTimeout(() => reject("ddd"), 50);
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -254,6 +294,8 @@ it("promiseall 3 reject 3", (done) => {
           setTimeout(() => reject("ddd"), 50);
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -289,6 +331,8 @@ it("promiseall 3 reject by throw", (done) => {
           setTimeout(() => reject("ddd"), 50);
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -321,6 +365,8 @@ it("promiseall 3 reject by throw both", (done) => {
           throw "throw 2";
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -340,41 +386,49 @@ it("promiseall 3 reject by throw both", (done) => {
 
 it("promiseall async", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      async () => "cde",
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("ddd"), 50);
-      }),
-    ]);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        async () => "cde",
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("ddd"), 50);
+        }),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "ddd"]);
+      expect(data).toEqual(["abc", "cde", "ddd"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
 it("promiseall async 2", (done) => {
   (async function () {
-    const data = await promiseall([
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("abc"), 150);
-      }),
-      async () => {
-        await delay(30);
+    try {
+      const data = await promiseall([
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("abc"), 150);
+        }),
+        async () => {
+          await delay(30);
 
-        return "cde";
-      },
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve("ddd"), 50);
-      }),
-    ]);
+          return "cde";
+        },
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve("ddd"), 50);
+        }),
+      ]);
 
-    expect(data).toEqual(["abc", "cde", "ddd"]);
+      expect(data).toEqual(["abc", "cde", "ddd"]);
 
-    done();
+      done();
+    } catch (e) {
+      done(String(e));
+    }
   })();
 });
 
@@ -392,6 +446,8 @@ it("promiseall async 33", (done) => {
           setTimeout(() => resolve("ddd"), 50);
         }),
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -431,6 +487,8 @@ it("promiseall async 3", (done) => {
           throw "ddd";
         },
       ]);
+
+      done(`Shouldn't be happening`);
     } catch (e) {
       expect(e).toEqual([
         {
@@ -449,7 +507,5 @@ it("promiseall async 3", (done) => {
 
       done();
     }
-
-    (async function () {})();
   })();
 });

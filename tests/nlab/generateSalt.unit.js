@@ -1,4 +1,4 @@
-const generateSalt = require("../../generateSalt");
+const generateSalt = require("nlab/generateSalt.js");
 
 try {
   jest.setTimeout(100);

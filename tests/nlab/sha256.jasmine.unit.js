@@ -1,4 +1,4 @@
-const sha256 = require("../../sha256");
+const sha256 = require("nlab/sha256.js");
 
 /**
  * https://passwordsgenerator.net/sha256-hash-generator/

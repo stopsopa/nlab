@@ -1,10 +1,10 @@
 "use strict";
 
-const delay = require("../../delay");
+const delay = require("nlab/delay.js");
 
 const then = delay.then;
 
-const { start, diff } = require("./timer");
+const { start, diff } = require("./timer.js");
 
 try {
   jest.setTimeout(100);

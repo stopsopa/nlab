@@ -1,4 +1,4 @@
-const md5FetchArguments = require("../../md5FetchArguments");
+const md5FetchArguments = require("nlab/md5FetchArguments.js");
 
 describe("md5FetchArguments", () => {
   it("just url", (done) => {

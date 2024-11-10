@@ -18,7 +18,7 @@
 //  ✓isDate - string                                              -> false
 //  ✓isDate - Symbol('test')                                      -> false
 
-const isDate = require("../../isDate");
+const isDate = require("nlab/isDate.js");
 
 try {
   jest.setTimeout(100);

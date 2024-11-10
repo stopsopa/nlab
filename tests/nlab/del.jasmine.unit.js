@@ -1,8 +1,8 @@
 "use strict";
 
-const get = require("../../get");
+const get = require("nlab/get.js");
 
-const del = require("../../del");
+const del = require("nlab/del.js");
 
 const data = {
   test: {

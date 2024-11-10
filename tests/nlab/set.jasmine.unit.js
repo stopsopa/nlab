@@ -1,6 +1,6 @@
 "use strict";
 
-const set = require("../../set");
+const set = require("nlab/set.js");
 
 it("set() - key null", (done) => {
   let target = {};

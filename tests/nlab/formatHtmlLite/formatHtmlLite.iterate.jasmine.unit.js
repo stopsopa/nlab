@@ -1,4 +1,4 @@
-const formatHtmlLite = require("../../../formatHtmlLite");
+const formatHtmlLite = require("nlab/formatHtmlLite.js");
 
 const iterate = formatHtmlLite.iterate;
 

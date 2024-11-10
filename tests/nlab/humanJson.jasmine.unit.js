@@ -1,4 +1,4 @@
-const humanJson = require("../../humanJson");
+const humanJson = require("nlab/humanJson.js");
 
 /**
  * https://passwordsgenerator.net/sha256-hash-generator/

@@ -1,6 +1,6 @@
 "use strict";
 
-const is = require("../../incrementSlug");
+const is = require("nlab/incrementSlug.js");
 
 it("incrementSlug() - not string", (done) => {
   try {

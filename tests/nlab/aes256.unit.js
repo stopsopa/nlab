@@ -1,6 +1,6 @@
-const aes256 = require("../../aes256");
+const aes256 = require("nlab/aes256.js");
 
-const unique = require("../../unique");
+const unique = require("nlab/unique.js");
 
 try {
   jest.setTimeout(100);

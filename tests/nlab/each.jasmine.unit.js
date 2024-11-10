@@ -1,4 +1,4 @@
-const each = require("../../each");
+const each = require("nlab/each.js");
 
 it("each() - array stop", (done) => {
   const a = "qwertyuiop".split("");

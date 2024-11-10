@@ -1,4 +1,4 @@
-const generateCurl = require("../../generateCurl");
+const generateCurl = require("nlab/generateCurl.js");
 
 it("generateCurl all parts - no multiline", (done) => {
   try {
