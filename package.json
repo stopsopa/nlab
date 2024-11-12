@@ -4,6 +4,7 @@
   "author": "Szymon Działowski",
   "description": "",
   "license": "MIT",
+  "main": "src/index.js",
   "homepage": "https://github.com/stopsopa/nlab",
   "dependencies": {
     "inspc": "^0.0.19",

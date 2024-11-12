@@ -9,14 +9,20 @@ const pregQuote = require("./pregQuote");
  * direction : 'rl'|'r'|'l'   -->   (undefined => 'rl')
  * charlist  : (undefined => " \n")
  */
+/**
+ *
+ * @param {string} string
+ * @param {string} charlist
+ * @param {"r" | "l" | "rl"} direction
+ * @returns {string}
+ */
 module.exports = function trim(string, charlist, direction) {
   if (typeof string !== "string") {
-    return false;
+    return "";
   }
 
   direction = direction || "rl";
-  charlist = pregQuote(charlist || "");
-  charlist = charlist || " \\n";
+  charlist = pregQuote(charlist || "") || " \\n";
   direction.indexOf("r") + 1 && (string = string.replace(new RegExp("^(.*?)[" + charlist + "]*$", "gm"), "$1"));
   direction.indexOf("l") + 1 && (string = string.replace(new RegExp("^[" + charlist + "]*(.*)$", "gm"), "$1"));
   return string;
