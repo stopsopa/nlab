@@ -1,0 +1,85 @@
+module.exports = (fn) => {
+  if (typeof fn !== "function") {
+    throw new Error(`curry.js error: fn is not a function`);
+  }
+
+  let buff = [];
+
+  const pass = (...args) => {
+    buff = buff.concat(args);
+
+    if (fn.length > buff.length) {
+      return pass;
+    }
+
+    return fn.apply(this, buff);
+  };
+
+  return pass;
+};
+
+/**
+ * Above is totally wrong, here is some testing that will demonstrate issue
+ */
+
+(function () {
+  function curry(fn) {
+    // better implementation
+    return function curried(...args) {
+      return args.length >= fn.length
+        ? fn.apply(this, args)
+        : (...nextArgs) => curried(...args, ...nextArgs);
+    };
+  }
+
+  // Example usage:
+  function add(a, b) {
+    return a + b;
+  }
+
+  const curriedAdd = curry(add);
+  var a = curriedAdd(1);
+  var b = curriedAdd(10);
+
+  console.log(b(20));
+  console.log(b(2));
+  console.log(b(100));
+})();
+
+// ---------------
+
+(function () {
+  const curry = (fn) => {
+    // my broken implementation - totally wrong
+    if (typeof fn !== "function") {
+      throw new Error(`curry.js error: fn is not a function`);
+    }
+
+    let buff = [];
+
+    const pass = (...args) => {
+      buff = buff.concat(args);
+
+      if (fn.length > buff.length) {
+        return pass;
+      }
+
+      return fn.apply(this, buff);
+    };
+
+    return pass;
+  };
+
+  // Example usage:
+  function add(a, b) {
+    return a + b;
+  }
+
+  const curriedAdd = curry(add);
+  var a = curriedAdd(1);
+  var b = curriedAdd(10);
+
+  console.log(b(20));
+  console.log(b(2));
+  console.log(b(100));
+})();
