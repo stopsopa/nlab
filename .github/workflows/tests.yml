@@ -89,9 +89,10 @@ jobs:
         if: matrix.version == 20
         run: /bin/bash .github/clean_before_github_pages.sh
 
+      # updated https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/
       - name: Upload artifact
         if: matrix.version == 20
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: .
 
@@ -105,7 +106,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 
   npm:
     needs: test # https://docs.github.com/en/actions/using-jobs/using-jobs-in-a-workflow#defining-prerequisite-jobs
