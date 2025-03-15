@@ -72,6 +72,8 @@ jobs:
 
       - name: UNIT TESTS
         run: |
+          set -e
+          set -o pipefail
           mkdir -p coverage
           /bin/bash jest.sh | tee coverage/for-coverage-badge.log
 
@@ -83,6 +85,8 @@ jobs:
       - name: generate coverage badge
         if: matrix.version == 20
         run: |
+          set -e
+          set -o pipefail
           cat coverage/for-coverage-badge.log | node bash/node/coverage-badge.js --output coverage/coverage-badge.svg
 
       - name: Clean before artifact
