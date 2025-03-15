@@ -34,7 +34,7 @@ it(`REPO_COVERALLS_URL https url`, (done) => {
 });
 
 describe(`lightFetch`, () => {
-  it.only(`lightFetch process.env.REPO_COVERALLS_URL`, (done) => {
+  it(`lightFetch process.env.REPO_COVERALLS_URL`, (done) => {
     (async function () {
       try {
         const res = await lightFetch(process.env.REPO_COVERALLS_URL);
