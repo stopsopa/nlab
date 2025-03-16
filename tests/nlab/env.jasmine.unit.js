@@ -54,7 +54,7 @@ it("getIntegerThrowInvalid - ABC -> 123", async () => {
     "env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
   );
   expect(() => getIntegerThrowInvalid("BIG")).toThrowError(
-    "parseInt(90071992547409919007199254740991, 10) returned 9.007199254740992e+31, doesn't match regex >/^-?\\d+$/<",
+    "env.js: parseInt(90071992547409919007199254740991, 10) returned 9.007199254740992e+31, doesn't match regex >/^-?\\d+$/<",
   );
 });
 
@@ -92,7 +92,7 @@ test("getIntegerThrow", async () => {
   }
 
   expect(data).toEqual({
-    throw: "env.ts: env var GHI is not defined or is not a number",
-    throw2: "env.ts: env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
+    throw: "env.js: env var GHI is not defined or is not a number",
+    throw2: "env.js: env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
   });
 });
