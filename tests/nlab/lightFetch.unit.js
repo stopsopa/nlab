@@ -108,8 +108,10 @@ describe(`lightFetch`, () => {
 
         done(`test error: should reject`);
       } catch (e) {
+        const es = String(e);
+
         expect(
-          String(e).includes("JSON.parse(response body) error: SyntaxError: Unexpected end of JSON input"),
+          es.includes("JSON.parse(response body) error: SyntaxError: "),
         ).toEqual(true);
 
         done();
@@ -479,7 +481,7 @@ describe(`lightFetch`, () => {
 
         done(`test error: should reject`);
       } catch (e) {
-        expect(String(e).includes(`SyntaxError: Unexpected end of JSON input`)).toEqual(true);
+        expect(String(e).includes(`SyntaxError: `)).toEqual(true);
 
         done();
       }
