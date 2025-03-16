@@ -1,6 +1,14 @@
 "use strict";
 
-const { mockEnv, get, getDefault, getIntegerThrowInvalid, getIntegerDefault, getThrow } = require("nlab/env.js");
+const {
+  mockEnv,
+  get,
+  getDefault,
+  getIntegerThrowInvalid,
+  getIntegerDefault,
+  getIntegerThrow,
+  getThrow,
+} = require("nlab/env.js");
 
 try {
   jest.setTimeout(100);
@@ -46,7 +54,7 @@ it("getIntegerThrowInvalid - ABC -> 123", async () => {
     "env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
   );
   expect(() => getIntegerThrowInvalid("BIG")).toThrowError(
-    "parseInt(90071992547409919007199254740991, 10) returned 9.007199254740992e+31, doesn't match regex >/^-?\\d+$/<",
+    "env.js: parseInt(90071992547409919007199254740991, 10) returned 9.007199254740992e+31, doesn't match regex >/^-?\\d+$/<",
   );
 });
 
@@ -59,4 +67,32 @@ it("getIntegerDefault - ABC -> 123", async () => {
   expect(getIntegerDefault("ABC", 456)).toEqual(123);
   expect(getIntegerDefault("GHI", 789)).toEqual(789);
   expect(getIntegerDefault("ZZZ", 789)).toEqual(789);
+});
+
+test("getIntegerThrow", async () => {
+  mockEnv({
+    ABC: "123",
+    ZZZ: "not a number",
+  });
+
+  expect(getIntegerThrow("ABC")).toEqual(123);
+
+  const data = {};
+
+  try {
+    getIntegerThrow("GHI");
+  } catch (e) {
+    data.throw = e.message;
+  }
+
+  try {
+    getIntegerThrow("ZZZ");
+  } catch (e) {
+    data.throw2 = e.message;
+  }
+
+  expect(data).toEqual({
+    throw: "env.js: env var GHI is not defined or is not a number",
+    throw2: "env.js: env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
+  });
 });

@@ -1,5 +1,7 @@
 const isNode = require("./isNode");
 
+const th = msg => new Error(`env.js: ${msg}`);
+
 /**
  * @typedef {Object.<string, string>} Env
  */
@@ -14,7 +16,7 @@ if (isNode) {
 } else if (typeof window !== "undefined") {
   env = window.process.env;
 } else {
-  throw new Error("env.js: neither node.js nor browser context detected");
+  throw th("env.js: neither node.js nor browser context detected");
 }
 
 /**
@@ -63,7 +65,7 @@ function getThrow(key, msg) {
   if (has(key)) {
     return env[key];
   }
-  throw new Error(msg || `env var ${key} is not defined`);
+  throw th(msg || `env var ${key} is not defined`);
 }
 
 const intTest = /^-?\d+$/;
@@ -80,7 +82,7 @@ function getIntegerThrowInvalid(key) {
 
     if (typeof value === "string") {
       if (!intTest.test(value)) {
-        throw new Error(`env var ${key} is not a number. value >${value}<, doesn't match regex >${intTest}<`);
+        throw th(`env var ${key} is not a number. value >${value}<, doesn't match regex >${intTest}<`);
       }
 
       const int = parseInt(value, 10);
@@ -88,7 +90,7 @@ function getIntegerThrowInvalid(key) {
       const strint = String(int);
 
       if (!intTest.test(strint)) {
-        throw new Error(`parseInt(${value}, 10) returned ${strint}, doesn't match regex >${intTest}<`);
+        throw th(`parseInt(${value}, 10) returned ${strint}, doesn't match regex >${intTest}<`);
       }
 
       return int;
@@ -117,6 +119,21 @@ function getIntegerDefault(key, defaultValue) {
     return defaultValue;
   }
 }
+/**
+ * get env var cast to integer and throw if anything during casting to int fail or env var is not defined
+ * @param {string} key
+ * @returns {string | number}
+ * @throws {Error} If the environment variable is not defined or is not a number.
+ */
+function getIntegerThrow(key) {
+  const val = getIntegerThrowInvalid(key);
+
+  if (typeof val === "number") {
+    return val;
+  }
+
+  throw th(`env var ${key} is not defined or is not a number`);
+}
 
 module.exports = {
   mockEnv,
@@ -126,4 +143,5 @@ module.exports = {
   getThrow,
   getIntegerThrowInvalid,
   getIntegerDefault,
+  getIntegerThrow,
 };
