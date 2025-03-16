@@ -117,6 +117,21 @@ function getIntegerDefault(key, defaultValue) {
     return defaultValue;
   }
 }
+/**
+ * get env var cast to integer and throw if anything during casting to int fail or env var is not defined
+ * @param {string} key
+ * @returns {string | number}
+ * @throws {Error} If the environment variable is not defined or is not a number.
+ */
+function getIntegerThrow(key) {
+  const val = getIntegerThrowInvalid(key);
+
+  if (typeof val === "number") {
+    return val;
+  }
+
+  throw th(`env var ${key} is not defined or is not a number`);
+}
 
 module.exports = {
   mockEnv,
@@ -126,4 +141,5 @@ module.exports = {
   getThrow,
   getIntegerThrowInvalid,
   getIntegerDefault,
+  getIntegerThrow,
 };
