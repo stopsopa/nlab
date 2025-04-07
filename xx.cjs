@@ -40,6 +40,14 @@ set -e
       description: `coverage server`,
       confirm: false,
     },
+    [`testall.sh`]: {
+      command: `
+set -e
+/bin/bash testall.sh 
+`,
+      description: `coverage server`,
+      confirm: false,
+    },
     [`jasmine tests`]: {
       command: `
 set -e
