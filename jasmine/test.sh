@@ -238,7 +238,7 @@ if [ "${?}" != "0" ]; then
   exit 1
 fi
 
-node node_modules/.bin/esbuild --help 1> /dev/null 2> /dev/null
+NODE_OPTIONS="" node node_modules/.bin/esbuild --help 1> /dev/null 2> /dev/null
 
 if [ "${?}" != "0" ]; then
 
@@ -301,7 +301,7 @@ set -e
 
 function es {
   # "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --sourcemap --target=chrome80 --outfile="${2}"
-  node "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --target=chrome80 --outfile="${2}"
+  NODE_OPTIONS="" node "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --target=chrome80 --outfile="${2}"
 }
 
 # https://esbuild.github.io/getting-started/#install-esbuild
@@ -310,9 +310,9 @@ function es {
 
 function build {
 
-  OUTPUT="$(node "${_DIR}/filename_transformer.js" "${1}")"  
+  OUTPUT="$(NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${1}")"  
 
-  ROOT_RELATIVE="$(node "${_DIR}/filename_transformer.js" "${1}" "${ROOT}")"
+  ROOT_RELATIVE="$(NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${1}" "${ROOT}")"
 
   es "${1}" "${OUTPUT}" 
 

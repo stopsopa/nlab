@@ -48,17 +48,17 @@ set -e
       description: `coverage server`,
       confirm: false,
     },
-    [`coverage server`]: {
+    [`coverage`]: {
       command: `
 set -e
 source .env
 cat <<EEE
 
-    http://localhost:\${JEST_COVERAGE_PORT}
+    open "file://$(realpath "coverage/index.html")"
 
 EEE
 read -p "\n      Press enter to continue\n"
-python -m http.server \${JEST_COVERAGE_PORT} --directory ./coverage
+open "file://$(realpath "coverage/index.html")"
 `,
       confirm: false,
     },

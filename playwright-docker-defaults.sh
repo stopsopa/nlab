@@ -9,7 +9,21 @@ fi
 NODE_API_PORT_DEFAULT=""
 if [ "${NODE_API_PORT}" != "" ]; then
     NODE_API_PORT_DEFAULT="--env NODE_API_PORT"
-fi  
+fi 
+
+# MYSQL_DB_CHANGE_DEFAULT=""
+# if [ "${MYSQL_DB_CHANGE}" != "" ]; then
+#     MYSQL_DB_CHANGE_DEFAULT="--env MYSQL_DB_CHANGE"
+# fi  
+
+# MYSQL_HOST_PASS=""
+# if [ "${1}" != "--nohost" ]; then
+#     if [[ "$OSTYPE" == "darwin"* ]]; then
+#         MYSQL_HOST_PASS="--env MYSQL_HOST=host.docker.internal"
+#     # else # this case if uncommented then in some cases might double passing --net host which wouldn't make much sense, so let's prevent it
+#     #     _HOSTHANDLER="--net host"
+#     fi
+# fi 
 
 cat <<EOF
 -w "/code" $S
