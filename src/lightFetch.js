@@ -21,6 +21,7 @@ const def = {
   headers: {},
   body: undefined,
   noBody: false,
+  rejectUnauthorized: true,
 
   // If you wish lightFetch to automatically decode json:
   // true     - try always try decode - if it fail
