@@ -74,6 +74,7 @@ module.exports = function (url, opt = {}) {
     promiseResolvingStatusCodes,
     qsOptions,
     jsonSpace,
+    ...rest
   } = {
     ...def,
     ...opt,
@@ -135,6 +136,7 @@ module.exports = function (url, opt = {}) {
       }
 
       const request = {
+        ...rest,
         hostname: uri.hostname,
         port: uri.port || (uri.protocol === "https:" ? "443" : "80"),
         path: uri.pathname + (querystring.length > 0 ? `?${querystring}` : ""),
@@ -244,7 +246,7 @@ module.exports = function (url, opt = {}) {
       });
 
       req.on("error", (e) => {
-        reject(new Error(emsg(`on error: ${e}`)))
+        reject(new Error(emsg(`on error: ${e}`)));
       });
 
       body && req.write(body);

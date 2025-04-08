@@ -6,7 +6,7 @@ function fetchMock(url, opt) {
   return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.NODE_API_PORT}${url}`, opt);
 }
 
-function fetchCrush(url, opt) {
+function fetchCrash(url, opt) {
   return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.CRASH_PORT}${url}`, opt);
 }
 
@@ -235,7 +235,7 @@ describe(`lightFetch`, () => {
   it(`lightFetch - crash`, (done) => {
     (async function () {
       try {
-        await fetchCrush(`/crash`);
+        await fetchCrash(`/crash`);
 
         done(`test error: should reject`);
       } catch (e) {
