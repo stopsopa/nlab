@@ -48,12 +48,38 @@ set -e
       description: `coverage server`,
       confirm: false,
     },
-    [`jasmine tests`]: {
+    [`jasmine`]: {
       command: `
-set -e
+set -e   
+export NODE_OPTIONS=""  
+cat <<EEE
+
 /bin/bash jasmine/test.sh --env .env
+
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker
+
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
+      --env .env \
+      --filter "grep aes.jasmine.unit" \
+      -- --target docker 
+
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
+      --stay \
+      --env .env \
+      --test pages/encryptor/aes.jasmine.unit.js
+      --  \
+      -- --debug
+
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
+      --stay \
+      --env .env \
+      --filter "grep aes.jasmine.unit" 
+      --  \
+      -- --debug
+
+EEE
 `,
-      description: `coverage server`,
+      description: `helper script running all unit jest tests`,
       confirm: false,
     },
     [`coverage`]: {
