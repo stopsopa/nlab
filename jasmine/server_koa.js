@@ -181,7 +181,18 @@ const templateFile = path.resolve(__dirname, "jasmine.playwright.html");
 const staticFile = path.resolve(__dirname, "index.html");
 
 app.use(async (ctx, next) => {
+  ctx.set("X-testServer", "true");
+
   const url = ctx.url;
+
+  if (url.includes("/preprocessed.js")) {
+    ctx.set("Content-Type", "application/javascript");
+
+    ctx.body = `
+window.testServer = true;    
+`;
+    return;
+  }
 
   if (url.startsWith("/jsonp?")) {
     const data = {
