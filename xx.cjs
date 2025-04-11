@@ -60,20 +60,20 @@ NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker
 
 NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
       --env .env \
-      --filter "grep aes.jasmine.unit" \
+      --filter "grep xor.jasmine.unit.js" \
       -- --target docker 
 
 NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
       --stay \
       --env .env \
-      --test pages/encryptor/aes.jasmine.unit.js
+      --test tests/nlab/xor.jasmine.unit.js
       --  \
       -- --debug
 
 NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
       --stay \
       --env .env \
-      --filter "grep aes.jasmine.unit" 
+      --filter "grep xor.jasmine.unit.js" 
       --  \
       -- --debug
 

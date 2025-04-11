@@ -292,29 +292,11 @@ sleep 0.2
 # set -x
 set -e
 
-# (
-#     cd "${_DIR}" 
-#     unlink bundles/node_modules 2>/dev/null || true
-#     mkdir -p bundles
-#     ln -s ../../node_modules/ bundles/node_modules
-# )
-
-function es {
-  # "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --sourcemap --target=chrome80 --outfile="${2}"
-  NODE_OPTIONS="" node "${_DIR}/../node_modules/.bin/esbuild" "${1}" --allow-overwrite --bundle --target=chrome80 --outfile="${2}"
-}
-
-# https://esbuild.github.io/getting-started/#install-esbuild
-# es "${_DIR}/jasmine.js" "${_DIR}/bundles/jasmine.js"
-# no need for above now, since we are not importing anything then we can use raw file - no need to bundle
-
 function build {
 
   OUTPUT="$(NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${1}")"  
 
   ROOT_RELATIVE="$(NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${1}" "${ROOT}")"
-
-  es "${1}" "${OUTPUT}" 
 
   echo "${ROOT_RELATIVE}" >> "${ASSETLIST}"
 }
@@ -350,22 +332,11 @@ if [ "${LIST}" = "" ]; then
 EEE
 
   exit 1
-
-else
-  COUNT="$(echo "${LIST}" | wc -l)"
-  COUNT="$(trim "${COUNT}")"
-  I="1"
-  while read -r TESTFILE
-  do
-
-    ec "esbuild ${I}/${COUNT} test '${TESTFILE}'"
-
-    build "${TESTFILE}"
-
-    I="$(($I + 1))"
-
-  done <<< "${LIST}"
 fi
+
+echo "${LIST}" | node "${_DIR}/esbuild.js"  
+
+echo "${LIST}" | NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${ROOT}" > "${ASSETLIST}"
 
 node "${_DIR}/server_koa.js" --web "${ROOT}" --asset_list "${ASSETLIST}" --env "${ENVFILE}" 1>> "${LOGFILE}" 2>> "${LOGFILE}" & disown
 
