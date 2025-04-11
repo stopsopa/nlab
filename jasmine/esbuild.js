@@ -7,9 +7,11 @@
 // echo ./tests/nlab/each.jasmine.unit.js | node jasmine/esbuild.js
 
 // esbuild@0.19.12
-const readline = require("readline");
+// const readline = require("readline");
+import readline from "readline";
 
-const esbuild = require("esbuild");
+// const esbuild = require("esbuild");
+import esbuild from "esbuild";
 
 function promiseStdin() {
   return new Promise((resolve, reject) => {
@@ -59,30 +61,26 @@ function promiseStdin() {
       process.exit(1);
     }
 
-    (async function () {
-      let ctx = await esbuild.context(config);
+    let ctx = await esbuild.context(config);
 
-      await ctx.watch();
+    await ctx.watch();
 
-      console.log("watching...");
-    })();
+    console.log("watching...");
   } else {
-    (async function () {
-      try {
-        const result = await esbuild.build(config);
+    try {
+      const result = await esbuild.build(config);
 
-        const stats = await esbuild.analyzeMetafile(result.metafile, {
-          verbose: true,
-        });
+      const stats = await esbuild.analyzeMetafile(result.metafile, {
+        verbose: true,
+      });
 
-        console.log(stats);
+      console.log(stats);
 
-        console.log("finished building");
-      } catch (e) {
-        console.error(`general esbuild error: ${e}`);
+      console.log("finished building");
+    } catch (e) {
+      console.error(`general esbuild error: ${e}`);
 
-        process.exit(1);
-      }
-    })();
+      process.exit(1);
+    }
   }
 })();
