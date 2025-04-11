@@ -116,6 +116,9 @@ const config = {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
+        launchOptions: {
+          args: ["--ignore-certificate-errors"], // https://stackoverflow.com/a/76610601
+        },
       },
     },
     {

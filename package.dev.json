@@ -38,5 +38,8 @@
     "serve-index": "^1.9.1",
     "sjcl": "^1.0.8",
     "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "spdy": "^4.0.2"
   }
 }

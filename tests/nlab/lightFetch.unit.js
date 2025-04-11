@@ -3,11 +3,21 @@ const lightFetch = require("nlab/lightFetch");
 require("dotenv-up")(3, true, "test/nlab/lightFetch.js");
 
 function fetchMock(url, opt) {
-  return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.NODE_API_PORT}${url}`, opt);
+  const endpoint = `${process.env.NODE_API_PROTOCOL}://${process.env.NODE_API_HOST}:${process.env.NODE_API_PORT}${url}`;
+
+  return lightFetch(endpoint, {
+    ...opt,
+    rejectUnauthorized: false,
+  });
 }
 
 function fetchCrash(url, opt) {
-  return lightFetch(`http://${process.env.NODE_API_HOST}:${process.env.CRASH_PORT}${url}`, opt);
+  const endpoint = `${process.env.NODE_API_PROTOCOL}://${process.env.NODE_API_HOST}:${process.env.CRASH_PORT}${url}`;
+
+  return lightFetch(endpoint, {
+    ...opt,
+    rejectUnauthorized: false,
+  });
 }
 
 function cleanHeaders(req) {
@@ -19,9 +29,9 @@ function cleanHeaders(req) {
   delete req.headers["keep-alive"];
 }
 
-try {
-  jest.setTimeout(30000);
-} catch (e) {}
+// try {
+//   jest.setTimeout(30000);
+// } catch (e) {}
 
 it(`REPO_COVERALLS_URL https url`, (done) => {
   expect(typeof process.env.REPO_COVERALLS_URL === "string").toEqual(true);
@@ -110,9 +120,7 @@ describe(`lightFetch`, () => {
       } catch (e) {
         const es = String(e);
 
-        expect(
-          es.includes("JSON.parse(response body) error: SyntaxError: "),
-        ).toEqual(true);
+        expect(es.includes("JSON.parse(response body) error: SyntaxError: ")).toEqual(true);
 
         done();
       }

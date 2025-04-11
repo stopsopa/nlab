@@ -196,7 +196,7 @@ _EVAL="$(trim "$_EVAL")"
 
 if [ "${ENVFILE}" = "" ]; then
 
-  ec "error: --env ENVFILE is not defined"
+  ec "error: --env >${ENVFILE}< is not defined"
 
   exit 1;
 fi
@@ -224,7 +224,14 @@ if [ "${NODE_API_HOST}" = "" ]; then
   exit 1;
 fi
 
-SERVER="http://${NODE_API_HOST}:${NODE_API_PORT}";
+if [ "${NODE_API_PROTOCOL}" = "" ]; then
+
+  ec "error: NODE_API_PROTOCOL is not defined"
+
+  exit 1;
+fi
+
+SERVER="${NODE_API_PROTOCOL}://${NODE_API_HOST}:${NODE_API_PORT}";
 
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
@@ -278,7 +285,7 @@ function cleanup {
 
     set +e
 
-    curl  -sS "${SERVER}/exit" 2>/dev/null
+    curl -k -sS "${SERVER}/exit" 2>/dev/null
 
     unlink "${ASSETLIST}" 2>/dev/null || true
 }
@@ -338,13 +345,24 @@ echo "${LIST}" | node "${_DIR}/esbuild.js"
 
 echo "${LIST}" | NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${ROOT}" > "${ASSETLIST}"
 
-node "${_DIR}/server_koa.js" --web "${ROOT}" --asset_list "${ASSETLIST}" --env "${ENVFILE}" 1>> "${LOGFILE}" 2>> "${LOGFILE}" & disown
+cat <<EEE
+
+  If launching server takes too long check file:
+  
+    ${LOGFILE}
+  
+  also you might as well check healthcheck manually:
+    curl -k -sS "${SERVER}/healthcheck"
+
+EEE
+
+NODE_OPTIONS="" node "${_DIR}/server_koa.js" --web "${ROOT}" --asset_list "${ASSETLIST}" --env "${ENVFILE}" 1>> "${LOGFILE}" 2>> "${LOGFILE}" & disown
 
 set +x
 
 ec "Waiting for server healthcheck - ${SERVER}/healthcheck:";
 # https://stackoverflow.com/a/33520390/5560682
-until [ "$(curl -sS "${SERVER}/healthcheck" 2>/dev/null)" = "jasmine healthy" ]; do
+until [ "$(curl -k -sS "${SERVER}/healthcheck" 2>/dev/null)" = "jasmine healthy" ]; do
     printf "."
     sleep 0.5;
 done;
@@ -362,13 +380,15 @@ cat <<EEE
 
     /bin/bash playwright.sh --env "${ENVFILE}" $@
 
+    /bin/bash bash/swap-files-v2.sh package.json package.dev.json -- /bin/bash playwright.sh --env "${ENVFILE}" $@
+
 EEE
 
 set +e
 set +x
 
 # /bin/bash playwright.sh --env "${ENVFILE}" "$@"
-/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- /bin/bash playwright.sh --env "${ENVFILE}" "$@"
+/bin/bash bash/swap-files-v2.sh package.json package.dev.json -- /bin/bash playwright.sh --env "${ENVFILE}" $@
 
 STATUS=${?}
 

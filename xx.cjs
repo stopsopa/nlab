@@ -9,6 +9,8 @@
 // 🗑️  -
 // 🛑 -
 
+const S="\\\\"
+
 module.exports = (setup) => {
   return {
     help: {
@@ -58,23 +60,23 @@ cat <<EEE
 
 NODE_API_PORT=4273 /bin/bash jasmine/test.sh --env .env -- --target docker
 
-NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
-      --env .env \
-      --filter "grep xor.jasmine.unit.js" \
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh ${S}
+      --env .env ${S}
+      --filter "grep xor.jasmine.unit.js" ${S}
       -- --target docker 
 
-NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
-      --stay \
-      --env .env \
-      --test tests/nlab/xor.jasmine.unit.js
-      --  \
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh ${S}
+      --stay ${S}
+      --env .env ${S}
+      --test tests/nlab/xor.jasmine.unit.js ${S}
+      --  ${S}
       -- --debug
 
-NODE_API_PORT=4273 /bin/bash jasmine/test.sh \
-      --stay \
-      --env .env \
-      --filter "grep xor.jasmine.unit.js" 
-      --  \
+NODE_API_PORT=4273 /bin/bash jasmine/test.sh ${S}
+      --stay ${S}
+      --env .env ${S}
+      --filter "grep xor.jasmine.unit.js" ${S}
+      --  ${S}
       -- --debug
 
 EEE

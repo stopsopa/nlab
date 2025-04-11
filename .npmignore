@@ -34,3 +34,5 @@ prettier.config.mjs
 /docs/
 pull-docker-image.sh
 index.html
+/server.cert
+/server.key

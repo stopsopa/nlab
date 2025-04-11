@@ -1,5 +1,19 @@
 const express = require("express");
 
+const spdy = require("spdy");
+
+const fs = require("fs");
+
+const {
+  mockEnv,
+  get,
+  getDefault,
+  getIntegerThrowInvalid,
+  getIntegerDefault,
+  getIntegerThrow,
+  getThrow,
+} = require("./env.js");
+
 require("dotenv-up")(2, true, "server.js");
 
 const delay = require("nlab/delay.js");
@@ -16,9 +30,32 @@ if (typeof process.argv[2] !== "string") {
   throw new Error(`port not specified - specify it as a first argument`);
 }
 
-const host = process.env.NODE_API_HOST;
+// const protocols = getThrow("NODE_SERVER_PROTOCOLS")
+const protocols = "https"
+  .split(" ")
+  .map((k) => k.trim())
+  .filter(Boolean);
 
-const port = process.env[process.argv[2]];
+const port = getIntegerThrow(process.argv[2]);
+
+const host = getThrow("NODE_API_HOST");
+
+const protocolsPorts = {
+  // http: getIntegerThrow("NODE_API_PORT"),
+  https: port,
+};
+
+{
+  if (protocols.length === 0) {
+    throw th(`NODE_SERVER_PROTOCOLS is not defined`);
+  }
+
+  protocols.forEach((protocol) => {
+    if (!/^https?$/.test(protocol)) {
+      throw th(`NODE_SERVER_PROTOCOLS >${get("NODE_SERVER_PROTOCOLS")}<: protocol ${protocol} is not supported`);
+    }
+  });
+}
 
 if (!/^\d+$/.test(port)) {
   throw new Error(`port invalid >${port}<`);
@@ -39,6 +76,10 @@ app.disable("x-powered-by");
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
+
+app.all("/healthcheck", (req, res) => {
+  res.end("jasmine healthy");
+});
 
 app.use((req, res, next) => {
   console.log(`url: ${req.url}`);
@@ -104,8 +145,35 @@ app.all("/json/invalid/with/no/header", (req, res) => {
   res.end(JSON.stringify({ ok: true }).slice(0, -1));
 });
 
-app.listen(port, host, () => {
-  console.log(`\n 🌎  Server is running ` + `http://${host}:${port}\n`);
+function createServer(protocol = "http") {
+  if (!/^https?$/.test(protocol)) {
+    throw new th(`protocol ${protocol} is not supported`);
+  }
+  const port = protocolsPorts[protocol];
+
+  let server;
+  if (protocol === "https") {
+    server = spdy.createServer(
+      {
+        key: fs.readFileSync(`./server.key`),
+        cert: fs.readFileSync(`./server.cert`),
+      },
+      app,
+    );
+  } else {
+    server = app;
+  }
+
+  server.listen(port, () => {
+    log(`
+ 🌎  Server is running ${protocol.toUpperCase()}
+        ${protocol}://${host}:${port}
+`);
+  });
+}
+
+protocols.forEach((protocol) => {
+  createServer(protocol);
 });
 
 const char = process.argv[2] === "NODE_API_PORT" ? "x" : "+";

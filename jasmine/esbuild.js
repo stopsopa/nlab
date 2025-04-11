@@ -7,11 +7,11 @@
 // echo ./tests/nlab/each.jasmine.unit.js | node jasmine/esbuild.js
 
 // esbuild@0.19.12
-// const readline = require("readline");
-import readline from "readline";
+const readline = require("readline");
+// import readline from "readline";
 
-// const esbuild = require("esbuild");
-import esbuild from "esbuild";
+const esbuild = require("esbuild");
+// import esbuild from "esbuild";
 
 function promiseStdin() {
   return new Promise((resolve, reject) => {

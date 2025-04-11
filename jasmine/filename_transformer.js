@@ -1,16 +1,12 @@
 // import path from "path";
-
 // import fs from "fs";
-
 // import { fileURLToPath } from "url";
+// import readline from "readline";
+// const __filename = fileURLToPath(import.meta.url);
 
 const path = require("path");
-
 const fs = require("fs");
-
 const readline = require("readline");
-
-// const __filename = fileURLToPath(import.meta.url);
 
 const th = (msg) => new Error(`${__filename} error: ${msg}`);
 

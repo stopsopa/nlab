@@ -3,7 +3,7 @@ const { parseArgs } = require("node:util");
 const fs = require("fs");
 
 function out(line) {
-  fs.appendFileSync("out.txt", `out: ${line}\n`);
+  // fs.appendFileSync("out.txt", `out: ${line}\n`);
   process.stdout.write(`${line}\n`);
 }
 
