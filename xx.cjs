@@ -26,8 +26,6 @@ cat <<EEE
 
   coverage server http://0.0.0.0:\${JEST_COVERAGE_PORT}
 
-  more info: https://github.com/stopsopa/nlab
-
 EEE
 
       `,

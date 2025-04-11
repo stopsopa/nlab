@@ -38,7 +38,7 @@ it("getThrow - ABC -> DEF", async () => {
   });
 
   expect(getThrow("ABC")).toEqual("DEF");
-  expect(() => getThrow("GHI")).toThrowError("env var GHI is not defined");
+  expect(() => getThrow("GHI")).toThrowError("env.js: env var GHI is not defined");
 });
 
 it("getIntegerThrowInvalid - ABC -> 123", async () => {
@@ -51,7 +51,7 @@ it("getIntegerThrowInvalid - ABC -> 123", async () => {
   expect(getIntegerThrowInvalid("ABC")).toEqual(123);
   expect(getIntegerThrowInvalid("GHI")).toEqual(undefined);
   expect(() => getIntegerThrowInvalid("ZZZ")).toThrowError(
-    "env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
+    "env.js: env var ZZZ is not a number. value >not a number<, doesn't match regex >/^-?\\d+$/<",
   );
   expect(() => getIntegerThrowInvalid("BIG")).toThrowError(
     "env.js: parseInt(90071992547409919007199254740991, 10) returned 9.007199254740992e+31, doesn't match regex >/^-?\\d+$/<",

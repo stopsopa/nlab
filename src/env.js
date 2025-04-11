@@ -12,9 +12,9 @@ const th = msg => new Error(`env.js: ${msg}`);
 let env;
 
 if (isNode) {
-  env = process.env;
+  env = process?.env;
 } else if (typeof window !== "undefined") {
-  env = window.process.env;
+  env = window?.process?.env;
 } else {
   throw th("env.js: neither node.js nor browser context detected");
 }
