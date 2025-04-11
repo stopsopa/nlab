@@ -182,6 +182,18 @@ const staticFile = path.resolve(__dirname, "index.html");
 
 app.use(async (ctx, next) => {
   const url = ctx.url;
+
+  if (url.startsWith("/jsonp?")) {
+    const data = {
+      ...ctx?.query,
+      ok: true,
+    };
+
+    ctx.body = `${ctx?.query?.callback}(${JSON.stringify(data)})`;
+
+    return;
+  }
+
   if (tests_list_paths && (url === "/" || url.startsWith("/?"))) {
     log(`ctx.url (template mode) >${url}<`);
 
@@ -191,15 +203,15 @@ app.use(async (ctx, next) => {
 
     fs.writeFileSync(staticFile, html);
   } else {
-    log(`ctx.url >${ctx.url}<`);
+    log(`ctx.url >${url}<`);
   }
 
-  if (ctx.url === "/healthcheck") {
+  if (url === "/healthcheck") {
     ctx.body = "jasmine healthy";
     return;
   }
 
-  if (ctx.url === "/exit") {
+  if (url === "/exit") {
     process.exit();
   }
 
