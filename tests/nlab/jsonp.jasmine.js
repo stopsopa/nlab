@@ -2,8 +2,8 @@ import jsonp from "../../src/jsonp.js";
 
 import isNode from "../../src/isNode.js";
 
-describe("jsonp", () => {
-  if (!isNode && typeof window !== "undefined" && window.testServer) {
+if (!isNode && typeof window !== "undefined" && window.testServer) {
+  describe("jsonp", () => {
     it("regular", async () => {
       const data = await jsonp("/jsonp", {
         some: "data",
@@ -18,5 +18,5 @@ describe("jsonp", () => {
         callback: c,
       }).toEqual({ some: "data", ok: true, callback: "jsonpcallbacknamespaces._" });
     });
-  }
-});
+  });
+}
