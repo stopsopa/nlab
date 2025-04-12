@@ -1,20 +1,24 @@
-const isNode = require("./isNode");
+const isNode = require("detect-node");
 
-const th = msg => new Error(`env.js: ${msg}`);
+/**
+ * @param {string} msg
+ * @returns {Error}
+ */
+const th = (msg) => new Error(`env.js: ${msg}`);
 
 /**
  * @typedef {Object.<string, string>} Env
  */
 
 /**
- * @type {Env}
+ * @type {Record<string, string>}
  */
 let env;
 
 if (isNode) {
-  env = process?.env;
+  env = /** @type {Record<string, string>} */ (process?.env || {});
 } else if (typeof window !== "undefined") {
-  env = window?.process?.env;
+  env = /** @type {Record<string, string>} */ (window?.process?.env || {});
 } else {
   throw th("env.js: neither node.js nor browser context detected");
 }
@@ -78,23 +82,22 @@ const intTest = /^-?\d+$/;
  */
 function getIntegerThrowInvalid(key) {
   if (has(key)) {
-    const value = get(key);
+    // We know the value exists because has(key) returned true
+    const value = /** @type {string} */ (get(key));
 
-    if (typeof value === "string") {
-      if (!intTest.test(value)) {
-        throw th(`env var ${key} is not a number. value >${value}<, doesn't match regex >${intTest}<`);
-      }
-
-      const int = parseInt(value, 10);
-
-      const strint = String(int);
-
-      if (!intTest.test(strint)) {
-        throw th(`parseInt(${value}, 10) returned ${strint}, doesn't match regex >${intTest}<`);
-      }
-
-      return int;
+    if (!intTest.test(value)) {
+      throw th(`env var ${key} is not a number. value >${value}<, doesn't match regex >${intTest}<`);
     }
+
+    const int = parseInt(value, 10);
+
+    const strint = String(int);
+
+    if (!intTest.test(strint)) {
+      throw th(`parseInt(${value}, 10) returned ${strint}, doesn't match regex >${intTest}<`);
+    }
+
+    return int;
   }
 
   return undefined;
