@@ -7,10 +7,6 @@ const isNode = require("detect-node");
 const th = (msg) => new Error(`env.js: ${msg}`);
 
 /**
- * @typedef {Object.<string, string>} Env
- */
-
-/**
  * @type {Record<string, string>}
  */
 let env;
@@ -25,7 +21,7 @@ if (isNode) {
 
 /**
  * For testing purposes, it is possible to substitute the object process.env with a custom object.
- * @param {Env} map
+ * @param {Record<string, string>} map
  */
 function mockEnv(map) {
   env = map;
