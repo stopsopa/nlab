@@ -1,3 +1,5 @@
+// other interesting engines: https://github.com/olado/doT/blob/master/doT.js
+
 function getGlobal() {
   try {
     if (typeof window !== "undefined") {
