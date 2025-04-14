@@ -16,7 +16,7 @@ const html = `
 </html>
 `;
 
-describe("template.js", () => {
+describe("template.js main nlab", () => {
   it("html", (done) => {
     const tmp = template(html);
 
