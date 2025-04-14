@@ -1,6 +1,6 @@
 // other interesting engines: 
 //     https://github.com/olado/doT/blob/master/doT.js
-/      https://github.com/bluzky/nano-template/blob/master/nano.js
+//     https://github.com/bluzky/nano-template/blob/master/nano.js
 
 function getGlobal() {
   try {
