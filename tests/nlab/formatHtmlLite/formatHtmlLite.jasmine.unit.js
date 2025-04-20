@@ -55,7 +55,7 @@ describe("formatHtmlLite", () => {
     
 </div>`;
 
-        const result = formatHtmlLite(html, {noTrimTags: []});
+        const result = formatHtmlLite(html, { noTrimTags: [] });
 
         // console.log(`>>${result}<<`);
 

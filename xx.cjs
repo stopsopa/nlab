@@ -9,7 +9,7 @@
 // 🗑️  -
 // 🛑 -
 
-const S="\\\\"
+const S = "\\\\";
 
 module.exports = (setup) => {
   return {

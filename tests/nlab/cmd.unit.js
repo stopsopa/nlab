@@ -239,8 +239,6 @@ describe("cmd", () => {
     });
   });
 
-
-
   it("no options", (done) => {
     (async function () {
       try {

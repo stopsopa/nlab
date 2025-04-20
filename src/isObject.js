@@ -40,8 +40,8 @@
 //  ✓isObject - new Error()                                         -> false
 
 /**
- * @param {any} o 
- * @returns {boolean} 
+ * @param {any} o
+ * @returns {boolean}
  */
 function isObject(o) {
   return Object.prototype.toString.call(o) === "[object Object]";

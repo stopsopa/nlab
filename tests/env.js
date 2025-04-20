@@ -1,4 +1,3 @@
-
 // https://stopsopa.github.io/viewer.html?file=pages/node/env/env.js  js + jsdoc
 // CommonJs with jsdoc: https://github.com/stopsopa/nlab/blob/master/src/env.js
 
@@ -15,7 +14,7 @@ const th = (msg) => new Error(`env.js: ${msg}`);
 let env;
 
 // if (isNode) {
-  env = process.env;
+env = process.env;
 // } else if (typeof window !== "undefined") {
 //   env = window.process.env;
 // } else {
@@ -140,12 +139,12 @@ function getIntegerThrow(key) {
 }
 
 module.exports = {
-    mockEnv,
-    has,
-    get,
-    getDefault,
-    getThrow,
-    getIntegerThrowInvalid,
-    getIntegerDefault,
-    getIntegerThrow,
-}
+  mockEnv,
+  has,
+  get,
+  getDefault,
+  getThrow,
+  getIntegerThrowInvalid,
+  getIntegerDefault,
+  getIntegerThrow,
+};

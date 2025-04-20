@@ -2,7 +2,6 @@
 
 https://github.com/stopsopa/stopsopa.github.io
 
-
 # Setup
 
 Install all dependencies from package.json in this directory in the main directory

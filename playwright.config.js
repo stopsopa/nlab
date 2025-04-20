@@ -162,7 +162,7 @@ const config = {
     //   name: 'Google Chrome',
     //   use: {
     //     channel: 'chrome',
-    
+
     //   },
     // },
   ],
