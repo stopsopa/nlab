@@ -287,7 +287,7 @@ function cleanup {
 
     curl -k -sS "${SERVER}/exit" 2>/dev/null
 
-    unlink "${ASSETLIST}" 2>/dev/null || true
+    # unlink "${ASSETLIST}" 2>/dev/null || true
 }
 
 cleanup
@@ -341,15 +341,17 @@ EEE
   exit 1
 fi
 
-echo -e "${LIST}\njasmine/lib/template.jasmine.unit.js" | node "${_DIR}/esbuild.js"  
-
-# echo ">${LIST}<"
-
-# exit 0
+# Injecting an extra script is actually needed to make esbuild emit output transpiled test files right next to the original test files.
+# If only one file is provided, esbuild will generate the transpiled file in the root directory of the project.
+# This is not a problem, since we have our main script coordinating the test builds as well.
+echo -e "${LIST}\njasmine/lib/template.jasmine.unit.js" | node "${_DIR}/esbuild.js" 
 
 echo "${LIST}" | NODE_OPTIONS="" node "${_DIR}/filename_transformer.js" "${ROOT}" > "${ASSETLIST}"
 
 cat <<EEE
+
+  Launching server: 
+    NODE_OPTIONS="" NODE_API_PORT="${NODE_API_PORT}" node "${_DIR}/server_koa.js" --web "${ROOT}" --asset_list "${ASSETLIST}" --env "${ENVFILE}"
 
   If launching server takes too long check file:
   
