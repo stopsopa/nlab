@@ -14,7 +14,7 @@ it("xor() no key", (done) => {
   }
 });
 
-it("xor() empy string key", (done) => {
+it("xor() empty string key", (done) => {
   const data = "";
 
   try {
@@ -26,7 +26,7 @@ it("xor() empy string key", (done) => {
   }
 });
 
-it("xor() empy string key", (done) => {
+it("xor() empty string key", (done) => {
   const data = "";
 
   try {
