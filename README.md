@@ -3,6 +3,7 @@
 [![npm version](https://shields.io/npm/v/nlab)](https://www.npmjs.com/package/nlab)
 [![NpmLicense](https://img.shields.io/npm/l/nlab.svg)](https://github.com/stopsopa/nlab/blob/master/LICENSE)
 ![jest coverage](https://stopsopa.github.io/nlab/coverage/coverage-badge.svg)
+[![dependencies](https://depx.co/api/badge/nlab)](https://depx.co/pkg/nlab)
 
 # Go to
 
